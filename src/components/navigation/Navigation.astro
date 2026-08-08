@@ -1,0 +1,23 @@
+---
+import { SITE } from "../../config/site";
+---
+
+<nav>
+
+<ul>
+
+{
+SITE.navigation.map((item) => (
+
+<li>
+
+<a href={item.href}>{item.title}</a>
+
+</li>
+
+))
+}
+
+</ul>
+
+</nav>
