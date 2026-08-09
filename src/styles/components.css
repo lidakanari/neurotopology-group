@@ -1,3 +1,47 @@
+@import "./tokens.css";
+
+/* ==========================================================
+   Navigation
+   ========================================================== */
+
+nav {
+
+    border-bottom: 1px solid var(--color-light-stone);
+
+}
+
+.navigation {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 2rem;
+
+    padding: 1.5rem 0;
+
+}
+
+.navigation a {
+
+    color: var(--color-graphite);
+
+    font-size: .95rem;
+
+}
+
+.navigation a:hover {
+
+    color: var(--color-oxford-blue);
+
+}
+
+/* ==========================================================
+   Hero
+   ========================================================== */
+
 .hero {
 
     display: flex;
@@ -10,24 +54,79 @@
 
 .hero-subtitle {
 
-    margin-top: var(--space-md);
+    margin-top: 1rem;
 
     color: var(--color-slate);
 
+    font-size: 1.15rem;
+
 }
+
 
 .hero-tagline {
 
-    margin-top: var(--space-md);
+    margin-top: 1.5rem;
 
-    font-size: 1.4rem;
+    font-size: clamp(2rem,4vw,3.25rem);
 
     color: var(--color-oxford-blue);
+
+    line-height: 1.15;
+
+    max-width: 16ch;
 
 }
 
 .hero-intro {
 
-    margin-top: var(--space-lg);
+    margin-top: 2rem;
+
+    max-width: 60ch;
+
+}
+
+.hero-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: var(--space-md);
+
+    max-width: 900px;
+
+}
+
+/* ==========================================================
+   Research at a Glance
+   ========================================================== */
+
+.glance-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(5,1fr);
+
+    gap: 1.5rem;
+
+    margin-top: 2rem;
+
+}
+
+.glance-card {
+
+    padding: 1.5rem;
+
+    border: 1px solid var(--color-light-stone);
+
+    border-radius: 10px;
+
+    transition: .25s ease;
+
+}
+
+.glance-card:hover {
+
+    transform: translateY(-3px);
 
 }
