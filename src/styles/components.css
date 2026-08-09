@@ -259,3 +259,45 @@ nav {
     background: var(--color-light-stone);
 
 }
+
+/* ==========================================================
+   Publications
+   ========================================================== */
+
+.publication-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3,1fr);
+
+    gap: var(--space-lg);
+
+}
+
+.publication-card {
+
+    padding: var(--space-md);
+
+    border: 1px solid var(--color-light-stone);
+
+    border-radius: var(--radius-md);
+
+}
+
+.publication-year {
+
+    margin-bottom: var(--space-sm);
+
+    color: var(--color-slate);
+
+    font-size: .9rem;
+
+}
+
+.section-link {
+
+    margin-top: var(--space-lg);
+
+    color: var(--color-research);
+
+}
