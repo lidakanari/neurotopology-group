@@ -97,6 +97,25 @@ nav {
 
 }
 
+
+/* ==========================================================
+   Section Header
+   ========================================================== */
+
+.section-header {
+
+    margin-bottom: var(--space-lg);
+
+}
+
+.section-header p {
+
+    margin-top: var(--space-sm);
+
+    color: var(--color-slate);
+
+}
+
 /* ==========================================================
    Research at a Glance
    ========================================================== */
@@ -107,26 +126,26 @@ nav {
 
     grid-template-columns: repeat(5,1fr);
 
-    gap: 1.5rem;
-
-    margin-top: 2rem;
+    gap: var(--space-md);
 
 }
 
 .glance-card {
 
-    padding: 1.5rem;
+    padding: var(--space-md);
 
     border: 1px solid var(--color-light-stone);
 
-    border-radius: 10px;
+    border-radius: var(--radius-md);
 
-    transition: .25s ease;
+    background: white;
+
+    transition: transform var(--transition-fast);
 
 }
 
 .glance-card:hover {
 
-    transform: translateY(-3px);
+    transform: translateY(-4px);
 
 }
