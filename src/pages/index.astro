@@ -1,25 +1,22 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 
+/* Layout */
+
 import Navigation from "../components/navigation/Navigation.astro";
+import Footer from "../components/layout/Footer.astro";
+
+/* Homepage */
 
 import Hero from "../components/hero/Hero.astro";
 
 import ResearchAtAGlance from "../components/sections/ResearchAtAGlance.astro";
-
 import PeoplePreview from "../components/sections/PeoplePreview.astro";
-
 import ProjectsPreview from "../components/sections/ProjectsPreview.astro";
-
 import InteractivePreview from "../components/sections/InteractivePreview.astro";
-
 import PublicationsPreview from "../components/sections/PublicationsPreview.astro";
-
-import VisualizationsPreview from "../components/sections/NewsPreview.astro";
-
+import NewsPreview from "../components/sections/NewsPreview.astro";
 import JoinGroup from "../components/sections/JoinGroup.astro";
-
-import Footer from "../components/layout/Footer.astro";
 ---
 
 <MainLayout>
@@ -40,7 +37,7 @@ import Footer from "../components/layout/Footer.astro";
 
     <PublicationsPreview />
 
-    <VisualizationsPreview />
+    <NewsPreview />
 
     <JoinGroup />
 
