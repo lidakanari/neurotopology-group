@@ -1,0 +1,62 @@
+@import "./tokens.css";
+
+/* ==========================================================
+   Typography
+   ========================================================== */
+
+html {
+
+    font-size: 18px;
+
+}
+
+body {
+
+    font-family:
+        Inter,
+        system-ui,
+        sans-serif;
+
+}
+
+h1,
+h2,
+h3 {
+
+    margin: 0;
+
+    color: var(--color-oxford-blue);
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+}
+
+h1 {
+
+    font-size: clamp(3rem,6vw,5rem);
+
+}
+
+h2 {
+
+    font-size: clamp(2rem,4vw,3rem);
+
+}
+
+h3 {
+
+    font-size: 1.25rem;
+
+}
+
+p {
+
+    max-width: 65ch;
+
+    margin: 0;
+
+    color: var(--color-graphite);
+
+}

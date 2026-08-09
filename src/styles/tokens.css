@@ -1,0 +1,70 @@
+/* ==========================================================
+   Project Arbor
+   NeuroTopology Design Tokens
+   ========================================================== */
+
+:root {
+
+  /* ========================================================
+     Core Interface Colors
+     ======================================================== */
+
+  --color-oxford-blue: #23364A;
+  --color-slate: #506176;
+  --color-warm-white: #F8F7F5;
+  --color-light-stone: #E8EBEF;
+  --color-graphite: #2E3238;
+
+  /* ========================================================
+     Semantic Colors
+     ======================================================== */
+
+  --color-people: #6B4E71;
+  --color-research: #2E8B7D;
+  --color-projects: #5B7DB1;
+  --color-software: #6E8B3D;
+  --color-interactive: #3AAFA9;
+  --color-teaching: #B87333;
+  --color-community: #6B4E71;
+
+  /* ========================================================
+     Layout
+     ======================================================== */
+
+  --page-max-width: 1280px;
+  --content-max-width: 760px;
+
+  /* spacing */
+
+  --space-xs: .5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 8rem;
+
+  /* ========================================================
+     Border Radius
+     ======================================================== */
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  /* ========================================================
+     Shadows
+     ======================================================== */
+
+  --shadow-soft:
+      0 4px 12px rgba(0,0,0,.08);
+
+/* ========================================================
+   Transitions
+   ======================================================== */
+
+--transition-fast: .2s ease;
+
+--transition-medium: .35s ease;
+
+--transition-slow: .6s ease;
+
+}

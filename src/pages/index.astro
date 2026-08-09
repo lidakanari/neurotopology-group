@@ -1,13 +1,23 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+
 import Navigation from "../components/navigation/Navigation.astro";
+
 import Hero from "../components/hero/Hero.astro";
+
+import ResearchAtAGlance from "../components/sections/ResearchAtAGlance.astro";
 ---
 
 <MainLayout>
 
   <Navigation />
 
-  <Hero />
+  <main>
+
+    <Hero />
+
+    <ResearchAtAGlance />
+
+  </main>
 
 </MainLayout>

@@ -1,0 +1,24 @@
+---
+/**
+ * Container
+ *
+ * Provides a centered content area with the site's
+ * maximum width.
+ *
+ * Used by:
+ * Hero
+ * Research
+ * Projects
+ * People
+ */
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<div class={`container ${className}`}>
+  <slot />
+</div>

@@ -1,13 +1,28 @@
 ---
 import { SITE } from "../../config/site";
+import Container from "../layout/Container.astro";
+import Section from "../layout/Section.astro";
 ---
 
-<section>
+<Section>
 
-<h1>{SITE.title}</h1>
+  <Container>
 
-<h2>{SITE.subtitle}</h2>
+    <h1>{SITE.title}</h1>
 
-<p>{SITE.tagline}</p>
+    <p class="hero-subtitle">
+      {SITE.subtitle}
+    </p>
 
-</section>
+    <p class="hero-tagline">
+      {SITE.tagline}
+    </p>
+
+    <p class="hero-intro">
+      We develop mathematical, computational and topological methods
+      to understand how neuronal structure gives rise to brain organization.
+    </p>
+
+  </Container>
+
+</Section>

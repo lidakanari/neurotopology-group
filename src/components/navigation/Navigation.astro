@@ -1,23 +1,28 @@
 ---
+import Container from "../layout/Container.astro";
 import { SITE } from "../../config/site";
 ---
 
 <nav>
 
-<ul>
+  <Container>
 
-{
-SITE.navigation.map((item) => (
+    <ul class="navigation">
 
-<li>
+      {
+        SITE.navigation.map((item) => (
 
-<a href={item.href}>{item.title}</a>
+          <li>
 
-</li>
+            <a href={item.href}>{item.title}</a>
 
-))
-}
+          </li>
 
-</ul>
+        ))
+      }
+
+    </ul>
+
+  </Container>
 
 </nav>

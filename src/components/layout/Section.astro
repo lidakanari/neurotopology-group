@@ -1,0 +1,18 @@
+---
+/**
+ * Section
+ *
+ * Provides consistent vertical spacing between
+ * homepage and content sections.
+ */
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<section class={`section ${className}`}>
+  <slot />
+</section>
