@@ -225,3 +225,37 @@ nav {
     margin-top: var(--space-sm);
 
 }
+
+/* ==========================================================
+   Interactive Exploration
+   ========================================================== */
+
+.interactive-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2,1fr);
+
+    gap: var(--space-lg);
+
+}
+
+.interactive-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.interactive-image {
+
+    aspect-ratio: 16 / 10;
+
+    margin-bottom: var(--space-md);
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-light-stone);
+
+}
