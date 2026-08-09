@@ -149,3 +149,79 @@ nav {
     transform: translateY(-4px);
 
 }
+
+/* ==========================================================
+   People Preview
+   ========================================================== */
+
+.people-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3,1fr);
+
+    gap: var(--space-lg);
+
+}
+
+.person-card {
+
+    text-align: center;
+
+}
+
+.person-photo {
+
+    width: 150px;
+
+    aspect-ratio: 1;
+
+    margin-inline: auto;
+
+    margin-bottom: var(--space-md);
+
+    border-radius: 50%;
+
+    background: var(--color-light-stone);
+
+}
+
+/* ==========================================================
+   Featured Projects
+   ========================================================== */
+
+.project-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3,1fr);
+
+    gap: var(--space-lg);
+
+}
+
+.project-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.project-image {
+
+    aspect-ratio: 16 / 9;
+
+    margin-bottom: var(--space-md);
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-light-stone);
+
+}
+
+.project-card p {
+
+    margin-top: var(--space-sm);
+
+}
