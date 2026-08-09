@@ -1,6 +1,10 @@
 export const SITE = {
   title: "NeuroTopology Group",
 
+  navigationTitle: "NeuroTopology",
+
+  browserTitle: "NeuroTopology Group | University of Oxford",
+
   subtitle: "Mathematics • Topology • Neuroscience • AI",
 
   tagline:
@@ -15,7 +19,7 @@ export const SITE = {
     { title: "People", href: "/people" },
     { title: "Research", href: "/research" },
     { title: "Projects", href: "/projects" },
-    { title: "Software & Data", href: "/software" },
+    { title: "Software", href: "/software" },
     { title: "Interactive", href: "/interactive" },
     { title: "Publications", href: "/publications" },
     { title: "Teaching", href: "/teaching" },

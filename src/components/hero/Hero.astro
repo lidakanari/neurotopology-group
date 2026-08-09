@@ -8,24 +8,43 @@ import Section from "../layout/Section.astro";
 
   <Container>
 
-	<div class="hero-content">
+    <div class="hero-layout">
 
-	    <h1>{SITE.title}</h1>
+      <div class="hero-text">
 
-	    <p class="hero-subtitle">
-	      {SITE.subtitle}
-	    </p>
+        <h1>{SITE.title}</h1>
 
-	    <p class="hero-tagline">
-	      {SITE.tagline}
-	    </p>
+        <p class="hero-subtitle">
+          {SITE.subtitle}
+        </p>
 
-	    <p class="hero-intro">
-	      	We develop mathematical, computational and topological methods
-	      	to understand how neuronal structure gives rise to brain organization.
-	    </p>
+        <p class="hero-tagline">
+          {SITE.tagline}
+        </p>
 
-	</div>
+        <p class="hero-intro">
+          We develop mathematical, computational and topological methods
+          to understand how neuronal structure gives rise to brain organization.
+        </p>
+
+        <a class="hero-button" href="/research">
+
+          Explore Research →
+
+        </a>
+
+      </div>
+
+      <div class="hero-visual">
+
+        <img
+          src="/images/hero_neuron.svg"
+          alt="Neuron morphology"
+        />
+
+      </div>
+
+    </div>
 
   </Container>
 

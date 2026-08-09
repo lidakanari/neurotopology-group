@@ -4,9 +4,36 @@
    Navigation
    ========================================================== */
 
-nav {
+.site-navigation {
 
-    border-bottom: 1px solid var(--color-light-stone);
+    background: var(--color-warm-white);
+
+    padding: 2rem 0;
+
+}
+
+.navigation-wrapper {
+
+    display: grid;
+
+    grid-template-columns: 320px 1fr;
+
+    align-items: center;
+
+    gap: 2rem;
+}
+
+.site-title {
+
+    color: var(--color-oxford-blue);
+
+    font-size: 1.6rem;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    text-decoration: none;
 
 }
 
@@ -18,9 +45,15 @@ nav {
 
     align-items: center;
 
-    gap: 2rem;
+    gap: 1.2rem;
 
-    padding: 1.5rem 0;
+    flex-wrap: nowrap;
+
+}
+
+.navigation li {
+
+    list-style: none;
 
 }
 
@@ -30,11 +63,17 @@ nav {
 
     font-size: .95rem;
 
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition: color .2s ease;
+
 }
 
 .navigation a:hover {
 
-    color: var(--color-oxford-blue);
+    color: var(--color-research);
 
 }
 
@@ -44,48 +83,27 @@ nav {
 
 .hero {
 
+    min-height: 72vh;
+
     display: flex;
 
     align-items: center;
 
-    min-height: 70vh;
+}
+
+.hero-layout {
+
+    display: grid;
+
+    grid-template-columns: 1.2fr .8fr;
+
+    gap: var(--space-xl);
+
+    align-items: center;
 
 }
 
-.hero-subtitle {
-
-    margin-top: 1rem;
-
-    color: var(--color-slate);
-
-    font-size: 1.15rem;
-
-}
-
-
-.hero-tagline {
-
-    margin-top: 1.5rem;
-
-    font-size: clamp(2rem,4vw,3.25rem);
-
-    color: var(--color-oxford-blue);
-
-    line-height: 1.15;
-
-    max-width: 16ch;
-
-}
-
-.hero-intro {
-
-    margin-top: 2rem;
-
-    max-width: 60ch;
-
-}
-
-.hero-content {
+.hero-text {
 
     display: flex;
 
@@ -93,10 +111,49 @@ nav {
 
     gap: var(--space-md);
 
-    max-width: 900px;
+}
+
+.hero-subtitle {
+
+    color: var(--color-slate);
 
 }
 
+.hero-tagline {
+
+    color: var(--color-oxford-blue);
+
+    font-size: 2rem;
+
+    line-height: 1.2;
+
+    max-width: 18ch;
+
+}
+
+.hero-intro {
+
+    max-width: 60ch;
+
+}
+
+.hero-button {
+
+    margin-top: var(--space-md);
+
+    color: var(--color-research);
+
+    font-weight: 600;
+
+}
+
+.hero-visual img {
+
+    width: 100%;
+
+    opacity: .95;
+
+}
 
 /* ==========================================================
    Section Header

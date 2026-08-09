@@ -3,25 +3,41 @@ import Container from "../layout/Container.astro";
 import { SITE } from "../../config/site";
 ---
 
-<nav>
+<nav class="site-navigation">
 
   <Container>
 
-    <ul class="navigation">
+    <div class="navigation-wrapper">
 
-      {
-        SITE.navigation.map((item) => (
+      <a href="/" class="site-title">
 
-          <li>
+	{SITE.navigationTitle}
 
-            <a href={item.href}>{item.title}</a>
+      </a>
 
-          </li>
+      <ul class="navigation">
 
-        ))
-      }
+        {
+          SITE.navigation
+            .filter((item) => item.title !== "Home")
+            .map((item) => (
 
-    </ul>
+              <li>
+
+                <a href={item.href}>
+
+                  {item.title}
+
+                </a>
+
+              </li>
+
+            ))
+        }
+
+      </ul>
+
+    </div>
 
   </Container>
 
