@@ -27,7 +27,7 @@ h3 {
 
     font-family: "IBM Plex Sans", sans-serif;
 
-    color: inherit;
+    color: var(--color-hero);
 
     line-height: 1.1;
 
