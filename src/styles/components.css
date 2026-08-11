@@ -659,3 +659,290 @@
     font-weight: 600;
 
 }
+
+/* ==========================================================
+   Research Hero
+   ========================================================== */
+
+.research-hero {
+
+    background: var(--color-background);
+
+    padding-block: 5rem;
+
+}
+
+.research-hero-layout {
+
+    display: grid;
+
+    grid-template-columns: 1.2fr .8fr;
+
+    gap: 4rem;
+
+    align-items: center;
+
+}
+
+.research-hero-tagline {
+
+    font-size: 2rem;
+
+    color: var(--color-slate);
+
+    max-width: 18ch;
+
+    margin-top: 1rem;
+
+}
+
+.research-hero-intro {
+
+    color: var(--color-graphite);
+
+    max-width: 60ch;
+
+    line-height: 1.8;
+
+}
+
+.research-hero-visual {
+
+    min-height: 300px;
+
+}
+
+/* ==========================================================
+   Research Vision
+   ========================================================== */
+
+.research-vision {
+
+    max-width: 900px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1.75rem;
+
+}
+
+.research-vision p {
+
+    font-size: 1.1rem;
+
+    line-height: 1.9;
+
+}
+
+/* ==========================================================
+   Research Projects
+   ========================================================== */
+
+.research-project-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3rem;
+
+}
+
+.research-project {
+
+    display: grid;
+
+    grid-template-columns: 320px 1fr;
+
+    gap: 2rem;
+
+    align-items: center;
+
+}
+
+.research-project-image {
+
+    aspect-ratio: 4 / 3;
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-light-stone);
+
+}
+
+.research-project-content h3 {
+
+    margin-top: .5rem;
+
+    margin-bottom: 1rem;
+
+}
+
+.research-project-content p {
+
+    margin-bottom: 1.5rem;
+
+}
+
+.research-project-content a {
+
+    color: var(--color-research);
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+}
+
+.research-project.reverse {
+
+    grid-template-columns: 1fr 320px;
+
+}
+
+.research-project.reverse .research-project-image {
+
+    order: 2;
+
+}
+
+.research-project.reverse .research-project-content {
+
+    order: 1;
+
+}
+
+/* ==========================================================
+   Research Collaborations
+   ========================================================== */
+
+.collaboration-heading {
+
+    margin-top: 3rem;
+
+    margin-bottom: 1.5rem;
+
+}
+
+.collaboration-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 2rem;
+
+}
+
+.collaboration-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+    padding: 2rem;
+
+    border: 1px solid var(--color-light-stone);
+
+    border-radius: var(--radius-md);
+
+    background: white;
+
+    transition: transform .2s ease;
+
+}
+
+.collaboration-card:hover {
+
+    transform: translateY(-4px);
+
+}
+
+.collaboration-card h4 {
+
+    margin: 0 0 .5rem;
+
+    color: var(--color-primary);
+
+    font-size: 1.2rem;
+
+}
+
+.collaboration-institution {
+
+    color: var(--color-slate);
+
+    font-weight: 500;
+
+    margin-bottom: 1rem;
+
+}
+
+.collaboration-role {
+
+    flex-grow: 1;
+
+    margin-bottom: 1.5rem;
+
+}
+
+.collaboration-card a {
+
+    color: var(--color-research);
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+}
+/* ==========================================================
+   Funding
+   ========================================================== */
+
+.funding-content {
+
+    max-width: 900px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2rem;
+
+}
+
+.funding-card {
+
+    padding: 2rem;
+
+    border: 1px solid var(--color-light-stone);
+
+    border-radius: var(--radius-md);
+
+    background: white;
+
+}
+
+.funding-card h3 {
+
+    margin-bottom: .75rem;
+
+}
+
+.funding-card p {
+
+    margin-bottom: 1.5rem;
+
+}
+
+.funding-card a {
+
+    color: var(--color-research);
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+}
