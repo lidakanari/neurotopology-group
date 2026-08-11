@@ -6,7 +6,7 @@
 
 .site-navigation {
 
-    background: var(--color-warm-white);
+    background: var(--color-hero);
 
     padding: 2rem 0;
 
@@ -25,7 +25,7 @@
 
 .site-title {
 
-    color: var(--color-oxford-blue);
+    color: white;
 
     font-size: 1.6rem;
 
@@ -59,7 +59,7 @@
 
 .navigation a {
 
-    color: var(--color-graphite);
+    color: rgba(255,255,255,.82);
 
     font-size: .95rem;
 
@@ -83,11 +83,35 @@
 
 .hero {
 
-    min-height: 72vh;
+    background: 
+        radial-gradient(
+            circle at 78% 45%,
+            rgba(80,97,118,.18) 0%,
+            transparent 55%
+        ),
+        linear-gradient(
+            180deg,
+            #172434 0%,
+            #121C28 40%,
+            #0F1823 100%
+        );
+
+    color: var(--color-hero);
+
+    min-height: 78vh;
 
     display: flex;
 
     align-items: center;
+}
+
+.hero h1 {
+
+    color: white;
+
+    font-size: clamp(3rem, 6vw, 5rem);
+
+    font-weight: 700;
 
 }
 
@@ -95,15 +119,17 @@
 
     display: grid;
 
-    grid-template-columns: 1.2fr .8fr;
-
-    gap: var(--space-xl);
+    grid-template-columns: minmax(520px, 1.1fr) minmax(320px, .9fr);
 
     align-items: center;
+
+    gap: 6rem;
 
 }
 
 .hero-text {
+
+    color: white;
 
     display: flex;
 
@@ -115,29 +141,43 @@
 
 .hero-subtitle {
 
-    color: var(--color-slate);
+    color: rgba(255,255,255,.75);
+
+    font-size: 1.05rem;
+
+    letter-spacing: .03em;
 
 }
 
 .hero-tagline {
 
-    color: var(--color-oxford-blue);
+    color: var(--color-slate);
 
-    font-size: 2rem;
+    font-size: clamp(2.5rem,4vw,3.6rem);
 
-    line-height: 1.2;
+    font-weight: 500;
 
-    max-width: 18ch;
+    line-height: 1.15;
+
+    max-width: 15ch;
 
 }
 
 .hero-intro {
 
+    color: rgba(255,255,255,.82);
+
     max-width: 60ch;
+
+    line-height: 1.8;
 
 }
 
 .hero-button {
+
+    display: inline-flex;
+
+    align-items: center;
 
     margin-top: var(--space-md);
 
@@ -145,13 +185,15 @@
 
     font-weight: 600;
 
+    text-decoration: none;
+
 }
 
 .hero-visual img {
 
     width: 100%;
 
-    opacity: .95;
+    opacity: .75;
 
 }
 
@@ -177,19 +219,47 @@
    Research at a Glance
    ========================================================== */
 
+.section-header {
+
+    margin-bottom: var(--space-lg);
+
+}
+
+.section-header p {
+
+    margin-top: var(--space-sm);
+
+    color: var(--color-slate);
+
+}
+
+/* Grid */
+
 .glance-grid {
 
     display: grid;
 
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(5, 1fr);
 
-    gap: var(--space-md);
+    gap: 1.5rem;
+
+    margin-top: 2rem;
 
 }
 
+/* Cards */
+
 .glance-card {
 
-    padding: var(--space-md);
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.75rem;
+
+    padding: 1.5rem;
 
     border: 1px solid var(--color-light-stone);
 
@@ -197,13 +267,116 @@
 
     background: white;
 
-    transition: transform var(--transition-fast);
+    transition: transform .2s ease,
+                box-shadow .2s ease;
 
 }
 
 .glance-card:hover {
 
     transform: translateY(-4px);
+
+    box-shadow: var(--shadow-soft);
+
+}
+
+/* Top accent */
+
+.glance-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100%;
+
+    height: 4px;
+
+}
+
+/* Accent colours */
+
+.accent-group::before {
+
+    background: var(--color-people);
+
+}
+
+.accent-research::before {
+
+    background: var(--color-research);
+
+}
+
+.accent-computation::before {
+
+    background: var(--color-projects);
+
+}
+
+.accent-teaching::before {
+
+    background: var(--color-teaching);
+
+}
+
+.accent-community::before {
+
+    background: var(--color-community);
+
+}
+
+/* Heading colours */
+
+.accent-group h3 {
+
+    color: var(--color-people);
+
+}
+
+.accent-research h3 {
+
+    color: var(--color-research);
+
+}
+
+.accent-computation h3 {
+
+    color: var(--color-projects);
+
+}
+
+.accent-teaching h3 {
+
+    color: var(--color-teaching);
+
+}
+
+.accent-community h3 {
+
+    color: var(--color-community);
+
+}
+
+/* Card typography */
+
+.glance-card h3 {
+
+    margin: 0;
+
+    font-size: 1.25rem;
+
+}
+
+.glance-card p {
+
+    margin: 0;
+
+    line-height: 1.6;
 
 }
 
