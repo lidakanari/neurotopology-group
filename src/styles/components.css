@@ -946,3 +946,214 @@
     text-decoration: none;
 
 }
+
+/* ==========================================================
+   Publication Entries
+   ========================================================== */
+
+.publication-year-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.publication-entry {
+    width: 100%;
+
+    padding: 0.75rem 0;
+    margin: 0;
+
+    border-bottom: 1px solid var(--color-light-stone);
+}
+
+.publication-entry h4 {
+    width: 100%;
+    max-width: none;
+
+    margin: 0 0 .35rem;
+
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.publication-authors {
+    width: 100%;
+    max-width: none;
+
+    margin: 0 0 .25rem;
+
+    color: var(--color-graphite);
+    font-size: .95rem;
+    line-height: 1.5;
+}
+
+.publication-journal {
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+
+    color: var(--color-slate);
+    font-size: .95rem;
+    line-height: 1.4;
+}
+
+.publication-entry a {
+    display: inline-block;
+
+    margin-top: .5rem;
+
+    color: var(--color-research);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.publication-year-group {
+    margin-top: 2.5rem;
+}
+
+.publication-year-group:first-child {
+    margin-top: 0;
+}
+
+.publication-year-group > h3 {
+    margin: 0 0 .75rem;
+
+    color: var(--color-primary);
+}
+
+/* ==========================================================
+   Publications Sections
+   ========================================================== */
+
+.publications-section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+
+.publications-section--featured {
+    background: var(--color-warm-white);
+}
+
+.publications-section--published {
+    background: var(--color-surface-soft);
+}
+
+.publications-section--preprints {
+    background: var(--color-warm-white);
+}
+
+.publications-section .section-header {
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+/* ==========================================================
+   Featured Publications
+   ========================================================== */
+
+.publications-hero-text {
+    max-width: 800px;
+}
+
+.publications-hero-tagline {
+    max-width: none;
+}
+
+.publications-hero-intro {
+    max-width: 75ch;
+}
+
+
+/* Featured publication list */
+
+.featured-publications {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Individual publication */
+
+.featured-publication {
+    width: 100%;
+
+    padding: 1rem 0;
+    margin: 0;
+
+    border-bottom: 1px solid var(--color-light-stone);
+}
+
+.featured-publication:last-child {
+    border-bottom: none;
+}
+
+
+/* Title */
+
+.featured-publication h3 {
+    width: 100%;
+    max-width: none;
+
+    margin: 0 0 .35rem;
+
+    color: var(--color-primary);
+
+    font-size: 1.15rem;
+    line-height: 1.4;
+}
+
+
+/* Authors */
+
+.featured-publication .publication-authors {
+    width: 100%;
+    max-width: none;
+
+    margin: 0 0 .25rem;
+
+    color: var(--color-graphite);
+
+    font-size: .95rem;
+    line-height: 1.5;
+}
+
+
+/* Journal + year */
+
+.featured-publication .publication-journal,
+.featured-publication .publication-meta {
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+
+    color: var(--color-slate);
+
+    font-size: .95rem;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+
+/* Optional description */
+
+.featured-publication > p {
+    width: 100%;
+    max-width: none;
+}
+
+
+/* Publication link */
+
+.featured-publication a {
+    display: inline-block;
+
+    margin-top: .5rem;
+
+    color: var(--color-research);
+
+    font-weight: 600;
+
+    text-decoration: none;
+}

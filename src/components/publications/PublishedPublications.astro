@@ -1,0 +1,120 @@
+---
+import Section from "../layout/Section.astro";
+import Container from "../layout/Container.astro";
+
+import {
+  publishedPublications
+} from "../../lib/publications";
+
+/*
+ * Group publications by year.
+ */
+const publicationsByYear = publishedPublications.reduce(
+  (groups, paper) => {
+
+    const year = paper.year;
+
+    if (!groups[year]) {
+      groups[year] = [];
+    }
+
+    groups[year].push(paper);
+
+    return groups;
+
+  },
+  {} as Record<number, typeof publishedPublications>
+);
+
+/*
+ * Years newest → oldest.
+ */
+const years = Object.keys(publicationsByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<Section class="publications-section publications-section--published">
+
+  <Container>
+
+    <header class="section-header">
+
+      <h2>Published</h2>
+
+      <p>
+        Peer-reviewed publications organised chronologically.
+      </p>
+
+    </header>
+
+    <div class="publication-archive">
+
+      {
+        years.map((year) => (
+
+          <div class="publication-year-group">
+
+            <h3>{year}</h3>
+
+            <div class="publication-year-list">
+
+              {
+                publicationsByYear[year].map((paper) => (
+
+                  <article class="publication-entry">
+
+                    <h4>{paper.title}</h4>
+
+                    <p class="publication-authors">
+                      {paper.authors}
+                    </p>
+
+                    <p class="publication-journal">
+
+                      <em>{paper.journal}</em>
+
+                      {paper.volume && (
+                        <> · {paper.volume}</>
+                      )}
+
+                      {paper.year && (
+                        <> · {paper.year}</>
+                      )}
+
+                    </p>
+
+                    {
+                      (paper.url || paper.doi) && (
+
+                        <a
+                          href={
+                            paper.url ??
+                            `https://doi.org/${paper.doi}`
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Read publication →
+                        </a>
+
+                      )
+                    }
+
+                  </article>
+
+                ))
+              }
+
+            </div>
+
+          </div>
+
+        ))
+      }
+
+    </div>
+
+  </Container>
+
+</Section>

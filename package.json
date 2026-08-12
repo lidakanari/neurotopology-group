@@ -12,9 +12,16 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.2.0"
+    "@citation-js/core": "^0.8.2",
+    "@citation-js/plugin-bibtex": "^0.8.2",
+    "astro": "^7.2.0",
+    "bibtex-parse-js": "^0.0.24",
+    "latex-to-unicode": "^0.1.0"
   },
   "allowScripts": {
-    "esbuild@0.28.1": true
+    "esbuild@0.28.1": true,
+    "bibtex-parse-js@0.0.24": true,
+    "core-js@2.6.12": true,
+    "fsevents@1.2.13": true
   }
 }

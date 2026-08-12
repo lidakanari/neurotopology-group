@@ -1,0 +1,53 @@
+---
+import Section from "../layout/Section.astro";
+import Container from "../layout/Container.astro";
+
+import {
+  featuredPublications
+} from "../../lib/publications";
+
+---
+
+<Section class="publications-section publications-section--featured">
+
+<Container>
+
+<header class="section-header">
+
+<h2>Featured Publications</h2>
+
+</header>
+
+<div class="featured-publications">
+
+{
+
+featuredPublications.map((paper) => (
+
+<article class="featured-publication">
+
+<h3>{paper.title}</h3>
+
+<p class="publication-authors">
+
+    {paper.authors}
+
+</p>
+
+<p class="publication-journal">
+
+    <em>{paper.journal}</em> · {paper.year}
+
+</p>
+
+</article>
+
+))
+
+}
+
+</div>
+
+</Container>
+
+</Section>

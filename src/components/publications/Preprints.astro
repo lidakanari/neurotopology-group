@@ -1,0 +1,109 @@
+---
+import Section from "../layout/Section.astro";
+import Container from "../layout/Container.astro";
+
+import {
+  preprints
+} from "../../lib/publications";
+
+/*
+ * Group preprints by year.
+ */
+const preprintsByYear = preprints.reduce(
+  (groups, paper) => {
+
+    const year = paper.year;
+
+    if (!groups[year]) {
+      groups[year] = [];
+    }
+
+    groups[year].push(paper);
+
+    return groups;
+
+  },
+  {} as Record<number, typeof preprints>
+);
+
+const years = Object.keys(preprintsByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<Section class="publications-section publications-section--preprints">
+
+  <Container>
+
+    <header class="section-header">
+
+      <h2>Preprints</h2>
+
+      <p>
+        Current manuscripts available as preprints.
+      </p>
+
+    </header>
+
+    <div class="publication-archive">
+
+      {
+        years.map((year) => (
+
+          <div class="publication-year-group">
+
+            <h3>{year}</h3>
+
+            <div class="publication-year-list">
+
+              {
+                preprintsByYear[year].map((paper) => (
+
+                  <article class="publication-entry">
+
+                    <h4>{paper.title}</h4>
+
+                    <p class="publication-authors">
+                      {paper.authors}
+                    </p>
+
+                    <p class="publication-journal">
+
+                      <em>{paper.journal}</em> · {paper.year}
+
+                    </p>
+
+                    {
+                      (paper.url || paper.doi) && (
+
+                        <a
+                          href={
+                            paper.url ??
+                            `https://doi.org/${paper.doi}`
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View preprint →
+                        </a>
+
+                      )
+                    }
+
+                  </article>
+
+                ))
+              }
+
+            </div>
+
+          </div>
+
+        ))
+      }
+
+    </div>
+
+  </Container>
+
+</Section>
