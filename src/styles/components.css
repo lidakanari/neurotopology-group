@@ -1269,12 +1269,12 @@
 }
 
 .group-lead-photo {
-    width: 100%;
+    width: 260px;
     aspect-ratio: 1;
 
     overflow: hidden;
 
-    border-radius: var(--radius-md);
+    border-radius: 50%;
 
     background: var(--color-light-stone);
 }
@@ -1284,6 +1284,7 @@
     height: 100%;
 
     object-fit: cover;
+    object-position: center;
 }
 
 .group-lead-content {
@@ -1312,17 +1313,21 @@
 .person-card {
     display: flex;
     flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
 }
 
 .person-card-photo {
-    width: 100%;
-    aspect-ratio: 4 / 3;
+    width: 180px;
+    aspect-ratio: 1;
 
-    margin-bottom: 1.25rem;
+    margin: 0 auto 1.25rem;
 
     overflow: hidden;
 
-    border-radius: var(--radius-md);
+    border-radius: 50%;
 
     background: var(--color-light-stone);
 }
@@ -1332,6 +1337,7 @@
     height: 100%;
 
     object-fit: cover;
+    object-position: center;
 }
 
 .person-card-content h3 {
@@ -1497,4 +1503,492 @@
 
 .join-group--compact .join-group-text p {
     margin-bottom: .75rem;
+}
+
+/* ==========================================================
+   Software Hero
+   ========================================================== */
+
+.software-hero {
+    padding-block: 5rem;
+}
+
+.software-hero-text {
+    max-width: 900px;
+}
+
+.software-hero-tagline {
+    max-width: 30ch;
+
+    margin-top: 1rem;
+
+    color: var(--color-primary);
+
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.2;
+}
+
+.software-hero-intro {
+    max-width: 70ch;
+
+    margin-top: 1.5rem;
+
+    color: var(--color-graphite);
+
+    line-height: 1.8;
+}
+
+
+/* ==========================================================
+   Software Sections
+   ========================================================== */
+
+.software-section {
+    padding-block: 3.5rem;
+}
+
+.software-section--alternate {
+    background: var(--color-surface-soft);
+}
+
+.software-section .section-header {
+    margin-bottom: 2rem;
+}
+
+
+/* ==========================================================
+   Software List
+   ========================================================== */
+
+.software-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* ==========================================================
+   Software Tool
+   ========================================================== */
+
+.software-tool {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(200px, .3fr);
+
+    gap: 3rem;
+
+    padding: 1.75rem 1.75rem 1.75rem 2rem;
+
+    border-bottom: 1px solid var(--color-light-stone);
+}
+
+.software-tool::before {
+    content: "";
+
+    position: absolute;
+
+    top: 1.75rem;
+    bottom: 1.75rem;
+    left: 0;
+
+    width: 3px;
+
+    border-radius: 999px;
+
+    background: var(--color-research);
+}
+
+.software-tool:first-child {
+    border-top:
+        1px solid var(--color-light-stone);
+}
+
+
+/* Tool title */
+
+.software-tool-header h3 {
+    margin: 0;
+
+    color: var(--color-primary);
+
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+
+/* Full software name */
+
+
+.software-tool-fullname {
+    margin: .3rem 0 0;
+
+    color: var(--color-research);
+
+    font-size: .95rem;
+    font-weight: 500;
+}
+
+
+/* Scientific description */
+
+.software-tool-description {
+    max-width: 65ch;
+
+    margin: 1rem 0 1.25rem;
+
+    color: var(--color-graphite);
+
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+/* Credits */
+
+.software-tool-developers {
+    margin: 0;
+
+    color: var(--color-graphite);
+
+    font-size: .9rem;
+}
+
+.software-tool-developers span {
+    display: block;
+
+    margin-bottom: .2rem;
+
+    color: var(--color-slate);
+
+    font-size: .7rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+/* Institutional attribution */
+
+.software-tool-attribution {
+    margin: .4rem 0 0;
+
+    color: var(--color-slate);
+
+    font-size: .82rem;
+    line-height: 1.5;
+}
+
+/* ==========================================================
+   Software Metadata
+   ========================================================== */
+
+.software-tool-meta {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 1.5rem;
+}
+
+/* Tags */
+
+.software-tool-tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: .45rem;
+}
+
+
+.software-tag {
+    padding: .3rem .65rem;
+
+    border: 1px solid rgba(80, 97, 118, .22);
+    border-radius: 999px;
+
+    background: rgba(80, 97, 118, .06);
+
+    color: var(--color-primary);
+
+    font-size: .72rem;
+    font-weight: 600;
+
+    letter-spacing: .02em;
+}
+
+
+/* Links */
+
+.software-tool-links {
+    display: flex;
+    flex-direction: column;
+
+    gap: .45rem;
+}
+
+.software-tool-links a {
+    color: var(--color-research);
+
+    font-size: .9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: transform .15s ease;
+}
+
+.software-tool-links a:hover {
+    transform: translateX(3px);
+}
+
+/* ==========================================================
+   Data Hero
+   ========================================================== */
+
+.data-hero {
+    padding-block: 5rem;
+}
+
+.data-hero-text {
+    max-width: 900px;
+}
+
+.data-hero-tagline {
+    max-width: 30ch;
+
+    margin-top: 1rem;
+
+    color: var(--color-primary);
+
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.2;
+}
+
+.data-hero-intro {
+    max-width: 70ch;
+
+    margin-top: 1.5rem;
+
+    color: var(--color-graphite);
+
+    line-height: 1.8;
+}
+
+
+/* ==========================================================
+   Dataset Sections
+   ========================================================== */
+
+.dataset-section {
+    padding-block: 3.5rem;
+
+    --dataset-accent: var(--color-research);
+}
+
+.dataset-section--alternate {
+    background: var(--color-surface-soft);
+}
+
+.dataset-section .section-header {
+    margin-bottom: 2rem;
+}
+
+
+/* ==========================================================
+   Dataset List
+   ========================================================== */
+
+.dataset-list {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ==========================================================
+   Dataset Entry
+   ========================================================== */
+
+.dataset-entry {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(200px, .3fr);
+
+    gap: 3rem;
+
+    padding: 1.75rem 1.75rem 1.75rem 2rem;
+
+    border-bottom:
+        1px solid var(--color-light-stone);
+}
+
+.dataset-entry::before {
+    content: "";
+
+    position: absolute;
+
+    top: 1.75rem;
+    bottom: 1.75rem;
+    left: 0;
+
+    width: 3px;
+
+    border-radius: 999px;
+
+    background: var(--dataset-accent);
+}
+
+
+/* Heading */
+
+.dataset-heading {
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 1rem;
+}
+
+.dataset-heading h3 {
+    margin: 0;
+
+    color: var(--color-primary);
+
+    font-size: 1.3rem;
+    line-height: 1.3;
+}
+
+.dataset-year {
+    color: var(--dataset-accent);
+
+    font-size: .85rem;
+    font-weight: 700;
+}
+
+
+/* Authors */
+
+.dataset-authors {
+    margin: .5rem 0 0;
+
+    color: var(--color-slate);
+
+    font-size: .9rem;
+}
+
+
+/* Description */
+
+.dataset-description {
+    max-width: 65ch;
+
+    margin: 1rem 0;
+
+    color: var(--color-graphite);
+
+    line-height: 1.65;
+}
+
+
+/* Associated publication */
+
+.dataset-publication {
+    margin-top: 1.25rem;
+}
+
+.dataset-publication span {
+    display: block;
+
+    margin-bottom: .3rem;
+
+    color: var(--color-slate);
+
+    font-size: .7rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.dataset-publication a {
+    color: var(--color-research);
+
+    font-size: .9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+/* ==========================================================
+   Dataset Metadata
+   ========================================================== */
+
+.dataset-meta {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 1.5rem;
+}
+
+.dataset-tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: .45rem;
+}
+
+.dataset-tag {
+    padding: .3rem .65rem;
+
+    border:
+        1px solid rgba(80, 97, 118, .22);
+
+    border-radius: 999px;
+
+    background:
+        rgba(80, 97, 118, .06);
+
+    color: var(--color-primary);
+
+    font-size: .72rem;
+    font-weight: 600;
+}
+
+.dataset-links {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: .45rem;
+}
+
+.dataset-links a {
+    color: var(--color-research);
+
+    font-size: .9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.dataset-empty {
+    margin: 0;
+
+    color: var(--color-slate);
+
+    font-size: .95rem;
+    font-style: italic;
 }

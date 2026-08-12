@@ -4,20 +4,57 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Navigation from "../components/navigation/Navigation.astro";
 import Footer from "../components/layout/Footer.astro";
 
-import ResearchHero from "../components/research/ResearchHero.astro";
-
+import SoftwareHero from "../components/software/SoftwareHero.astro";
+import SoftwareSection from "../components/software/SoftwareSection.astro";
 ---
 
-<MainLayout title="Research">
+<MainLayout title="Scientific Software">
 
-    <Navigation />
+  <Navigation />
 
-    <main>
+  <main>
 
-        <ResearchHero />
+    <SoftwareHero />
 
-    </main>
 
-    <Footer />
+    <SoftwareSection
+      category="topological-data-analysis"
+      title="Topological Data Analysis"
+      description="Software for representing and analysing neuronal structure using topological methods."
+    />
+
+
+    <SoftwareSection
+      category="neuronal-morphology-analysis"
+      title="Neuronal Morphology Analysis"
+      description="Tools for reading, processing, repairing and quantitatively analysing neuronal morphologies."
+      alternate
+    />
+
+
+    <SoftwareSection
+      category="classification-tools"
+      title="Classification Tools"
+      description="Computational methods for identifying and comparing neuronal morphological classes."
+    />
+
+
+    <SoftwareSection
+      category="neuronal-morphology-synthesis"
+      title="Neuronal Morphology Synthesis"
+      description="Software for computational generation of dendritic and axonal morphologies."
+      alternate
+    />
+
+
+    <SoftwareSection
+      category="other"
+      title="Other"
+      description="Additional scientific software associated with the NeuroTopology research programme."
+    />
+
+  </main>
+
+  <Footer />
 
 </MainLayout>

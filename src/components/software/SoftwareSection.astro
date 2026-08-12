@@ -1,0 +1,65 @@
+---
+import Section from "../layout/Section.astro";
+import Container from "../layout/Container.astro";
+import SoftwareTool from "./SoftwareTool.astro";
+
+import {
+  getSoftwareByCategory,
+  type SoftwareCategory
+} from "../../lib/software";
+
+interface Props {
+  category: SoftwareCategory;
+  title: string;
+  description?: string;
+  alternate?: boolean;
+}
+
+const {
+  category,
+  title,
+  description,
+  alternate = false
+} = Astro.props;
+
+const tools = getSoftwareByCategory(category);
+---
+
+{
+  tools.length > 0 && (
+
+    <Section
+      class={`software-section ${
+        alternate ? "software-section--alternate" : ""
+      }`}
+    >
+
+      <Container>
+
+        <header class="section-header">
+
+          <h2>{title}</h2>
+
+          {description && (
+            <p>{description}</p>
+          )}
+
+        </header>
+
+
+        <div class="software-list">
+
+          {
+            tools.map((tool) => (
+              <SoftwareTool tool={tool} />
+            ))
+          }
+
+        </div>
+
+      </Container>
+
+    </Section>
+
+  )
+}

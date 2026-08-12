@@ -1,0 +1,91 @@
+---
+import type { SoftwareTool } from "../../lib/software";
+
+interface Props {
+  tool: SoftwareTool;
+}
+
+const { tool } = Astro.props;
+
+const developerText = tool.developers.join(", ");
+const languageText = tool.languages.join(" · ");
+---
+
+<article class="software-tool">
+
+  <div class="software-tool-main">
+
+    <header class="software-tool-header">
+
+      <h3>{tool.name}</h3>
+
+      {tool.fullName && (
+        <p class="software-tool-fullname">
+          {tool.fullName}
+        </p>
+      )}
+
+    </header>
+
+    <p class="software-tool-description">
+      {tool.description}
+    </p>
+
+    <p class="software-tool-developers">
+      <span>Developed by</span>
+      {developerText}
+    </p>
+
+    {tool.attribution && (
+      <p class="software-tool-attribution">
+        {tool.attribution}
+      </p>
+    )}
+
+  </div>
+
+
+  <div class="software-tool-meta">
+
+    <div class="software-tool-tags">
+
+      {tool.languages.map((language) => (
+        <span class="software-tag">
+          {language}
+        </span>
+      ))}
+
+      {tool.openSource && (
+        <span class="software-tag">
+          Open Source
+        </span>
+      )}
+
+    </div>
+
+
+    <div class="software-tool-links">
+
+      {tool.documentation && (
+        <a
+          href={tool.documentation}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Documentation →
+        </a>
+      )}
+
+      <a
+        href={tool.github}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub →
+      </a>
+
+    </div>
+
+  </div>
+
+</article>

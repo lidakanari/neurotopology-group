@@ -59,7 +59,10 @@ const years = Object.keys(preprintsByYear)
               {
                 preprintsByYear[year].map((paper) => (
 
-                  <article class="publication-entry">
+                  <article
+			  class="publication-entry"
+			  id={paper.key}
+			>
 
                     <h4>{paper.title}</h4>
 

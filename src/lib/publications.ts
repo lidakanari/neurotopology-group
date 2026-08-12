@@ -505,3 +505,12 @@ export function getPublicationsByResearch(
   );
 
 }
+
+export function getPublicationByKey(
+  key: string
+): Publication | undefined {
+
+  return publications.find(
+    publication => publication.key === key
+  );
+}

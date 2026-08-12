@@ -1,0 +1,86 @@
+---
+import Section from "../layout/Section.astro";
+import Container from "../layout/Container.astro";
+
+import DatasetEntry from "./DatasetEntry.astro";
+
+import {
+  getDatasetsByCategory,
+  type DatasetCategory
+} from "../../lib/datasets";
+
+
+interface Props {
+  category: DatasetCategory;
+  title: string;
+  description?: string;
+  alternate?: boolean;
+}
+
+
+const {
+  category,
+  title,
+  description,
+  alternate = false
+} = Astro.props;
+
+
+const datasets =
+  getDatasetsByCategory(category);
+---
+
+<Section
+  class={`dataset-section dataset-section--${category} ${
+    alternate
+      ? "dataset-section--alternate"
+      : ""
+  }`}
+>
+
+  <Container>
+
+    <header class="section-header">
+
+      <h2>{title}</h2>
+
+      {
+        description && (
+          <p>{description}</p>
+        )
+      }
+
+    </header>
+
+
+    {
+      datasets.length > 0 ? (
+
+        <div class="dataset-list">
+
+          {
+            datasets.map(
+              dataset => (
+
+                <DatasetEntry
+                  dataset={dataset}
+                />
+
+              )
+            )
+          }
+
+        </div>
+
+      ) : (
+
+        <p class="dataset-empty">
+          Datasets will be added here.
+        </p>
+
+      )
+    }
+
+  </Container>
+
+</Section>

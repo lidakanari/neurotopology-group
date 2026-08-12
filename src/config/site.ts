@@ -18,6 +18,7 @@ export const SITE = {
   { title: "People", href: "/people" },
   { title: "Research", href: "/research" },
   { title: "Software", href: "/software" },
+  { title: "Data", href: "/data" },
   { title: "Interactive", href: "/interactive" },
   { title: "Publications", href: "/publications" },
   { title: "Teaching", href: "/teaching" },

@@ -1,0 +1,60 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+
+import Navigation from "../components/navigation/Navigation.astro";
+import Footer from "../components/layout/Footer.astro";
+
+import DataHero from "../components/data/DatasetHero.astro";
+import DatasetSection from "../components/data/DatasetSection.astro";
+---
+
+<MainLayout title="Research Data">
+
+  <Navigation />
+
+  <main>
+
+    <DataHero />
+
+
+    <DatasetSection
+      category="topological-data-analysis"
+      title="Topological Data Analysis"
+      description="Datasets supporting topological representations and analysis of neuronal structure."
+    />
+
+
+    <DatasetSection
+      category="neuronal-morphology"
+      title="Neuronal Morphology"
+      description="Curated neuronal morphology datasets used for structural analysis and comparison."
+      alternate
+    />
+
+
+    <DatasetSection
+      category="classification"
+      title="Classification"
+      description="Datasets supporting morphological classification and comparative analysis."
+    />
+
+
+    <DatasetSection
+      category="neuronal-morphology-synthesis"
+      title="Neuronal Morphology Synthesis"
+      description="Data supporting computational generation and validation of neuronal morphologies."
+      alternate
+    />
+
+
+    <DatasetSection
+      category="other"
+      title="Other"
+      description="Additional research datasets associated with the NeuroTopology research programme."
+    />
+
+  </main>
+
+  <Footer />
+
+</MainLayout>
