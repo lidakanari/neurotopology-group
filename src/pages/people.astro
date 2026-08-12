@@ -4,20 +4,32 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Navigation from "../components/navigation/Navigation.astro";
 import Footer from "../components/layout/Footer.astro";
 
-import ResearchHero from "../components/research/ResearchHero.astro";
+import PeopleHero from "../components/people/PeopleHero.astro";
+import GroupLead from "../components/people/GroupLead.astro";
+import CurrentMembers from "../components/people/CurrentMembers.astro";
+import Alumni from "../components/people/Alumni.astro";
+import JoinGroup from "../components/sections/JoinGroup.astro";
 
 ---
 
-<MainLayout title="Research">
+<MainLayout title="People">
 
-    <Navigation />
+  <Navigation />
 
-    <main>
+  <main>
 
-        <ResearchHero />
+    <PeopleHero />
 
-    </main>
+    <GroupLead />
 
-    <Footer />
+    <CurrentMembers />
+
+    <Alumni />
+
+    <JoinGroup />
+
+  </main>
+
+  <Footer />
 
 </MainLayout>

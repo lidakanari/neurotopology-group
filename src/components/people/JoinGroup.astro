@@ -1,15 +1,9 @@
 ---
 import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
-
-interface Props {
-  compact?: boolean;
-}
-
-const { compact = false } = Astro.props;
 ---
 
-<Section class={`join-group ${compact ? "join-group--compact" : ""}`}>
+<Section class="people-section join-group">
 
   <Container>
 
@@ -33,13 +27,11 @@ const { compact = false } = Astro.props;
           neuroscience and neuronal morphology.
         </p>
 
-        {!compact && (
-          <p>
-            Opportunities for doctoral research, postdoctoral
-            projects and student research projects will be
-            advertised here as they become available.
-          </p>
-        )}
+        <p>
+          Opportunities for doctoral research, postdoctoral
+          projects and student research projects will be
+          advertised here as they become available.
+        </p>
 
         <a
           href="mailto:lida.kanari@maths.ox.ac.uk"
