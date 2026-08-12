@@ -241,6 +241,79 @@ function decodeBibTeX(value?: string): string {
     .trim();
 }
 
+function formatAuthors(value?: string): string {
+  if (!value) return "";
+
+  const authors = value
+    .split(/\s+and\s+/)
+    .map((author) => author.trim())
+    .filter(Boolean);
+
+  const formatted = authors.map((author) => {
+
+    if (author.toLowerCase() === "others") {
+      return "et al.";
+    }
+
+    /*
+     * Standard BibTeX:
+     *
+     * Kanari, Lida
+     * Castro, André Ferreira
+     */
+    if (author.includes(",")) {
+
+      const [surname, givenNames] = author
+        .split(",", 2)
+        .map((part) => part.trim());
+
+      const initials = givenNames
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((name) => {
+
+          const clean = name.replace(/\./g, "");
+
+          return clean
+            ? `${clean.charAt(0)}.`
+            : "";
+
+        })
+        .filter(Boolean)
+        .join(" ");
+
+      return `${surname} ${initials}`;
+
+    }
+
+    /*
+     * Leave unusual/non-standard names untouched.
+     */
+    return author;
+
+  });
+
+  if (formatted.length === 0) {
+    return "";
+  }
+
+  if (formatted.at(-1) === "et al.") {
+    return `${formatted.slice(0, -1).join(", ")} et al.`;
+  }
+
+  if (formatted.length === 1) {
+    return formatted[0];
+  }
+
+  if (formatted.length === 2) {
+    return `${formatted[0]} & ${formatted[1]}`;
+  }
+
+  return `${formatted.slice(0, -1).join(", ")} & ${
+    formatted[formatted.length - 1]
+  }`;
+}
+
 function formatAuthorName(author: string): string {
   const clean = decodeLatex(author.trim());
 
@@ -319,7 +392,9 @@ function normalizePublication(
     key: entry.citationKey ?? "",
 
     title: decodeLatex(tags.title),
-    authors: decodeBibTeX(tags.author),
+    authors: formatAuthors(
+  decodeBibTeX(tags.author)
+),
 
     journal:
       decodeLatex(

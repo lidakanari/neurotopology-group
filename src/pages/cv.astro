@@ -1,34 +1,52 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-
 import Navigation from "../components/navigation/Navigation.astro";
 import Footer from "../components/layout/Footer.astro";
-
-import ResearchHero from "../components/research/ResearchHero.astro";
-import ResearchVision from "../components/research/ResearchVision.astro";
-import ResearchProjects from "../components/research/ResearchProjects.astro";
-import Collaborations from "../components/research/Collaborations.astro";
-import Funding from "../components/research/Funding.astro";
+import Container from "../components/layout/Container.astro";
 ---
 
-<MainLayout title="Research">
+<MainLayout title="CV">
 
-    <Navigation />
+  <Navigation />
 
-    <main>
+  <main class="cv-page">
 
-        <ResearchHero />
+    <Container>
 
-        <ResearchVision />
+      <header class="cv-header">
 
-        <ResearchProjects />
+        <div>
+          <h1>Curriculum Vitae</h1>
 
-        <Collaborations />
+          <p>
+            Lida Kanari · NeuroTopology Group · University of Oxford
+          </p>
+        </div>
 
-        <Funding />
+        <a
+          class="cv-download"
+          href="/documents/Lida_Kanari_CV.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Download CV ↓
+        </a>
 
-    </main>
+      </header>
 
-    <Footer />
+      <div class="cv-document">
+
+        <iframe
+          src="/documents/Lida_Kanari_CV.pdf"
+          title="Curriculum Vitae — Lida Kanari"
+        ></iframe>
+
+      </div>
+
+    </Container>
+
+  </main>
+
+  <Footer />
 
 </MainLayout>
