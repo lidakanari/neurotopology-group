@@ -4,20 +4,28 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Navigation from "../components/navigation/Navigation.astro";
 import Footer from "../components/layout/Footer.astro";
 
-import ResearchHero from "../components/research/ResearchHero.astro";
-
+import TeachingHero from "../components/teaching/TeachingHero.astro";
+import TeachingExperience from "../components/teaching/TeachingExperience.astro";
+import StudentSupervision from "../components/teaching/StudentSupervision.astro";
+import ResearchMentoring from "../components/teaching/ResearchMentoring.astro";
 ---
 
-<MainLayout title="Research">
+<MainLayout title="Teaching">
 
-    <Navigation />
+  <Navigation />
 
-    <main>
+  <main>
 
-        <ResearchHero />
+    <TeachingHero />
 
-    </main>
+    <TeachingExperience />
 
-    <Footer />
+    <StudentSupervision />
+
+    <ResearchMentoring />
+
+  </main>
+
+  <Footer />
 
 </MainLayout>

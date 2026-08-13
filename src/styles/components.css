@@ -1992,3 +1992,307 @@
     font-size: .95rem;
     font-style: italic;
 }
+
+/* ==========================================================
+   Interactive — Coming Soon
+   ========================================================== */
+
+.interactive-coming-soon {
+    min-height: 65vh;
+
+    display: flex;
+    align-items: center;
+
+    background:
+        radial-gradient(
+            circle at 80% 50%,
+            rgba(80, 97, 118, .20),
+            transparent 45%
+        ),
+        var(--color-hero);
+
+    color: white;
+}
+
+.interactive-coming-soon-content {
+    max-width: 800px;
+
+    padding-block: 6rem;
+}
+
+.interactive-label {
+    margin: 0 0 1rem;
+
+    color: var(--color-research);
+
+    font-size: .8rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: .12em;
+}
+
+.interactive-coming-soon h1 {
+    max-width: 14ch;
+
+    margin: 0;
+
+    color: white;
+
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 500;
+    line-height: 1.05;
+}
+
+.interactive-intro {
+    max-width: 58ch;
+
+    margin: 1.75rem 0 0;
+
+    color: rgba(255, 255, 255, .78);
+
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.interactive-status {
+    display: inline-flex;
+
+    margin-top: 2rem;
+
+    padding: .45rem .8rem;
+
+    border: 1px solid rgba(255, 255, 255, .22);
+    border-radius: 999px;
+
+    color: rgba(255, 255, 255, .8);
+
+    font-size: .78rem;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+/* ==========================================================
+   Teaching Hero
+   ========================================================== */
+
+.teaching-hero {
+    padding-block: 5rem;
+}
+
+.teaching-hero-text {
+    max-width: 900px;
+}
+
+.teaching-hero-tagline {
+    max-width: 30ch;
+
+    margin-top: 1rem;
+
+    color: var(--color-primary);
+
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.2;
+}
+
+.teaching-hero-intro {
+    max-width: 70ch;
+
+    margin-top: 1.5rem;
+
+    color: var(--color-graphite);
+
+    line-height: 1.8;
+}
+
+
+/* ==========================================================
+   Teaching Sections
+   ========================================================== */
+
+.teaching-section {
+    padding-block: 3.5rem;
+}
+
+.teaching-section--alternate {
+    background: var(--color-surface-soft);
+}
+
+
+/* ==========================================================
+   Teaching Experience
+   ========================================================== */
+
+.teaching-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.teaching-entry {
+    display: grid;
+
+    grid-template-columns: 110px minmax(0, 1fr);
+
+    gap: 2rem;
+
+    padding: 1.25rem 0;
+
+    border-bottom: 1px solid var(--color-light-stone);
+}
+
+.teaching-entry:first-child {
+    border-top: 1px solid var(--color-light-stone);
+}
+
+.teaching-year {
+    color: var(--color-teaching);
+
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+.teaching-content h3 {
+    margin: 0 0 .3rem;
+
+    color: var(--color-primary);
+
+    font-size: 1.15rem;
+}
+
+.teaching-institution {
+    margin: 0;
+
+    color: var(--color-slate);
+
+    font-size: .9rem;
+}
+
+.teaching-role {
+    margin: .25rem 0 0;
+
+    color: var(--color-graphite);
+
+    font-size: .85rem;
+}
+
+
+/* ==========================================================
+   Research Mentoring
+   ========================================================== */
+
+.mentoring-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.mentoring-entry {
+    display: grid;
+
+    grid-template-columns: 110px minmax(0, 1fr);
+
+    gap: 2rem;
+
+    padding: 1.25rem 0;
+
+    border-bottom: 1px solid var(--color-light-stone);
+}
+
+.mentoring-years {
+    color: var(--color-teaching);
+
+    font-size: .85rem;
+    font-weight: 700;
+}
+
+.mentoring-entry h3 {
+    margin: 0 0 .35rem;
+
+    color: var(--color-primary);
+
+    font-size: 1.1rem;
+}
+
+.mentoring-people {
+    margin: 0;
+
+    color: var(--color-graphite);
+
+    line-height: 1.6;
+}
+
+.mentoring-role {
+    margin: .25rem 0 0;
+
+    color: var(--color-slate);
+
+    font-size: .85rem;
+}
+
+
+/* ==========================================================
+   Student Supervision
+   ========================================================== */
+
+.student-supervision-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 2rem;
+}
+
+.student-supervision-group {
+    padding-top: 1.25rem;
+
+    border-top: 3px solid var(--color-teaching);
+}
+
+.student-supervision-header span {
+    color: var(--color-teaching);
+
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.student-supervision-header h3 {
+    margin: .35rem 0 .75rem;
+
+    color: var(--color-primary);
+
+    font-size: 1.1rem;
+}
+
+.student-supervision-group > p {
+    max-width: none;
+
+    margin: 0;
+
+    color: var(--color-graphite);
+
+    font-size: .9rem;
+    line-height: 1.7;
+}
+
+.student-list {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.student-list li {
+    padding: .4rem 0;
+
+    border-bottom: 1px solid var(--color-light-stone);
+
+    color: var(--color-graphite);
+
+    font-size: .9rem;
+    line-height: 1.5;
+}
+
+.student-list li:last-child {
+    border-bottom: none;
+}
