@@ -1,6 +1,12 @@
 ---
 import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
+
+import { people } from "../../lib/people";
+
+const alumni = people.filter(
+  (person) => person.alumni
+);
 ---
 
 <Section class="people-section">
@@ -18,81 +24,57 @@ import Container from "../layout/Container.astro";
 
     </header>
 
+
     <div class="alumni-list">
 
-      <article class="alumni-entry">
+      {
+        alumni.map((person) => (
 
-        <div>
-          <h3>Alumni Name</h3>
+          <article class="alumni-entry">
 
-          <p class="alumni-role">
-            Postdoctoral Researcher
-          </p>
-        </div>
+            <div>
 
-        <div class="alumni-details">
+              <h3>{person.name}</h3>
 
-          <p>
-            Neuronal morphology and computational modelling
-          </p>
+              <p class="alumni-role">
+                {person.role}
+              </p>
 
-          <p class="alumni-current">
-            Current position
-          </p>
-
-        </div>
-
-      </article>
+            </div>
 
 
-      <article class="alumni-entry">
+            <div class="alumni-details">
 
-        <div>
-          <h3>Alumni Name</h3>
+              {
+                person.project && (
+                  <p>
+                    {person.project}
+                  </p>
+                )
+              }
 
-          <p class="alumni-role">
-            Research Software Engineer
-          </p>
-        </div>
+              {
+                person.institution && (
+                  <p class="alumni-institution">
+                    {person.institution}
+                  </p>
+                )
+              }
 
-        <div class="alumni-details">
+              {
+                person.currentPosition && (
+                  <p class="alumni-current">
+                    {person.currentPosition}
+                  </p>
+                )
+              }
 
-          <p>
-            Topological analysis of neuronal morphology
-          </p>
+            </div>
 
-          <p class="alumni-current">
-            Current position
-          </p>
+          </article>
 
-        </div>
-
-      </article>
-
-
-      <article class="alumni-entry">
-
-        <div>
-          <h3>Alumni Name</h3>
-
-          <p class="alumni-role">
-            Master's Student
-          </p>
-        </div>
-
-        <div class="alumni-details">
-
-          <p>
-            Mathematical and computational neuroscience
-          </p>
-
-          <p class="alumni-current">
-            Current position
-          </p>
-
-        </div>
-
-      </article>
+        ))
+      }
 
     </div>
 

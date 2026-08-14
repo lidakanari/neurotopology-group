@@ -1,6 +1,12 @@
 ---
 import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
+
+import { people } from "../../lib/people";
+
+const lead = people.find(
+  (person) => person.groupLead
+);
 ---
 
 <Section class="people-section">
@@ -13,9 +19,14 @@ import Container from "../layout/Container.astro";
 
     <article class="group-lead">
 
-      <div class="group-lead-photo">
-        <!-- Add portrait here -->
-      </div>
+<div class="group-lead-photo">
+  {lead?.photo && (
+    <img
+      src={lead.photo}
+      alt={lead.name}
+    />
+  )}
+</div>
 
       <div class="group-lead-content">
 
@@ -34,7 +45,7 @@ import Container from "../layout/Container.astro";
           algebraic topology, computational modelling and neuroscience.
         </p>
 
-        <a href="/cv" class="person-link">
+        <a href="/people/lida-kanari" class="person-link">
           View CV →
         </a>
 

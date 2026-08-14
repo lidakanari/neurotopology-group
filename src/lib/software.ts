@@ -424,7 +424,7 @@ export const software: SoftwareTool[] = [
     ],
 
     developers: [
-      "NeuroTS contributors"
+      "Lida Kanari and NeuroTS contributors"
     ],
 
     attribution:
@@ -466,7 +466,7 @@ export const software: SoftwareTool[] = [
     ],
 
     developers: [
-      "Axon Synthesis contributors"
+      "Adrien Berchet and Axon Synthesis contributors"
     ],
 
     attribution:
@@ -489,7 +489,44 @@ export const software: SoftwareTool[] = [
 
     github:
       "https://github.com/BlueBrain/axon-synthesis"
-  }
+  },
+
+{
+  id: "axon-projection",
+
+  name: "Axon Projection",
+
+  description:
+    "Analysis and classification of long-range axonal morphologies based on their projection patterns across brain regions.",
+
+  categories: [
+    "neuronal-morphology-synthesis"
+  ],
+
+  developers: [
+    "Remy Petkantchin and Axon Projection contributors"
+  ],
+
+  attribution:
+    "Originally developed within the Blue Brain Project.",
+
+  research: [
+    "neurons-to-networks"
+  ],
+
+  publications: [
+      "petkantchin2025connectome",
+    ],
+
+  languages: [
+    "Python"
+  ],
+
+  openSource: true,
+
+  github:
+    "https://github.com/openbraininstitute/axon-projection"
+},
 
 ];
 

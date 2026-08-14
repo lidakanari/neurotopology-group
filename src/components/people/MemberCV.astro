@@ -1,0 +1,82 @@
+---
+import Container from "../layout/Container.astro";
+import type { Person } from "../../lib/people";
+
+interface Props {
+  person: Person;
+}
+
+const { person } = Astro.props;
+---
+
+<main class="member-cv-page">
+
+  <Container>
+
+    <header class="member-cv-header">
+
+      <div class="member-cv-identity">
+
+        <h1>Curriculum Vitae</h1>
+
+        <p>
+          {person.name}
+
+          {person.role && (
+            <> · {person.role}</>
+          )}
+
+          {person.institution && (
+            <> · {person.institution}</>
+          )}
+        </p>
+
+      </div>
+
+
+      {
+        person.cv && (
+
+          <a
+            class="member-cv-download"
+            href={person.cv}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Download CV ↓
+          </a>
+
+        )
+      }
+
+    </header>
+
+
+    {
+      person.cv ? (
+
+        <div class="member-cv-document">
+
+          <iframe
+            src={person.cv}
+            title={`Curriculum Vitae — ${person.name}`}
+          ></iframe>
+
+        </div>
+
+      ) : (
+
+        <div class="member-cv-unavailable">
+
+          <p>
+            CV currently unavailable.
+          </p>
+
+        </div>
+
+      )
+    }
+
+  </Container>
+
+</main>

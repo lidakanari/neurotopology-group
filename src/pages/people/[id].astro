@@ -1,0 +1,50 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+
+import Navigation from "../../components/navigation/Navigation.astro";
+import Footer from "../../components/layout/Footer.astro";
+
+import MemberCV from "../../components/people/MemberCV.astro";
+
+import {
+  people,
+  type Person
+} from "../../lib/people";
+
+
+export function getStaticPaths() {
+
+  return people
+    .filter((person) => person.cv)
+    .map((person) => ({
+
+      params: {
+        id: person.id
+      },
+
+      props: {
+        person
+      }
+
+    }));
+
+}
+
+
+interface Props {
+  person: Person;
+}
+
+
+const { person } = Astro.props;
+---
+
+<MainLayout title={`${person.name} — CV`}>
+
+  <Navigation />
+
+  <MemberCV person={person} />
+
+  <Footer />
+
+</MainLayout>

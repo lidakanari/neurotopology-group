@@ -21,9 +21,7 @@ export const people: Person[] = [
     id: "lida-kanari",
 
     name: "Lida Kanari",
-
     role: "Group Leader",
-
     institution: "University of Oxford",
 
     description:
@@ -36,34 +34,198 @@ export const people: Person[] = [
       "/documents/cv/lida-kanari.pdf",
 
     current: true,
-
     groupLead: true
   },
 
+  {
+    id: "nestor-timonidis",
 
-  /*
-   * Example future member:
-   *
-   * {
-   *   id: "member-name",
-   *
-   *   name: "Member Name",
-   *
-   *   role: "Postdoctoral Researcher",
-   *
-   *   institution: "University of Oxford",
-   *
-   *   description:
-   *     "Short research description.",
-   *
-   *   photo:
-   *     "/images/people/member-name.jpg",
-   *
-   *   cv:
-   *     "/documents/cv/member-name.pdf",
-   *
-   *   current: true
-   * }
-   */
+    name: "Nestor Timonidis",
+    role: "Postdoctoral researcher",
+    institution: "University of Oxford",
+
+    description:
+      "Computational neuroscientist.",
+
+    photo:
+      "/images/people/nestor-timonidis.jpeg",
+
+    cv:
+      "/documents/cv/nestor-timonidis.pdf",
+
+    current: true,
+  },
+
+  {
+    id: "member-name",
+
+    name: "Name",
+    role: "Member",
+    institution: "University of Oxford",
+
+    description:
+      "TBD.",
+
+    photo:
+      "/images/people/member-name.jpg",
+
+    cv:
+      "/documents/cv/member-name.pdf",
+
+    current: true,
+  },
+
+  /* ========================================================
+     Alumni — Researchers & Engineers
+     ======================================================== */
+
+  {
+    id: "adrien-berchet",
+    name: "Adrien Berchet",
+    role: "Postdoctoral Researcher",
+    institution: "EPFL",
+    project: "Axon synthesis",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "remy-petkantchin",
+    name: "Remy Petkantchin",
+    role: "Postdoctoral Researcher",
+    institution: "EPFL",
+    project: "Axon synthesis",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "ying-shi",
+    name: "Ying Shi",
+    role: "Reconstruction Specialist",
+    institution: "EPFL",
+    project: "Neuronal reconstructions",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "alexis-arnaudon",
+    name: "Alexis Arnaudon",
+    role: "Postdoctoral Researcher",
+    institution: "EPFL",
+    project: "Morpho-electrical properties of neurons",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "stanislav-schmidt",
+    name: "Stanislav Schmidt",
+    role: "Software Engineer",
+    institution: "EPFL",
+    project: "Machine learning of neuronal morphologies",
+    current: false,
+    alumni: true
+  },
+
+
+  /* ========================================================
+     Alumni — Master's Theses
+     ======================================================== */
+
+
+  {
+    id: "Adelie-garin",
+    name: "Adelie Garin",
+    role: "PhD collaborator",
+    institution: "EPFL",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "alexia-paratte",
+    name: "Alexia Stéphanie Liviana Paratte",
+    role: "Master's Thesis Student",
+    institution: "EPFL",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "romane-cornali",
+    name: "Romane Cornali",
+    role: "Master's Thesis Student",
+    institution: "EPFL",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "thomas-negrello-alain-walter",
+    name: "Thomas Negrello Alain Walter",
+    role: "Master's Thesis Student",
+    institution: "EPFL",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "jelena-banjac",
+    name: "Jelena Banjac",
+    role: "Master's Thesis Student",
+    institution: "EPFL",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "marc-fersztand",
+    name: "Marc Fersztand",
+    role: "Master's Thesis Student",
+    institution: "EPFL",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "abel-adary",
+    name: "Abel Adary",
+    role: "Master's Thesis Student",
+    institution: "EPFL",
+    current: false,
+    alumni: true
+  },
+
+  {
+    id: "sebastien-morand",
+    name: "Sébastien Morand",
+    role: "Master's Thesis Student",
+    institution: "EPFL",
+    current: false,
+    alumni: true
+  },
+
+  // Future member:
+  //
+  // {
+  //   id: "member-name",
+  //
+  //   name: "Member Name",
+  //   role: "Postdoctoral Researcher",
+  //   institution: "University of Oxford",
+  //
+  //   description:
+  //     "Research description.",
+  //
+  //   photo:
+  //     "/images/people/member-name.jpg",
+  //
+  //   cv:
+  //     "/documents/cv/member-name.pdf",
+  //
+  //   current: true
+  // }
 
 ];
