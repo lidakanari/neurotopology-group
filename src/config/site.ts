@@ -23,6 +23,5 @@ export const SITE = {
   { title: "Publications", href: "/publications" },
   { title: "Teaching", href: "/teaching" },
   { title: "Community", href: "/community" },
-  { title: "CV", href: "/cv" }
 ]
 };

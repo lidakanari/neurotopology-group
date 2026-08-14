@@ -661,6 +661,21 @@
 }
 
 /* ==========================================================
+   Internal Page Heroes
+   ========================================================== */
+
+.people-hero,
+.research-hero,
+.publications-hero,
+.software-hero,
+.data-hero,
+.teaching-hero,
+.community-hero {
+    padding-top: 4.5rem;
+    padding-bottom: 3.5rem;
+}
+
+/* ==========================================================
    Research Hero
    ========================================================== */
 
@@ -668,40 +683,32 @@
 
     background: var(--color-background);
 
-    padding-block: 5rem;
-
 }
 
-.research-hero-layout {
-
-    display: grid;
-
-    grid-template-columns: 1.2fr .8fr;
-
-    gap: 4rem;
-
-    align-items: center;
-
+.research-hero-text {
+    width: 100%;
+    max-width: none;
 }
 
 .research-hero-tagline {
 
-    font-size: 2rem;
-
-    color: var(--color-slate);
-
-    max-width: 18ch;
+    max-width: 1100px;
 
     margin-top: 1rem;
 
+    color: var(--color-slate);
+
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.2;
 }
 
+
 .research-hero-intro {
+    max-width: 70ch;
+
+    margin-top: 1.5rem;
 
     color: var(--color-graphite);
-
-    max-width: 60ch;
-
     line-height: 1.8;
 
 }
@@ -1219,18 +1226,17 @@
    People Hero
    ========================================================== */
 
-.people-hero {
-    padding-block: 5rem;
-}
-
 .people-hero-text {
     max-width: 900px;
 }
 
 .people-hero-tagline {
+
+    max-width: 1100px;
+
     margin-top: 1rem;
 
-    color: var(--color-primary);
+    color: var(--color-slate);
 
     font-size: clamp(2rem, 3vw, 2.8rem);
     line-height: 1.2;
@@ -1509,10 +1515,6 @@
    Software Hero
    ========================================================== */
 
-.software-hero {
-    padding-block: 5rem;
-}
-
 .software-hero-text {
     max-width: 900px;
 }
@@ -1522,7 +1524,7 @@
 
     margin-top: 1rem;
 
-    color: var(--color-primary);
+    color: var(--color-slate);
 
     font-size: clamp(2rem, 3vw, 2.8rem);
     line-height: 1.2;
@@ -1749,10 +1751,6 @@
    Data Hero
    ========================================================== */
 
-.data-hero {
-    padding-block: 5rem;
-}
-
 .data-hero-text {
     max-width: 900px;
 }
@@ -1762,7 +1760,7 @@
 
     margin-top: 1rem;
 
-    color: var(--color-primary);
+    color: var(--color-slate);
 
     font-size: clamp(2rem, 3vw, 2.8rem);
     line-height: 1.2;
@@ -2078,10 +2076,6 @@
    Teaching Hero
    ========================================================== */
 
-.teaching-hero {
-    padding-block: 5rem;
-}
-
 .teaching-hero-text {
     max-width: 900px;
 }
@@ -2091,7 +2085,7 @@
 
     margin-top: 1rem;
 
-    color: var(--color-primary);
+    color: var(--color-slate);
 
     font-size: clamp(2rem, 3vw, 2.8rem);
     line-height: 1.2;
@@ -2301,10 +2295,6 @@
    Community Hero
    ========================================================== */
 
-.community-hero {
-    padding-block: 5rem;
-}
-
 .community-hero-text {
     max-width: 900px;
 }
@@ -2314,7 +2304,7 @@
 
     margin-top: 1rem;
 
-    color: var(--color-primary);
+    color: var(--color-slate);
 
     font-size: clamp(2rem, 3vw, 2.8rem);
     line-height: 1.2;
