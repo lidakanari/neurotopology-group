@@ -59,18 +59,18 @@ export const people: Person[] = [
   {
     id: "member-name",
 
-    name: "Name",
-    role: "Member",
+    name: "Coming soon",
+    role: "Doctoral student",
     institution: "University of Oxford",
 
     description:
-      "TBD.",
+      "Two incoming students in 2026.",
 
     photo:
       "/images/people/member-name.jpg",
 
     cv:
-      "/documents/cv/member-name.pdf",
+      "/documents/cv/",
 
     current: true,
   },
@@ -138,7 +138,7 @@ export const people: Person[] = [
   {
     id: "Adelie-garin",
     name: "Adelie Garin",
-    role: "PhD collaborator",
+    role: "Doctoral student",
     institution: "EPFL",
     current: false,
     alumni: true

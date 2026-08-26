@@ -1,17 +1,84 @@
 ---
-import Container from "./Container.astro";
+const year = new Date().getFullYear();
 ---
 
-<footer>
+<footer class="site-footer">
 
-  <Container>
+  <div class="footer-container">
 
-    <p>
+    <div class="footer-main">
 
-      © 2026 NeuroTopology Group
+      <div class="footer-identity">
 
-    </p>
+        <a href="/" class="footer-title">
+          NeuroTopology
+        </a>
 
-  </Container>
+        <p>
+          Mathematics · Topology · Neuroscience
+        </p>
+
+        <p class="footer-affiliation">
+          University of Oxford
+        </p>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <div class="footer-column">
+
+          <h2>Explore</h2>
+
+          <a href="/research">Research</a>
+          <a href="/people">People</a>
+          <a href="/publications">Publications</a>
+          <a href="/software">Software</a>
+          <a href="/data">Data</a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+          <h2>Connect</h2>
+
+          <a href="mailto:lida.kanari@maths.ox.ac.uk">
+            Contact
+          </a>
+
+          <a
+            href="https://github.com/lidakanari"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+
+          <a
+            href="https://www.maths.ox.ac.uk/people/lida.kanari"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            University of Oxford
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <p>
+        © {year} NeuroTopology
+      </p>
+
+    </div>
+
+  </div>
 
 </footer>

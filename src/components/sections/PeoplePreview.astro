@@ -1,9 +1,15 @@
 ---
 import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
+
+import { people } from "../../lib/people";
+
+const currentPeople = people.filter(
+  (person) => person.current
+);
 ---
 
-<Section>
+<Section class="people-preview">
 
   <Container>
 
@@ -11,55 +17,60 @@ import Container from "../layout/Container.astro";
 
       <h2>The People Behind NeuroTopology</h2>
 
-      <p>
-        Meet the researchers building the mathematical foundations of NeuroTopology.
-      </p>
+  <p>
+    Meet the researchers developing mathematical and computational
+    approaches in NeuroTopology Group.
+  </p>
 
     </header>
 
     <div class="people-grid">
 
-      <article class="person-card">
+      {
+        currentPeople.map((person) => (
 
-        <div class="person-photo"></div>
+          <article class="person-card">
 
-        <h3>Lida Kanari</h3>
+            <div class="person-card-photo">
 
-        <p>Group Leader</p>
+              {
+                person.photo && (
+                  <img
+                    src={person.photo}
+                    alt={person.name}
+                  />
+                )
+              }
 
-      </article>
+            </div>
 
-      <article class="person-card">
 
-        <div class="person-photo"></div>
+            <div class="person-card-content">
 
-        <h3>Postdoctoral Researcher</h3>
+              <h3>{person.name}</h3>
 
-        <p>Coming soon</p>
+              <p class="person-role">
+                {person.role}
+              </p>
 
-      </article>
+            </div>
 
-      <article class="person-card">
+          </article>
 
-        <div class="person-photo"></div>
-
-        <h3>Doctoral student</h3>
-
-        <p>Coming soon</p>
-
-      </article>
-
-	<article class="person-card">
-
-        <div class="person-photo"></div>
-
-        <h3>Doctoral student</h3>
-
-        <p>Coming soon</p>
-
-      </article>
+        ))
+      }
 
     </div>
+
+
+<div class="people-preview-link">
+  <a
+    href="/people"
+    class="section-link"
+  >
+    Meet the group →
+  </a>
+</div>
 
   </Container>
 

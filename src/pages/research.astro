@@ -6,29 +6,44 @@ import Footer from "../components/layout/Footer.astro";
 
 import ResearchHero from "../components/research/ResearchHero.astro";
 import ResearchVision from "../components/research/ResearchVision.astro";
-import ResearchProjects from "../components/research/ResearchProjects.astro";
-import Collaborations from "../components/research/Collaborations.astro";
+
+import MathematicalFoundations
+  from "../components/research/MathematicalFoundations.astro";
+
+import DataCentricComputation
+  from "../components/research/DataCentricComputation.astro";
+
+import GenerativeBiology
+  from "../components/research/GenerativeBiology.astro";
+
+import CellsToSystems
+  from "../components/research/CellsToSystems.astro";
+
 import Funding from "../components/research/Funding.astro";
 ---
 
 <MainLayout title="Research">
 
-    <Navigation />
+  <Navigation />
 
-    <main>
+  <main>
 
-        <ResearchHero />
+    <ResearchHero />
 
-        <ResearchVision />
+    <ResearchVision />
 
-        <ResearchProjects />
+    <MathematicalFoundations />
 
-        <Collaborations />
+    <DataCentricComputation />
 
-        <Funding />
+    <GenerativeBiology />
 
-    </main>
+    <CellsToSystems />
 
-    <Footer />
+    <Funding />
+
+  </main>
+
+  <Footer />
 
 </MainLayout>

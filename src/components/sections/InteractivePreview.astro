@@ -3,51 +3,92 @@ import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
 ---
 
-<Section>
+<Section class="interactive-preview">
 
   <Container>
 
-<header class="section-header">
+    <header class="section-header">
 
-  <h2>Interactive Exploration</h2>
+      <h2>Interactive Exploration</h2>
 
-  <p>
-    Experience NeuroTopology through interactive scientific tools and educational explorations.
-  </p>
+      <p>
+        Explore the work of the NeuroTopology group through interactive scientific
+        games and experimentation with the tools we develop.
+      </p>
 
-</header>
+    </header>
 
-<div class="interactive-grid">
 
-  <article class="interactive-card">
+    <div class="interactive-grid">
 
-    <div class="interactive-image"></div>
+      <!-- Real Neuron Challenge -->
 
-    <h3>Real Neuron Challenge</h3>
+      <article class="interactive-card">
 
-    <p>
-      Can you distinguish real neurons from synthetic ones?
-    </p>
+        <div class="interactive-card-image">
 
-    <p><strong>Coming soon.</strong></p>
+          <img
+            src="/images/interactive/Exploration1.png"
+            alt="Neuronal morphology for the Real Neuron Challenge"
+          />
 
-  </article>
+        </div>
 
-  <article class="interactive-card">
 
-    <div class="interactive-image"></div>
+        <div class="interactive-card-content">
 
-    <h3>Synthesize Your Own Neuron</h3>
+          <h4>
+            Coming soon! 
+          </h4>
 
-    <p>
-      Explore how branching rules generate realistic neuronal morphologies.
-    </p>
+          <h3>
+            Real Neuron Challenge
+          </h3>
 
-    <p><strong>Coming soon.</strong></p>
+          <p>
+            Can you distinguish real neuronal morphologies
+            from computationally generated ones?
+          </p>
 
-  </article>
+        </div>
 
-</div>
+      </article>
+
+
+      <!-- Synthesize Your Own Neuron -->
+
+      <article class="interactive-card">
+
+        <div class="interactive-card-image">
+
+          <img
+            src="/images/interactive/Exploration2.png"
+            alt="Progressive generation of a branching neuronal morphology"
+          />
+
+        </div>
+
+
+        <div class="interactive-card-content">
+
+          <h4>
+            Coming soon! 
+          </h4>
+
+          <h3>
+            Synthesize Your Own Neuron
+          </h3>
+
+          <p>
+            Explore how mathematical and biological constraints
+            generate realistic neuronal morphologies.
+          </p>
+
+        </div>
+
+      </article>
+
+    </div>
 
   </Container>
 

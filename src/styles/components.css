@@ -241,7 +241,7 @@
 
     display: grid;
 
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
     gap: 1.5rem;
 
@@ -302,34 +302,20 @@
 
 /* Accent colours */
 
-.accent-group::before {
-
-    background: var(--color-people);
-
+.glance-card--mathematics h3 {
+    color: var(--color-research);
 }
 
-.accent-research::before {
-
-    background: var(--color-research);
-
+.glance-card--computation h3 {
+    color: var(--color-projects);
 }
 
-.accent-computation::before {
-
-    background: var(--color-projects);
-
+.glance-card--generative h3 {
+    color: var(--color-teaching);
 }
 
-.accent-teaching::before {
-
-    background: var(--color-teaching);
-
-}
-
-.accent-community::before {
-
-    background: var(--color-community);
-
+.glance-card--systems h3 {
+    color: var(--color-community);
 }
 
 /* Heading colours */
@@ -416,6 +402,23 @@
 
     background: var(--color-light-stone);
 
+}
+
+.people-preview-link {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 2.5rem;
+}
+
+.people-preview .section-header {
+    width: 100%;
+    max-width: none;
+}
+
+.people-preview .section-header p {
+    width: 100%;
+    max-width: none;
 }
 
 /* ==========================================================
@@ -584,9 +587,41 @@
 
 }
 
+.interactive-card-content {
+    padding-top: 1.5rem;
+}
+
+.interactive-card-content h3 {
+    margin: 0 0 .75rem;
+}
+
+.interactive-card-content p {
+    margin: 0;
+
+    line-height: 1.65;
+}
+
+.interactive-card-content h4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    color: var(--color-research);
+
+    font-size: 4.rem;
+    font-weight: 600;
+}
+
 /* ==========================================================
    Publications
    ========================================================== */
+
+.publication-grid + .section-link {
+    display: block;
+
+    width: fit-content;
+
+    margin: 2.5rem auto 0;
+}
 
 .publication-grid {
 
@@ -717,6 +752,276 @@
 
     min-height: 300px;
 
+}
+
+/* ==========================================================
+   Research Themes
+   ========================================================== */
+
+.research-theme {
+    padding-block: 4.5rem;
+}
+
+.research-theme--mathematics {
+    background: var(--color-background);
+}
+
+
+/* Theme introduction */
+
+.research-theme-header {
+    max-width: 1050px;
+
+    margin-bottom: 3.5rem;
+}
+
+.research-theme-header h2 {
+    position: relative;
+
+    width: fit-content;
+
+    margin: 0 0 2rem;
+    padding-bottom: 1rem;
+
+    color: var(--color-primary);
+
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 1.05;
+}
+
+.research-theme-header h2::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 4px;
+
+    border-radius: 2px;
+}
+
+.research-theme-header p {
+    max-width: 900px;
+
+    margin: 0;
+
+    color: var(--color-graphite);
+
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.research-theme--mathematics
+.research-theme-header h2::after {
+    background: var(--color-research);
+}
+
+.research-theme--computation
+.research-theme-header h2::after {
+    background: var(--color-projects);
+}
+
+.research-theme--generative
+.research-theme-header h2::after {
+    background: var(--color-teaching);
+}
+
+.research-theme--systems
+.research-theme-header h2::after {
+    background: var(--color-community);
+}
+
+.research-theme-label {
+    color: var(--color-research);
+}
+
+
+/* Projects + publications */
+
+.research-theme-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 5rem;
+}
+
+
+/* Small section labels */
+
+.research-theme--mathematics .research-theme-label {
+    color: var(--color-research);
+}
+
+.research-theme--computation .research-theme-label {
+    color: var(--color-projects);
+}
+
+.research-theme--generative .research-theme-label {
+    color: var(--color-teaching);
+}
+
+.research-theme--systems .research-theme-label {
+    color: var(--color-community);
+}
+
+/* Project list */
+
+.research-theme-list {
+    border-top: 1px solid var(--color-light-stone);
+}
+
+.research-theme-item {
+    padding: 1.25rem 0;
+
+    border-bottom: 1px solid var(--color-light-stone);
+}
+
+.research-theme-item h4 {
+    margin: 0 0 .4rem;
+
+    color: var(--color-primary);
+
+    font-size: 1.05rem;
+}
+
+.research-theme-item p {
+    max-width: none;
+
+    margin: 0;
+
+    color: var(--color-slate);
+
+    font-size: .9rem;
+    line-height: 1.6;
+}
+
+
+/* Publications */
+
+.research-publication-list {
+    border-top: 1px solid var(--color-light-stone);
+}
+
+.research-publication {
+    display: grid;
+
+    grid-template-columns: 55px minmax(0, 1fr);
+
+    gap: 1rem;
+
+    padding: 1.25rem 0;
+
+    border-bottom: 1px solid var(--color-light-stone);
+
+    color: inherit;
+    text-decoration: none;
+}
+
+.research-publication > span {
+
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.research-publication p {
+    max-width: none;
+
+    margin: 0;
+
+    color: var(--color-primary);
+
+    font-size: .9rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.research-publication:hover p {
+    color: var(--color-research);
+}
+
+/* Research theme header with figure */
+
+.research-theme-header--visual {
+    display: grid;
+
+    grid-template-columns: 220px minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: 3rem;
+
+    max-width: none;
+}
+
+
+/* Figure */
+
+.research-theme-header-figure {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+
+.research-theme-header-figure img {
+    display: block;
+
+    width: 100%;
+    max-width: 420px;
+    max-height: 420px;
+
+    object-fit: contain;
+}
+
+.research-theme {
+    scroll-margin-top: 100px;
+}
+
+
+/* Text */
+
+.research-theme-header-text {
+    min-width: 0;
+}
+
+.research-theme-header-text p {
+    max-width: 900px;
+
+    margin: 0;
+
+    color: var(--color-graphite);
+
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+/* Collaborations */
+
+.research-collaborations {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+
+    border-top: 1px solid var(--color-light-stone);
+}
+
+.research-collaborations .research-theme-label {
+    margin-bottom: .75rem;
+}
+
+.research-collaborations p {
+    max-width: none;
+
+    margin: 0;
+
+    color: var(--color-slate);
+
+    font-size: .95rem;
+    line-height: 1.7;
 }
 
 /* ==========================================================
@@ -1163,6 +1468,87 @@
     font-weight: 600;
 
     text-decoration: none;
+}
+
+/* ==========================================================
+   Patents
+   ========================================================== */
+
+.publications-section--patents {
+    background: var(--color-surface-soft);
+}
+
+.patent-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.patent-entry {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(180px, .3fr);
+
+    gap: 3rem;
+
+    padding: 1.25rem 0;
+
+    border-top: 1px solid var(--color-light-stone);
+    border-bottom: 1px solid var(--color-light-stone);
+}
+
+.patent-main h3 {
+    margin: 0 0 .4rem;
+
+    color: var(--color-primary);
+
+    font-size: 1.15rem;
+    line-height: 1.4;
+}
+
+.patent-inventors {
+    margin: 0;
+
+    color: var(--color-graphite);
+
+    font-size: .95rem;
+}
+
+.patent-meta {
+    text-align: left;
+}
+
+.patent-meta span {
+    display: block;
+
+    margin-bottom: .3rem;
+
+    color: var(--color-slate);
+
+    font-size: .7rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.patent-meta p {
+    margin: 0;
+
+    color: var(--color-research);
+
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.patent-meta a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.patent-meta a:hover {
+    color: var(--color-primary);
 }
 
 /* ==========================================================
@@ -2341,7 +2727,7 @@
 .student-supervision-grid {
     display: grid;
 
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     gap: 2rem;
 }
@@ -2684,4 +3070,109 @@
 
     font-size: .85rem;
     line-height: 1.5;
+}
+
+/* ==========================================================
+   Footer
+   ========================================================== */
+
+.site-footer {
+    padding: 4rem 0 2rem;
+
+    background: var(--color-hero);
+
+    color: rgba(255, 255, 255, .75);
+}
+
+.footer-container {
+    width: min(1200px, calc(100% - 3rem));
+
+    margin-inline: auto;
+}
+
+.footer-main {
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 5rem;
+
+    padding-bottom: 3rem;
+}
+
+.footer-title {
+    display: inline-block;
+
+    margin-bottom: 1rem;
+
+    color: white;
+
+    font-size: 1.5rem;
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+.footer-identity p {
+    margin: .25rem 0;
+
+    max-width: none;
+}
+
+.footer-affiliation {
+    color: rgba(255, 255, 255, .55);
+}
+
+.footer-links {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(130px, 1fr));
+
+    gap: 4rem;
+}
+
+.footer-column {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: .55rem;
+}
+
+.footer-column h2 {
+    margin: 0 0 .5rem;
+
+    color: rgba(255, 255, 255, .5);
+
+    font-size: .72rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+
+.footer-column a {
+    color: rgba(255, 255, 255, .8);
+
+    font-size: .9rem;
+
+    text-decoration: none;
+}
+
+.footer-column a:hover {
+    color: var(--color-research);
+}
+
+.footer-bottom {
+    padding-top: 1.5rem;
+
+    border-top: 1px solid rgba(255, 255, 255, .12);
+}
+
+.footer-bottom p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, .45);
+
+    font-size: .8rem;
 }
