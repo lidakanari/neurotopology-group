@@ -96,10 +96,8 @@ function parseResearch(value?: string): string[] {
 
 
 /**
- * Normalize a parsed BibTeX entry into the structure used
- * throughout the NeuroTopology website.
+ * Decode general LaTeX/BibTeX characters.
  */
-
 function decodeLatex(value?: string): string {
   if (!value) return "";
 
@@ -108,6 +106,10 @@ function decodeLatex(value?: string): string {
     .trim();
 }
 
+
+/**
+ * Decode BibTeX characters that require explicit handling.
+ */
 function decodeBibTeX(value?: string): string {
   if (!value) return "";
 
@@ -241,6 +243,18 @@ function decodeBibTeX(value?: string): string {
     .trim();
 }
 
+
+/**
+ * Format a BibTeX author list for display.
+ *
+ * Example:
+ *
+ * Kanari, Lida and Hess, Kathryn
+ *
+ * becomes:
+ *
+ * Kanari L. & Hess K.
+ */
 function formatAuthors(value?: string): string {
   if (!value) return "";
 
@@ -314,74 +328,11 @@ function formatAuthors(value?: string): string {
   }`;
 }
 
-function formatAuthorName(author: string): string {
-  const clean = decodeLatex(author.trim());
 
-  /*
-   * BibTeX format:
-   * Kanari, Lida
-   *
-   * becomes:
-   * Kanari L.
-   */
-  if (clean.includes(",")) {
-    const [lastName, firstNames] = clean
-      .split(",")
-      .map((part) => part.trim());
-
-    const initials = firstNames
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((name) => `${name.charAt(0)}.`)
-      .join(" ");
-
-    return `${lastName} ${initials}`;
-  }
-
-  /*
-   * Fallback for:
-   * Lida Kanari
-   */
-  const parts = clean.split(/\s+/);
-
-  if (parts.length === 1) {
-    return clean;
-  }
-
-  const lastName = parts.pop()!;
-
-  const initials = parts
-    .map((name) => `${name.charAt(0)}.`)
-    .join(" ");
-
-  return `${lastName} ${initials}`;
-}
-
-
-function formatAuthors(value?: string): string {
-  if (!value) return "";
-
-  const authors = value
-    .split(/\s+and\s+/)
-    .map((author) => author.trim())
-    .filter(Boolean);
-
-  const formatted = authors.map(formatAuthorName);
-
-  if (formatted.length === 1) {
-    return formatted[0];
-  }
-
-  if (formatted.length === 2) {
-    return `${formatted[0]} & ${formatted[1]}`;
-  }
-
-  return `${formatted.slice(0, -1).join(", ")} & ${
-    formatted[formatted.length - 1]
-  }`;
-}
-
-
+/**
+ * Normalize a parsed BibTeX entry into the structure used
+ * throughout the NeuroTopology website.
+ */
 function normalizePublication(
   entry: BibTeXEntry
 ): Publication {
@@ -392,17 +343,17 @@ function normalizePublication(
     key: entry.citationKey ?? "",
 
     title: decodeLatex(tags.title),
-    authors: formatAuthors(
-  decodeBibTeX(tags.author)
-),
 
-    journal:
-      decodeLatex(
-  tags.journal ??
-  tags.booktitle ??
-  tags.howpublished ??
-  ""
-	),
+    authors: formatAuthors(
+      decodeBibTeX(tags.author)
+    ),
+
+    journal: decodeLatex(
+      tags.journal ??
+      tags.booktitle ??
+      tags.howpublished ??
+      ""
+    ),
 
     year: Number(tags.year) || 0,
 
@@ -506,11 +457,17 @@ export function getPublicationsByResearch(
 
 }
 
+
+/**
+ * Return a publication by its BibTeX citation key.
+ */
 export function getPublicationByKey(
   key: string
 ): Publication | undefined {
 
   return publications.find(
-    publication => publication.key === key
+    (publication) =>
+      publication.key === key
   );
+
 }

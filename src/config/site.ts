@@ -8,20 +8,20 @@ export const SITE = {
   subtitle: "Mathematics • Topology • Neuroscience • AI",
 
   tagline:
-    "Developing mathematical foundations for understanding neuronal structure and brain networks.",
+    "Developing mathematical foundations for understanding biological structure across scales.",
 
   author: "Lida Kanari",
 
   github: "https://github.com/lidakanari",
 
   navigation: [
-  { title: "People", href: "/people" },
-  { title: "Research", href: "/research" },
-  { title: "Software", href: "/software" },
-  { title: "Data", href: "/data" },
-  { title: "Interactive", href: "/interactive" },
-  { title: "Publications", href: "/publications" },
-  { title: "Teaching", href: "/teaching" },
-  { title: "Community", href: "/community" },
-]
+    { title: "People", href: "/people" },
+    { title: "Research", href: "/research" },
+    { title: "Software", href: "/software" },
+    { title: "Data", href: "/data" },
+    { title: "Interactive", href: "/interactive" },
+    { title: "Publications", href: "/publications" },
+    { title: "Teaching", href: "/teaching" },
+    { title: "Community", href: "/community" },
+  ],
 };
