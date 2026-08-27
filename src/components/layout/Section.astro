@@ -8,11 +8,18 @@
 
 interface Props {
   class?: string;
+  id?: string;
 }
 
-const { class: className = "" } = Astro.props;
+const {
+  class: className = "",
+  id
+} = Astro.props;
 ---
 
-<section class={`section ${className}`}>
+<section
+  id={id}
+  class={`section ${className}`}
+>
   <slot />
 </section>
