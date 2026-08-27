@@ -10,10 +10,11 @@ import { SITE } from "../../config/site";
     <div class="navigation-wrapper">
 
       <a href="/" class="site-title">
-
-	{SITE.navigationTitle}
-
+        {SITE.navigationTitle}
       </a>
+
+
+      <!-- Desktop navigation -->
 
       <ul class="navigation">
 
@@ -25,9 +26,7 @@ import { SITE } from "../../config/site";
               <li>
 
                 <a href={item.href}>
-
                   {item.title}
-
                 </a>
 
               </li>
@@ -36,6 +35,37 @@ import { SITE } from "../../config/site";
         }
 
       </ul>
+
+
+      <!-- Tablet / mobile menu -->
+
+      <details class="navigation-mobile">
+
+        <summary>
+          Menu
+        </summary>
+
+        <ul>
+
+          {
+            SITE.navigation
+              .filter((item) => item.title !== "Home")
+              .map((item) => (
+
+                <li>
+
+                  <a href={item.href}>
+                    {item.title}
+                  </a>
+
+                </li>
+
+              ))
+          }
+
+        </ul>
+
+      </details>
 
     </div>
 

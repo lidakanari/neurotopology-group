@@ -79,6 +79,12 @@
 
 }
 
+/* Mobile navigation hidden by default */
+
+.navigation-mobile {
+    display: none;
+}
+
 /* ==========================================================
    Hero
    ========================================================== */
@@ -111,7 +117,7 @@
 
     color: white;
 
-    font-size: clamp(3rem, 6vw, 5rem);
+    font-size: clamp(2.4rem, 12vw, 3.2rem);
 
     font-weight: 700;
 
@@ -607,7 +613,7 @@
 
     color: var(--color-research);
 
-    font-size: 4.rem;
+    font-size: 1.0rem;
     font-weight: 600;
 }
 
@@ -3115,13 +3121,15 @@
 
 .footer-identity p {
     margin: .25rem 0;
-
     max-width: none;
+    color: rgba(255, 255, 255, .4);
+
 }
 
 .footer-affiliation {
     color: rgba(255, 255, 255, .55);
 }
+
 
 .footer-links {
     display: grid;
@@ -3175,4 +3183,497 @@
     color: rgba(255, 255, 255, .45);
 
     font-size: .8rem;
+}
+
+/* ==========================================================
+   Responsive — Tablet
+   ========================================================== */
+
+@media (max-width: 900px) {
+
+    .glance-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .people-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .publication-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .interactive-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 900px) {
+
+    /* Hero */
+
+    .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .hero-tagline {
+        max-width: 18ch;
+    }
+
+    .hero-visual {
+        max-width: 500px;
+        margin-inline: auto;
+    }
+
+
+    /* Research at a Glance */
+
+    .glance-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+
+    /* People */
+
+    .people-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+
+    /* Projects */
+
+    .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+
+    /* Interactive */
+
+    .interactive-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* Publications */
+
+    .publication-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 1100px) {
+
+    .navigation-wrapper {
+        grid-template-columns: 1fr auto;
+    }
+
+    .navigation {
+        display: none;
+    }
+
+    .navigation-mobile {
+        position: relative;
+
+        display: block;
+    }
+
+    .navigation-mobile summary {
+        color: white;
+
+        font-size: 1rem;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        list-style: none;
+    }
+
+    .navigation-mobile summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .navigation-mobile ul {
+        position: absolute;
+
+        z-index: 100;
+
+        top: calc(100% + 1rem);
+        right: 0;
+
+        min-width: 220px;
+
+        margin: 0;
+        padding: 1rem;
+
+        border: 1px solid rgba(255, 255, 255, .12);
+        border-radius: var(--radius-md);
+
+        background: var(--color-hero);
+
+        list-style: none;
+    }
+
+    .navigation-mobile li {
+        margin: 0;
+    }
+
+    .navigation-mobile a {
+        display: block;
+
+        padding: .55rem .75rem;
+
+        color: rgba(255, 255, 255, .82);
+
+        text-decoration: none;
+    }
+
+    .navigation-mobile a:hover {
+        color: var(--color-research);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .hero h1 {
+        font-size: clamp(2.1rem, 10vw, 2.7rem);
+        line-height: 1.05;
+
+        word-break: normal;
+        overflow-wrap: normal;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .hero-tagline {
+        max-width: none;
+
+        font-size: clamp(1.75rem, 7.5vw, 2.2rem);
+        line-height: 1.15;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .hero {
+        min-height: 0;
+
+        display: block;
+
+        padding-top: 3.5rem;
+        padding-bottom: 4rem;
+    }
+
+}
+
+
+/* ==========================================================
+   Responsive — Tablet
+   ========================================================== */
+
+@media (max-width: 900px) {
+
+    .glance-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .people-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .publication-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .interactive-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* ==========================================================
+   Responsive — Mobile
+   MUST come after tablet
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+    .glance-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .people-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .project-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .publication-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .interactive-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+/* Footer */
+
+.site-footer {
+    padding: 3rem 0 2rem;
+}
+
+.footer-main {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+}
+
+.footer-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+.footer-container {
+    width: min(100% - 2rem, 1200px);
+}
+
+.footer-title {
+    font-size: 1.35rem;
+}
+
+.footer-bottom {
+    margin-top: .5rem;
+}
+
+/* ==========================================================
+   Research — Mobile
+   ========================================================== */
+
+.research-theme {
+    padding-block: 3rem;
+}
+
+
+/* Figure + theme introduction */
+
+.research-theme-header--visual {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    width: 100%;
+    max-width: none;
+
+    margin-bottom: 2.5rem;
+}
+
+
+/* Figure */
+
+.research-theme-header-figure {
+    width: 100%;
+    max-width: 180px;
+
+    margin: 0;
+    justify-content: flex-start;
+
+}
+
+.research-theme-header-figure img {
+    width: 100%;
+    max-width: 180px;
+    max-height: 180px;
+}
+
+
+/* Title + description */
+
+.research-theme-header-text {
+    width: 100%;
+    min-width: 0;
+}
+
+.research-theme-header h2 {
+    width: fit-content;
+    max-width: 100%;
+
+    margin-bottom: 1.5rem;
+
+    font-size: clamp(2rem, 10vw, 2.7rem);
+    line-height: 1.1;
+}
+
+.research-theme-header-text p {
+    width: 100%;
+    max-width: none;
+
+    font-size: .95rem;
+    line-height: 1.7;
+}
+
+
+/* Projects + publications */
+
+.research-theme-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+
+/* Collaborations */
+
+.research-collaborations {
+    margin-top: 2.5rem;
+}
+
+/* ==========================================================
+   Software — Mobile
+   ========================================================== */
+
+.software-tool {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    padding: 1.5rem 0 1.5rem 1.25rem;
+}
+
+
+/* Main content */
+
+.software-tool-main {
+    min-width: 0;
+}
+
+.software-tool-header h3 {
+    font-size: 1.25rem;
+}
+
+.software-tool-description {
+    max-width: none;
+
+    font-size: .95rem;
+    line-height: 1.6;
+}
+
+
+/* Metadata: tags + links */
+
+.software-tool-meta {
+    width: 100%;
+
+    gap: 1rem;
+}
+
+.software-tool-tags {
+    width: 100%;
+
+    flex-wrap: wrap;
+}
+
+.software-tool-links {
+    width: 100%;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    gap: .75rem 1.25rem;
+}
+
+
+/* Keep tags compact */
+
+.software-tag {
+    white-space: nowrap;
+}
+
+/* ==========================================================
+   Data — Mobile
+   ========================================================== */
+
+.dataset-entry {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    padding: 1.5rem 0 1.5rem 1.25rem;
+}
+
+.dataset-meta {
+    width: 100%;
+
+    gap: 1rem;
+}
+
+.dataset-tags {
+    width: 100%;
+}
+
+.dataset-links {
+    width: 100%;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    gap: .75rem 1.25rem;
+}
+
+.dataset-description {
+    max-width: none;
+}
+
+/* ==========================================================
+   Community — Mobile
+   ========================================================== */
+
+/* Editorial & Reviewing */
+
+.reviewing-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.reviewing-list {
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+
+/* Community roles */
+
+.community-role-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+
+/* Talks, Workshops & Conferences */
+
+.engagement-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+
+/* Outreach / community entries */
+
+.community-entry {
+    grid-template-columns: 1fr;
+    gap: .5rem;
+}
+
 }
