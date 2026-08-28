@@ -17,7 +17,6 @@ export function getStaticPaths() {
   return people
     .filter((person) => person.cv)
     .map((person) => ({
-
       params: {
         id: person.id
       },
@@ -25,7 +24,6 @@ export function getStaticPaths() {
       props: {
         person
       }
-
     }));
 
 }

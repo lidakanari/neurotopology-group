@@ -3,6 +3,7 @@ import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
 
 import { people } from "../../lib/people";
+import { sitePath } from "../../lib/paths";
 
 /*
  * Current members, excluding the group lead.
@@ -12,8 +13,6 @@ const members = people.filter(
     person.current &&
     !person.groupLead
 );
-
-import { sitePath } from "../../lib/paths";
 ---
 
 <Section class="people-section people-section--soft">
@@ -65,36 +64,30 @@ import { sitePath } from "../../lib/paths";
 
               {
                 person.institution && (
-
                   <p class="person-affiliation">
                     {person.institution}
                   </p>
-
                 )
               }
 
 
               {
                 person.description && (
-
                   <p class="person-description">
                     {person.description}
                   </p>
-
                 )
               }
 
 
               {
                 person.cv && (
-
                   <a
                     href={sitePath(`/people/${person.id}`)}
                     class="person-link"
                   >
                     View CV →
                   </a>
-
                 )
               }
 

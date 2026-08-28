@@ -69,9 +69,6 @@ export const people: Person[] = [
     photo:
       "/images/people/member-name.jpg",
 
-    cv:
-      "/documents/cv/",
-
     current: true,
   },
 
