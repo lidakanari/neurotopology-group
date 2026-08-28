@@ -5,10 +5,23 @@ import Navigation from "../components/navigation/Navigation.astro";
 import Footer from "../components/layout/Footer.astro";
 
 import DataHero from "../components/data/DatasetHero.astro";
-import DatasetSection from "../components/data/DatasetSection.astro";
+import DatasetEntry from "../components/data/DatasetEntry.astro";
+
+import Section from "../components/layout/Section.astro";
+import Container from "../components/layout/Container.astro";
+
+import { datasets } from "../lib/datasets";
+
+
+const sortedDatasets = [...datasets].sort(
+  (a, b) => b.year - a.year
+);
 ---
 
-<MainLayout title="Research Data">
+<MainLayout
+  title="Research Data"
+  description="Open research datasets supporting work in neuronal morphology, topology and computational neuroscience."
+>
 
   <Navigation />
 
@@ -17,41 +30,34 @@ import DatasetSection from "../components/data/DatasetSection.astro";
     <DataHero />
 
 
-    <DatasetSection
-      category="topological-data-analysis"
-      title="Topological Data Analysis"
-      description="Datasets supporting topological representations and analysis of neuronal structure."
-    />
+    <Section class="dataset-section">
+
+      <Container>
+
+        <header class="section-header">
+
+          <h2>Research Datasets</h2>
+
+        </header>
 
 
-    <DatasetSection
-      category="neuronal-morphology"
-      title="Neuronal Morphology"
-      description="Curated neuronal morphology datasets used for structural analysis and comparison."
-      alternate
-    />
+        <div class="dataset-list">
 
+          {
+            sortedDatasets.map((dataset) => (
 
-    <DatasetSection
-      category="classification"
-      title="Classification"
-      description="Datasets supporting morphological classification and comparative analysis."
-    />
+              <DatasetEntry
+                dataset={dataset}
+              />
 
+            ))
+          }
 
-    <DatasetSection
-      category="neuronal-morphology-synthesis"
-      title="Neuronal Morphology Synthesis"
-      description="Data supporting computational generation and validation of neuronal morphologies."
-      alternate
-    />
+        </div>
 
+      </Container>
 
-    <DatasetSection
-      category="other"
-      title="Other"
-      description="Additional research datasets associated with the NeuroTopology research programme."
-    />
+    </Section>
 
   </main>
 

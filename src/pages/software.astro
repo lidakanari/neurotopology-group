@@ -5,10 +5,18 @@ import Navigation from "../components/navigation/Navigation.astro";
 import Footer from "../components/layout/Footer.astro";
 
 import SoftwareHero from "../components/software/SoftwareHero.astro";
-import SoftwareSection from "../components/software/SoftwareSection.astro";
+import SoftwareTool from "../components/software/SoftwareTool.astro";
+
+import Section from "../components/layout/Section.astro";
+import Container from "../components/layout/Container.astro";
+
+import { software } from "../lib/software";
 ---
 
-<MainLayout title="Scientific Software">
+<MainLayout
+  title="Scientific Software"
+  description="Open-source scientific software for topological analysis, neuronal morphology, classification and computational synthesis."
+>
 
   <Navigation />
 
@@ -17,41 +25,34 @@ import SoftwareSection from "../components/software/SoftwareSection.astro";
     <SoftwareHero />
 
 
-    <SoftwareSection
-      category="topological-data-analysis"
-      title="Topological Data Analysis"
-      description="Software for representing and analysing neuronal structure using topological methods."
-    />
+    <Section class="software-section">
+
+      <Container>
+
+        <header class="section-header">
+
+          <h2>Scientific Software</h2>
+
+        </header>
 
 
-    <SoftwareSection
-      category="neuronal-morphology-analysis"
-      title="Neuronal Morphology Analysis"
-      description="Tools for reading, processing, repairing and quantitatively analysing neuronal morphologies."
-      alternate
-    />
+        <div class="software-list">
 
+          {
+            software.map((tool) => (
 
-    <SoftwareSection
-      category="classification-tools"
-      title="Classification Tools"
-      description="Computational methods for identifying and comparing neuronal morphological classes."
-    />
+              <SoftwareTool
+                tool={tool}
+              />
 
+            ))
+          }
 
-    <SoftwareSection
-      category="neuronal-morphology-synthesis"
-      title="Neuronal Morphology Synthesis"
-      description="Software for computational generation of dendritic and axonal morphologies."
-      alternate
-    />
+        </div>
 
+      </Container>
 
-    <SoftwareSection
-      category="other"
-      title="Other"
-      description="Additional scientific software associated with the NeuroTopology research programme."
-    />
+    </Section>
 
   </main>
 

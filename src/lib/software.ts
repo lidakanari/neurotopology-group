@@ -580,3 +580,13 @@ export function getSoftwareByPublication(
   );
 
 }
+
+export function getSoftwareCategoryTitle(
+  category: SoftwareCategory
+): string {
+
+  return softwareCategories.find(
+    (item) => item.id === category
+  )?.title ?? category;
+
+}

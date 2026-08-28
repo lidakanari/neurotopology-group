@@ -7,7 +7,7 @@ export type DatasetCategory =
   | "neuronal-morphology"
   | "classification"
   | "neuronal-morphology-synthesis"
-  | "other";
+  | "computational-neuroscience";
 
 
 export interface ResearchDataset {
@@ -94,9 +94,9 @@ export const datasetCategories: {
   },
 
   {
-    id: "other",
+    id: "computational-neuroscience",
 
-    title: "Other",
+    title: "Computational Neuroscience",
 
     description:
       "Additional research datasets associated with the NeuroTopology research programme."
@@ -365,7 +365,7 @@ export const datasets: ResearchDataset[] = [
     "Canonical electrical neuron models based on somatosensory cortex and thalamus data, including detailed morphology-based and point-neuron model variants.",
 
   categories: [
-    "other"
+    "computational-neuroscience"
   ],
 
   repository: "Zenodo",
@@ -462,4 +462,14 @@ export function getDatasetsByPublication(
     .sort(
       (a, b) => b.year - a.year
     );
+}
+
+export function getDatasetCategoryTitle(
+  category: DatasetCategory
+): string {
+
+  return datasetCategories.find(
+    (item) => item.id === category
+  )?.title ?? category;
+
 }

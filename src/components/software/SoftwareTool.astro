@@ -1,17 +1,27 @@
 ---
-import type { SoftwareTool } from "../../lib/software";
+import type {
+  SoftwareTool
+} from "../../lib/software";
+
+import {
+  getSoftwareCategoryTitle
+} from "../../lib/software";
+
 
 interface Props {
   tool: SoftwareTool;
 }
 
+
 const { tool } = Astro.props;
 
 const developerText = tool.developers.join(", ");
-const languageText = tool.languages.join(" · ");
 ---
 
-<article class="software-tool">
+<article
+  class="software-tool"
+  id={tool.id}
+>
 
   <div class="software-tool-main">
 
@@ -19,28 +29,59 @@ const languageText = tool.languages.join(" · ");
 
       <h3>{tool.name}</h3>
 
-      {tool.fullName && (
-        <p class="software-tool-fullname">
-          {tool.fullName}
-        </p>
-      )}
+      {
+        tool.fullName && (
+          <p class="software-tool-fullname">
+            {tool.fullName}
+          </p>
+        )
+      }
 
     </header>
+
+
+    <!-- Categories -->
+
+    <div class="software-tool-categories">
+
+      {
+        tool.categories.map((category) => (
+
+          <span class="software-tool-category">
+            {getSoftwareCategoryTitle(category)}
+          </span>
+
+        ))
+      }
+
+    </div>
+
 
     <p class="software-tool-description">
       {tool.description}
     </p>
 
+
     <p class="software-tool-developers">
-      <span>Developed by</span>
+
+      <span>
+        Developed by
+      </span>
+
       {developerText}
+
     </p>
 
-    {tool.attribution && (
-      <p class="software-tool-attribution">
-        {tool.attribution}
-      </p>
-    )}
+
+    {
+      tool.attribution && (
+
+        <p class="software-tool-attribution">
+          {tool.attribution}
+        </p>
+
+      )
+    }
 
   </div>
 
@@ -49,32 +90,44 @@ const languageText = tool.languages.join(" · ");
 
     <div class="software-tool-tags">
 
-      {tool.languages.map((language) => (
-        <span class="software-tag">
-          {language}
-        </span>
-      ))}
+      {
+        tool.languages.map((language) => (
 
-      {tool.openSource && (
-        <span class="software-tag">
-          Open Source
-        </span>
-      )}
+          <span class="software-tag">
+            {language}
+          </span>
+
+        ))
+      }
+
+      {
+        tool.openSource && (
+
+          <span class="software-tag">
+            Open Source
+          </span>
+
+        )
+      }
 
     </div>
 
 
     <div class="software-tool-links">
 
-      {tool.documentation && (
-        <a
-          href={tool.documentation}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Documentation →
-        </a>
-      )}
+      {
+        tool.documentation && (
+
+          <a
+            href={tool.documentation}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Documentation →
+          </a>
+
+        )
+      }
 
       <a
         href={tool.github}

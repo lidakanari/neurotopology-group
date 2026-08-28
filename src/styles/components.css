@@ -247,7 +247,7 @@
 
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 1.5rem;
 
@@ -2256,6 +2256,37 @@
 }
 
 /* ==========================================================
+   Software Categories
+   ========================================================== */
+
+.software-tool-categories {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: .35rem .8rem;
+
+    margin: .6rem 0 .8rem;
+}
+
+.software-tool-category {
+    color: var(--color-research);
+
+    font-size: .72rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.software-tool-category:not(:last-child)::after {
+    content: "·";
+
+    margin-left: .8rem;
+
+    color: var(--color-slate);
+}
+
+/* ==========================================================
    Data Hero
    ========================================================== */
 
@@ -2400,6 +2431,37 @@
     color: var(--color-graphite);
 
     line-height: 1.65;
+}
+
+/* ==========================================================
+   Dataset Categories
+   ========================================================== */
+
+.dataset-categories {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: .35rem .8rem;
+
+    margin: .6rem 0 .8rem;
+}
+
+.dataset-category {
+    color: var(--color-research);
+
+    font-size: .72rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.dataset-category:not(:last-child)::after {
+    content: "·";
+
+    margin-left: .8rem;
+
+    color: var(--color-slate);
 }
 
 

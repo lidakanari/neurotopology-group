@@ -4,6 +4,10 @@ import type {
 } from "../../lib/datasets";
 
 import {
+  getDatasetCategoryTitle
+} from "../../lib/datasets";
+
+import {
   getPublicationByKey
 } from "../../lib/publications";
 
@@ -40,6 +44,23 @@ const authors = dataset.authors.join(", ");
       </span>
 
       <h3>{dataset.name}</h3>
+
+    </div>
+
+
+    <!-- Research categories -->
+
+    <div class="dataset-categories">
+
+      {
+        dataset.categories.map((category) => (
+
+          <span class="dataset-category">
+            {getDatasetCategoryTitle(category)}
+          </span>
+
+        ))
+      }
 
     </div>
 
@@ -105,32 +126,17 @@ const authors = dataset.authors.join(", ");
 
     </div>
 
+<div class="dataset-links">
 
-    <div class="dataset-links">
+  <a
+    href={dataset.url}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    View dataset ↗
+  </a>
 
-      <a
-        href={dataset.url}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View dataset ↗
-      </a>
-
-      {
-        dataset.doi && (
-
-          <a
-            href={`https://doi.org/${dataset.doi}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            DOI ↗
-          </a>
-
-        )
-      }
-
-    </div>
+</div>
 
   </div>
 
