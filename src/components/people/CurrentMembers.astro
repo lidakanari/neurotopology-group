@@ -12,6 +12,8 @@ const members = people.filter(
     person.current &&
     !person.groupLead
 );
+
+import { sitePath } from "../../lib/paths";
 ---
 
 <Section class="people-section people-section--soft">
@@ -42,7 +44,7 @@ const members = people.filter(
               {
                 person.photo && (
                   <img
-                    src={person.photo}
+                    src={sitePath(person.photo)}
                     alt={person.name}
                   />
                 )
@@ -87,7 +89,7 @@ const members = people.filter(
                 person.cv && (
 
                   <a
-                    href={`/people/${person.id}`}
+                    href={sitePath(`/people/${person.id}`)}
                     class="person-link"
                   >
                     View CV →

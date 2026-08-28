@@ -3,6 +3,8 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Navigation from "../components/navigation/Navigation.astro";
 import Footer from "../components/layout/Footer.astro";
 import Container from "../components/layout/Container.astro";
+
+import { sitePath } from "../lib/paths";
 ---
 
 <MainLayout title="CV">
@@ -25,7 +27,7 @@ import Container from "../components/layout/Container.astro";
 
         <a
           class="cv-download"
-          href="/documents/Lida_Kanari_CV.pdf"
+          href={sitePath("/documents/Lida_Kanari_CV.pdf")}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -37,7 +39,7 @@ import Container from "../components/layout/Container.astro";
       <div class="cv-document">
 
         <iframe
-          src="/documents/Lida_Kanari_CV.pdf"
+          src={sitePath("/documents/Lida_Kanari_CV.pdf")}
           title="Curriculum Vitae — Lida Kanari"
         ></iframe>
 

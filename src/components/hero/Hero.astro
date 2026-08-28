@@ -2,6 +2,8 @@
 import { SITE } from "../../config/site";
 import Container from "../layout/Container.astro";
 import Section from "../layout/Section.astro";
+
+import { sitePath } from "../../lib/paths";
 ---
 
 <Section class="hero">
@@ -19,23 +21,30 @@ import Section from "../layout/Section.astro";
         </p>
 
         <p class="hero-tagline">
-          Developing mathematical foundations for understanding biological structure across scales.
+          Developing mathematical foundations for understanding biological
+          structure across scales.
         </p>
 
         <p class="hero-intro">
-	We combine mathematics, topology and computation to understand how the structure of cells gives rise to complex biological organization, from individual neurons to networks.
+          We combine mathematics, topology and computation to understand
+          how the structure of cells gives rise to complex biological
+          organization, from individual neurons to networks.
         </p>
 
-        <a href="/research" class="hero-button">
+        <a
+          href={sitePath("/research")}
+          class="hero-button"
+        >
           Explore Research →
         </a>
 
       </div>
 
+
       <div class="hero-visual">
 
         <img
-          src="/images/hero_neuron.svg"
+          src={sitePath("/images/hero_neuron.svg")}
           alt="Reconstructed neuronal morphology"
         />
 

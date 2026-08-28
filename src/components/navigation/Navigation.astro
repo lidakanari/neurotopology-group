@@ -1,6 +1,8 @@
 ---
 import Container from "../layout/Container.astro";
 import { SITE } from "../../config/site";
+
+import { sitePath } from "../../lib/paths";
 ---
 
 <nav class="site-navigation">
@@ -9,7 +11,10 @@ import { SITE } from "../../config/site";
 
     <div class="navigation-wrapper">
 
-      <a href="/" class="site-title">
+      <a
+        href={sitePath("/")}
+        class="site-title"
+      >
         {SITE.navigationTitle}
       </a>
 
@@ -25,7 +30,7 @@ import { SITE } from "../../config/site";
 
               <li>
 
-                <a href={item.href}>
+                <a href={sitePath(item.href)}>
                   {item.title}
                 </a>
 
@@ -54,7 +59,7 @@ import { SITE } from "../../config/site";
 
                 <li>
 
-                  <a href={item.href}>
+                  <a href={sitePath(item.href)}>
                     {item.title}
                   </a>
 

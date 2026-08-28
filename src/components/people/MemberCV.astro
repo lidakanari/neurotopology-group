@@ -2,6 +2,8 @@
 import Container from "../layout/Container.astro";
 import type { Person } from "../../lib/people";
 
+import { sitePath } from "../../lib/paths";
+
 interface Props {
   person: Person;
 }
@@ -39,7 +41,7 @@ const { person } = Astro.props;
 
           <a
             class="member-cv-download"
-            href={person.cv}
+            href={sitePath(person.cv)}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -58,7 +60,7 @@ const { person } = Astro.props;
         <div class="member-cv-document">
 
           <iframe
-            src={person.cv}
+            src={sitePath(person.cv)}
             title={`Curriculum Vitae — ${person.name}`}
           ></iframe>
 

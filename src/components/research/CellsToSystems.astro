@@ -1,6 +1,8 @@
 ---
 import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
+
+import { sitePath } from "../../lib/paths";
 ---
 
 <Section
@@ -17,7 +19,7 @@ import Container from "../layout/Container.astro";
       <div class="research-theme-header-figure">
 
         <img
-          src="/images/research/cells-to-systems.png"
+          src={sitePath("/images/research/cells-to-systems.png")}
           alt="Relationship between cellular morphology and larger-scale biological organization"
         />
 
@@ -126,7 +128,7 @@ import Container from "../layout/Container.astro";
           <!-- 2026 -->
 
           <a
-            href="/publications#reimann2026spatial"
+            href={sitePath("/publications#reimann2026spatial")}
             class="research-publication"
           >
             <span>2026</span>
@@ -139,7 +141,7 @@ import Container from "../layout/Container.astro";
 
 
           <a
-            href="/publications#barroszulaica2026connectome"
+            href={sitePath("/publications#barroszulaica2026connectome")}
             class="research-publication"
           >
             <span>2026</span>
@@ -152,7 +154,7 @@ import Container from "../layout/Container.astro";
 
 
           <a
-            href="/publications#siegert2026selforganized"
+            href={sitePath("/publications#siegert2026selforganized")}
             class="research-publication"
           >
             <span>2026</span>
@@ -167,7 +169,7 @@ import Container from "../layout/Container.astro";
           <!-- 2025 -->
 
           <a
-            href="/publications#kanari2025mice"
+            href={sitePath("/publications#kanari2025mice")}
             class="research-publication"
           >
             <span>2025</span>
@@ -180,7 +182,7 @@ import Container from "../layout/Container.astro";
 
 
           <a
-            href="/publications#petkantchin2025connectome"
+            href={sitePath("/publications#petkantchin2025connectome")}
             class="research-publication"
           >
             <span>2025</span>

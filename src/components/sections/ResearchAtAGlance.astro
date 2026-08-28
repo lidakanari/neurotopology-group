@@ -1,6 +1,8 @@
 ---
 import Container from "../layout/Container.astro";
 import Section from "../layout/Section.astro";
+
+import { sitePath } from "../../lib/paths";
 ---
 
 <Section>
@@ -20,7 +22,7 @@ import Section from "../layout/Section.astro";
 <div class="glance-grid">
 
   <a
-    href="/research#mathematical-foundations"
+    href={sitePath("/research#mathematical-foundations")}
     class="glance-card glance-card--mathematics"
   >
     <h3>Mathematical Foundations</h3>
@@ -32,7 +34,7 @@ import Section from "../layout/Section.astro";
 
 
   <a
-    href="/research#data-centric-computation"
+    href={sitePath("/research#data-centric-computation")}
     class="glance-card glance-card--computation"
   >
     <h3>Data-Centric Computation</h3>
@@ -44,7 +46,7 @@ import Section from "../layout/Section.astro";
 
 
   <a
-    href="/research#generative-biology"
+    href={sitePath("/research#generative-biology")}
     class="glance-card glance-card--generative"
   >
     <h3>Generative Biology</h3>
@@ -57,7 +59,7 @@ import Section from "../layout/Section.astro";
 
 
   <a
-    href="/research#from-cells-to-systems"
+    href={sitePath("/research#from-cells-to-systems")}
     class="glance-card glance-card--systems"
   >
     <h3>From Cells to Systems</h3>

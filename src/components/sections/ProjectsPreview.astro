@@ -1,6 +1,8 @@
 ---
 import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
+
+import { sitePath } from "../../lib/paths";
 ---
 
 <Section>
@@ -26,7 +28,7 @@ import Container from "../layout/Container.astro";
 
         <div class="project-image">
   <img
-    src="/images/projects/topology-of-trees.svg"
+    src={sitePath("/images/projects/topology-of-trees.svg")}
     alt="Topological representation of branching tree structures"
   />
 
@@ -45,7 +47,7 @@ import Container from "../layout/Container.astro";
             trees, branching structures and their persistent topology.
           </p>
 
-          <a href="/research#mathematical-foundations">
+          <a href={sitePath("/research#mathematical-foundations")}>
             Explore project →
           </a>
 
@@ -60,7 +62,7 @@ import Container from "../layout/Container.astro";
 
         <div class="project-image">
   <img
-    src="/images/projects/topology-of-trees.svg"
+    src={sitePath("/images/projects/topology-of-trees.svg")}
     alt="Topological representation of branching tree structures"
   />
         </div>
@@ -78,7 +80,7 @@ import Container from "../layout/Container.astro";
             classifying and learning from complex cellular morphologies.
           </p>
 
-          <a href="/research#data-centric-computation">
+          <a href={sitePath("/research#data-centric-computation")}>
             Explore project →
           </a>
 
@@ -93,7 +95,7 @@ import Container from "../layout/Container.astro";
 
         <div class="project-image">
   <img
-    src="/images/projects/topology-of-trees.svg"
+    src={sitePath("/images/projects/topology-of-trees.svg")}
     alt="Topological representation of branching tree structures"
   />
         </div>
@@ -111,7 +113,7 @@ import Container from "../layout/Container.astro";
             connectivity and contributes to brain-network organization.
           </p>
 
-          <a href="/research#from-cells-to-systems">
+          <a href={sitePath("/research#from-cells-to-systems")}>
             Explore project →
           </a>
 

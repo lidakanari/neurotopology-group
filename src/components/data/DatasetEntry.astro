@@ -7,6 +7,8 @@ import {
   getPublicationByKey
 } from "../../lib/publications";
 
+import { sitePath } from "../../lib/paths";
+
 
 interface Props {
   dataset: ResearchDataset;
@@ -68,7 +70,9 @@ const authors = dataset.authors.join(", ");
           </span>
 
           <a
-            href={`/publications#${publication.key}`}
+            href={sitePath(
+              `/publications#${publication.key}`
+            )}
           >
             {publication.title} →
           </a>

@@ -1,4 +1,6 @@
 ---
+import { sitePath } from "../../lib/paths";
+
 const year = new Date().getFullYear();
 ---
 
@@ -10,7 +12,10 @@ const year = new Date().getFullYear();
 
       <div class="footer-identity">
 
-        <a href="/" class="footer-title">
+        <a
+          href={sitePath("/")}
+          class="footer-title"
+        >
           NeuroTopology
         </a>
 
@@ -31,11 +36,25 @@ const year = new Date().getFullYear();
 
           <h2>Explore</h2>
 
-          <a href="/research">Research</a>
-          <a href="/people">People</a>
-          <a href="/publications">Publications</a>
-          <a href="/software">Software</a>
-          <a href="/data">Data</a>
+          <a href={sitePath("/research")}>
+            Research
+          </a>
+
+          <a href={sitePath("/people")}>
+            People
+          </a>
+
+          <a href={sitePath("/publications")}>
+            Publications
+          </a>
+
+          <a href={sitePath("/software")}>
+            Software
+          </a>
+
+          <a href={sitePath("/data")}>
+            Data
+          </a>
 
         </div>
 

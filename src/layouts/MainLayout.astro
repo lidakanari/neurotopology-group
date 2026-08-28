@@ -33,6 +33,7 @@ const canonicalURL =
 const socialImage =
   new URL(image, siteURL);
 
+import { sitePath } from "../lib/paths";
 ---
 
 <!doctype html>
@@ -124,7 +125,7 @@ const socialImage =
     <link
       rel="icon"
       type="image/png"
-      href="/favicon.png"
+      href={sitePath("/favicon.png")}
     />
 
     <!-- Fonts -->

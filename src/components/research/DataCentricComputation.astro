@@ -1,6 +1,8 @@
 ---
 import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
+
+import { sitePath } from "../../lib/paths";
 ---
 
 <Section
@@ -17,7 +19,7 @@ import Container from "../layout/Container.astro";
       <div class="research-theme-header-figure">
 
         <img
-          src="/images/research/data-centric-computation.png"
+          src={sitePath("/images/research/data-centric-computation.png")}
           alt="Computational representations and analysis of biological structure"
         />
 
@@ -113,7 +115,7 @@ import Container from "../layout/Container.astro";
           <!-- 2026 -->
 
           <a
-            href="/publications#veraszto2026multimodal"
+            href={sitePath("/publications#veraszto2026multimodal")}
             class="research-publication"
           >
             <span>2026</span>
@@ -129,7 +131,7 @@ import Container from "../layout/Container.astro";
           <!-- 2024 -->
 
           <a
-            href="/publications#kanari2024deep"
+            href={sitePath("/publications#kanari2024deep")}
             class="research-publication"
           >
             <span>2024</span>
@@ -144,7 +146,7 @@ import Container from "../layout/Container.astro";
           <!-- 2022 -->
 
           <a
-            href="/publications#colombo2022morphomics"
+            href={sitePath("/publications#colombo2022morphomics")}
             class="research-publication"
           >
             <span>2022</span>
@@ -159,7 +161,7 @@ import Container from "../layout/Container.astro";
           <!-- 2019 -->
 
           <a
-            href="/publications#kanari2019objective"
+            href={sitePath("/publications#kanari2019objective")}
             class="research-publication"
           >
             <span>2019</span>

@@ -3,6 +3,7 @@ import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
 
 import { people } from "../../lib/people";
+import { sitePath } from "../../lib/paths";
 
 const currentPeople = people.filter(
   (person) => person.current
@@ -17,12 +18,13 @@ const currentPeople = people.filter(
 
       <h2>The People Behind NeuroTopology</h2>
 
-  <p>
-    Meet the researchers developing mathematical and computational
-    approaches in NeuroTopology Group.
-  </p>
+      <p>
+        Meet the researchers developing mathematical and computational
+        approaches in NeuroTopology Group.
+      </p>
 
     </header>
+
 
     <div class="people-grid">
 
@@ -36,7 +38,7 @@ const currentPeople = people.filter(
               {
                 person.photo && (
                   <img
-                    src={person.photo}
+                    src={sitePath(person.photo)}
                     alt={person.name}
                   />
                 )
@@ -63,14 +65,16 @@ const currentPeople = people.filter(
     </div>
 
 
-<div class="people-preview-link">
-  <a
-    href="/people"
-    class="section-link"
-  >
-    Meet the group →
-  </a>
-</div>
+    <div class="people-preview-link">
+
+      <a
+        href={sitePath("/people")}
+        class="section-link"
+      >
+        Meet the group →
+      </a>
+
+    </div>
 
   </Container>
 

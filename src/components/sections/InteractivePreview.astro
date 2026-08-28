@@ -1,6 +1,8 @@
 ---
 import Section from "../layout/Section.astro";
 import Container from "../layout/Container.astro";
+
+import { sitePath } from "../../lib/paths";
 ---
 
 <Section class="interactive-preview">
@@ -28,7 +30,7 @@ import Container from "../layout/Container.astro";
         <div class="interactive-card-image">
 
           <img
-            src="/images/interactive/Exploration1.png"
+            src={sitePath("/images/interactive/Exploration1.png")}
             alt="Neuronal morphology for the Real Neuron Challenge"
           />
 
@@ -62,7 +64,7 @@ import Container from "../layout/Container.astro";
         <div class="interactive-card-image">
 
           <img
-            src="/images/interactive/Exploration2.png"
+            src={sitePath("/images/interactive/Exploration2.png")}
             alt="Progressive generation of a branching neuronal morphology"
           />
 
