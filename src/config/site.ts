@@ -5,7 +5,7 @@ export const SITE = {
 
   browserTitle: "NeuroTopology Group | University of Oxford",
 
-  subtitle: "Mathematics • Topology • Neuroscience • AI",
+  subtitle: "Mathematics • Topology • Neuroscience • Computation",
 
   tagline:
     "Developing mathematical foundations for understanding biological structure across scales.",
