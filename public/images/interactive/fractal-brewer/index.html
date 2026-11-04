@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fractal Brewer — Grow your fractal neuron!</title>
+<style>
+:root{color-scheme:dark;--bg:#050b19;--panel:#0d1b33;--line:#263b59;--text:#edf7ff;--muted:#91a8c5;--mint:#6ce7d0;--gold:#eecb89;--red:#ff7888}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 0,#172b55,#050b19 72%);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text)}.shell{max-width:1100px;margin:auto;padding:20px}.header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.header h1{margin:0;font-size:clamp(22px,4vw,32px);letter-spacing:.02em}.eyebrow{color:var(--mint);font-size:11px;letter-spacing:.17em;text-transform:uppercase}.sub{margin:2px 0 0;color:var(--muted)}button,input{font:inherit}button{border:1px solid #3b6170;background:#1b3b4b;color:var(--text);border-radius:11px;padding:11px 15px;cursor:pointer;font-weight:650;transition:background .15s}button:hover:not(:disabled){background:#28566a}button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}button:disabled{opacity:.4;cursor:not-allowed}.primary{background:#1c796a;border-color:#38a58d}.primary:hover:not(:disabled){background:#22977f}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0 10px}.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}.stat .label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}.stat .val{font-size:23px;font-weight:750;font-variant-numeric:tabular-nums}.bar{height:9px;background:#233d50;border-radius:99px;overflow:hidden;margin-bottom:14px}.fill{height:100%;width:0;background:linear-gradient(90deg,#3dba9d,#b4f0ca);transition:width .12s}.layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:15px}.boardWrap{position:relative;overflow:hidden;border:1px solid #355267;border-radius:16px;background:#060f23;box-shadow:0 15px 45px #0006,inset 0 0 45px #050d20}.boardWrap canvas{display:block;width:100%;height:auto;aspect-ratio:4/3;touch-action:none;cursor:crosshair}.hint{position:absolute;bottom:9px;left:12px;background:#091320b8;border-radius:6px;padding:3px 7px;font-size:12px;color:#bad0d8;pointer-events:none}.sidebar{display:flex;flex-direction:column;gap:12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}.panel h2{font-size:16px;margin:0 0 8px}.panel p{margin:7px 0;color:var(--muted);font-size:13px}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.buttons button{padding:13px 6px}.buttons .wide{grid-column:1/-1}.direction{display:flex;align-items:center;gap:8px;margin:12px 0}.direction button{flex:1}.angle{color:var(--gold);font-variant-numeric:tabular-nums;white-space:nowrap}.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:12px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.leader{padding-left:22px;margin:10px 0 0}.leader li{padding:4px 0;color:#dce9ed}.leader .score{float:right;color:var(--gold);font-variant-numeric:tabular-nums}.notice{color:var(--gold)!important}.footer{margin-top:16px;color:var(--muted);font-size:12px}.overlay{position:absolute;inset:0;background:#071320e8;display:flex;align-items:center;justify-content:center;padding:20px;z-index:3}.modal{width:min(430px,100%);max-height:100%;overflow:auto;text-align:center;border:1px solid #406075;border-radius:17px;background:#14273b;padding:25px;box-shadow:0 20px 70px #0008}.modal h2{font-size:28px;margin:4px 0}.modal p{color:#b3cad4}.modal .big{font-size:38px;color:var(--gold);font-weight:800}.modal input{background:#0b1b2b;border:1px solid #4b6c7d;border-radius:8px;padding:11px;color:white;width:100%;margin:8px 0}.modal button{margin-top:8px;width:100%}.overlay.result-overlay{position:relative;inset:auto;background:#101e2e;padding:14px;border-top:1px solid #355267}.overlay.result-overlay .modal{width:100%;max-width:none;box-shadow:none;padding:16px}.overlay.result-overlay .modal h2{font-size:24px}.overlay.result-overlay .modal .big{font-size:30px}.hidden{display:none!important}.mini{font-size:12px;color:var(--muted)}@media(max-width:780px){.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(2,1fr)}.stat .val{font-size:21px}}@media(max-width:510px){.shell{padding:10px}.sidebar{grid-template-columns:1fr}.panel{padding:13px}.stat{padding:10px}.header h1{font-size:23px}}
+
+.rw-control{margin:14px 0}.rw-head{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:13px;font-weight:650}.rw-head output{color:#b9e8d6;font-variant-numeric:tabular-nums}.rw-control input[type=range]{width:100%;accent-color:#72d8bf;cursor:pointer;margin:9px 0 2px}.rw-help{font-size:11px!important;line-height:1.4;margin:0!important}.rw-note{padding:9px 11px;border-radius:9px;background:#132c38;border:1px solid #305365}
+.research-panel p{line-height:1.62;margin:11px 0;font-size:13px}.research-panel strong{color:#dceef5}.research-cite{background:#102c36;border:1px solid #315764;border-radius:10px;padding:11px}.research-cite a{color:#8fe7d2;text-decoration:underline;text-underline-offset:3px}.research-cite a:hover{color:#c2ffe9}
+.credit{padding:10px 12px;border-left:3px solid #73c5b4;background:#122b38;border-radius:5px;color:#c7dce8!important}
+/* v2.4: a shorter, more balanced research layout */
+.shell{max-width:1260px;padding:16px 22px}.layout{grid-template-columns:minmax(0,1fr) 330px;align-items:start;gap:16px}
+.sidebar{gap:10px}.sidebar .panel{padding:13px 15px}.sidebar .panel p{margin:6px 0;font-size:12.5px;line-height:1.5}
+.research-panel p{line-height:1.48!important;margin:7px 0!important}.research-panel .credit{padding:7px 10px}
+.panel[aria-label="Random walk settings"]{margin-top:12px;padding:13px 16px}
+.panel[aria-label="Random walk settings"] h2{margin-bottom:2px}
+.panel[aria-label="Random walk settings"]>p:first-of-type{margin:3px 0 9px}
+.panel[aria-label="Random walk settings"] .rw-control{margin:0;min-width:0}
+.panel[aria-label="Random walk settings"] .rw-help{font-size:11px;margin:2px 0 0}
+.panel[aria-label="Random walk settings"] .rw-note{margin:7px 0}
+.panel[aria-label="Random walk settings"] #rwReset{width:auto!important;margin-top:5px}
+.compact-details{padding:11px 14px!important}.compact-details summary{cursor:pointer;font-weight:700;list-style-position:inside}.compact-details summary:hover{color:#9fe5d4}.details-content{padding-top:8px}
+@media(min-width:980px){.panel[aria-label="Random walk settings"]{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:16px;align-items:start}.panel[aria-label="Random walk settings"] h2,.panel[aria-label="Random walk settings"]>p:first-of-type,.panel[aria-label="Random walk settings"] .rw-note{grid-column:1/-1}.panel[aria-label="Random walk settings"] #rwReset{grid-column:1/-1;justify-self:start}}
+@media(max-width:900px){.layout{grid-template-columns:minmax(0,1fr) 270px}.sidebar{display:flex}.shell{padding:12px}}
+@media(max-width:720px){.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr}.research-panel{grid-column:1/-1}}
+@media(max-width:510px){.sidebar{grid-template-columns:1fr}.research-panel{grid-column:auto}.shell{padding:10px}}
+.research-reference{padding:12px 16px}.research-reference h2{font-size:13px;color:#b4d8d0;margin-bottom:3px}.research-reference .research-cite{margin:0}.completion-bonus{color:#a6efd4!important;font-weight:600}
+
+/* Scientific results dashboard, displayed below the untouched final brain morphology. */
+.science-results{margin-top:14px;padding:18px;background:#0b1b2b;border:1px solid #31536b;border-radius:16px}
+.science-results h2{font-size:21px;margin:0 0 5px}.science-results p{color:#a9c2ce;font-size:13px;margin:6px 0 13px}
+.science-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:14px 0}
+.science-kpi{background:#14283b;border:1px solid #25475d;padding:12px;border-radius:10px}.science-kpi span{font-size:11px;color:#a8c1d0;display:block}.science-kpi strong{font-size:23px;color:#e8faff}
+.science-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.science-card{min-width:0;background:#0b1524;border:1px solid #254057;border-radius:12px;padding:12px}.science-card h3{margin:0 0 8px;font-size:13px;color:#ccece8}.science-card canvas{width:100%;height:auto;display:block;background:#07121f;border-radius:8px}
+.science-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.science-note{font-size:12px;color:#93b1c2}
+@media(max-width:510px){.science-kpis{grid-template-columns:repeat(2,1fr)}.science-grid{gap:7px}.science-card{padding:6px}.science-card h3{font-size:11px}}
+
+/* Separate end-of-game scientific dashboard; the playing layout is not modified. */
+#finalPage{max-width:1200px;margin:12px auto 28px}#finalPage.hidden{display:none!important}
+body.final-mode .stats,body.final-mode .bar,body.final-mode .layout{display:none!important}
+body.final-mode .header #restartTop{display:none}
+.final-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.final-head h2{margin:2px 0;font-size:clamp(23px,3vw,32px)}
+.final-primary{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(270px,0.85fr);gap:15px;align-items:stretch}
+.final-card{border:1px solid #29465c;border-radius:15px;background:#0b1b2b;padding:15px;min-width:0}
+.final-card h3{margin:0 0 10px;font-size:16px;color:#d6f6f0}
+#finalMorph{width:100%;height:auto;display:block;border-radius:9px;background:#000;aspect-ratio:4/3}
+.final-section-title{color:#75d9c6;text-transform:uppercase;font-size:12px;letter-spacing:.1em;margin:14px 0 7px;font-weight:750}
+.final-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid #20364b;font-size:13px}
+.final-row span{color:#a9c2d3}.final-row strong{font-variant-numeric:tabular-nums;color:#f0f9ff}
+.final-note{color:#99b6c6;font-size:12px;line-height:1.5}
+.final-comparison{margin-top:15px}.final-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.final-grid canvas{width:100%;height:auto;display:block;border-radius:8px;background:#06121e}
+.final-actions{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0}.final-actions button{padding:10px 14px}
+.final-input{background:#081525;color:#f1fbff;border:1px solid #496479;border-radius:7px;padding:9px;width:100%;margin:7px 0}
+.final-score-summary{margin-top:12px;padding:12px 14px;border:1px solid #31536a;border-radius:12px;background:#102c35;color:#d9f4ee;font-size:14px;line-height:1.6}.final-score-summary strong{color:#f3d48b}.final-ranking{margin-top:12px}.final-ranking strong{color:#f3d48b}
+@media(max-width:740px){.final-primary{grid-template-columns:1fr}.final-grid{gap:8px}.final-card{padding:10px}.final-grid h3{font-size:12px}}
+
+/* v3.9: compact top scores and polished shareable results */
+.final-top-scores{margin-top:15px;border-top:1px solid #29465c;padding-top:11px}
+.final-top-scores h3{margin:0 0 8px;font-size:14px;color:#75d9c6}
+.final-score-list{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.final-score-list li{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 9px;border:1px solid #244256;border-radius:8px;background:#102638;font-size:12px}
+.final-score-list .place{color:#75d9c6}.final-score-list .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#d6e8f0}.final-score-list .points{font-weight:750;color:#f3d48b}
+.final-score-list .current{border-color:#5e9f94;background:#183b40}.final-score-list .empty{display:block;color:#9bb6c6}
+.final-score-foot{margin:7px 0 0;font-size:11px;color:#91aebd}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="header"><div><div class="eyebrow">Generative research experiment · Fractal Edition v0.2</div><h1>Fractal Brewer</h1><p class="sub">Design the rules. Grow a fractal neuron. Capture golden (+1) and rare blue (+5) stars within 1,000 growth units.</p></div><button id="restartTop">New game ↻</button></header>
+<section id="finalPage" class="hidden" aria-label="Final scientific results"></section><div class="stats"><div class="stat"><div class="label">Resource points</div><div class="val" id="score">0</div></div><div class="stat"><div class="label">Tree length</div><div class="val" id="length">0 / 1000</div></div><div class="stat"><div class="label">Active tips</div><div class="val" id="tips">1</div></div><div class="stat"><div class="label">Growth ticks</div><div class="val" id="turns">0</div></div></div><div class="bar"><div class="fill" id="progress"></div></div>
+<div class="layout"><section><div class="boardWrap"><canvas id="board" width="800" height="600" aria-label="Automatically generated fractal neuron"></canvas><div class="hint" id="boardHint">Automatic fractal growth</div><div class="overlay" id="overlay"><div class="modal" id="modal"></div></div></div><section id="scienceResults" class="science-results hidden" aria-label="Scientific results"></section><div class="legend"><span><i class="dot" style="background:#69e0c2"></i>Violet trunk · cyan recursive daughters</span><span><i class="dot" style="background:#ffcd72"></i>Gold +1</span><span><i class="dot" style="background:#65baff;box-shadow:0 0 9px #3c9cff"></i>Rare blue +5 (1 of 20)</span><span><i class="dot" style="background:#fff"></i>Growing tips</span><span><i class="dot" style="background:#7ba7c5"></i>Terminal tips</span></div><section class="panel" aria-label="Fractal growth settings"><h2>Fractal growth parameters</h2><p>Adjust the six sliders before or during growth. Changes affect future growth and bifurcations; existing branches stay unchanged.</p>
+<div class="rw-control"><div class="rw-head"><label for="fAngle">Branching angle</label><output id="fAngleVal">35°</output></div><input id="fAngle" type="range" min="5" max="85" step="1" value="35"><p class="rw-help">Angle between daughter branches; each turns half this angle.</p></div>
+<div class="rw-control"><div class="rw-head"><label for="fInterval">Branching interval</label><output id="fIntervalVal">25</output></div><input id="fInterval" type="range" min="6" max="80" step="1" value="25"><p class="rw-help">Initial growth steps between bifurcations.</p></div>
+<div class="rw-control"><div class="rw-head"><label for="fRatio">Daughter length ratio</label><output id="fRatioVal">72%</output></div><input id="fRatio" type="range" min="40" max="95" step="1" value="72"><p class="rw-help">Branching interval decreases each generation by this factor.</p></div>
+<div class="rw-control"><div class="rw-head"><label for="fNoise">Angular randomness</label><output id="fNoiseVal">0°</output></div><input id="fNoise" type="range" min="0" max="45" step="1" value="0"><p class="rw-help">Random variation in each daughter direction; zero gives symmetry.</p></div>
+<div class="rw-control"><div class="rw-head"><label for="fBias">Upward bias</label><output id="fBiasVal">0%</output></div><input id="fBias" type="range" min="0" max="100" step="1" value="0"><p class="rw-help">Gradually steers branches toward upward growth.</p></div>
+<div class="rw-control"><div class="rw-head"><label for="fDeath">Tip death probability</label><output id="fDeathVal">0%</output></div><input id="fDeath" type="range" min="0" max="20" step="1" value="0"><p class="rw-help">Chance per growth step that a tip stops permanently.</p></div>
+<button id="fReset" style="width:100%;padding:8px">Reset fractal parameters</button><p class="rw-help" id="fLocked">Sliders are live: changes affect subsequent growth.</p></section></section>
+<aside class="sidebar"><section class="panel"><h2>Fractal growth controls</h2><p>Set the fractal rules, then press <strong>Start</strong>. All branches grow automatically and bifurcate recursively. Collisions or boundaries stop only the affected tip. Press <strong>Enter</strong> to pause or resume. No steering is needed.</p><div class="buttons"><button class="primary wide" id="grow">▶ Start <span class="mini">(Enter)</span></button></div><span id="heading" class="hidden">—</span><button id="split" class="hidden">Split</button><button id="left" class="hidden">Left</button><button id="right" class="hidden">Right</button><button id="resetAim" class="hidden">Reset</button><p id="status" role="status">Set the fractal parameters, then press Start.</p></section><details class="panel compact-details"><summary>How to play · full rules</summary><div class="details-content"><p><strong>Fractal growth:</strong> every active tip advances automatically. After its generation-specific interval it splits into two daughters at symmetric angles. Each daughter inherits a shorter interval, creating recursive self-similarity.</p><p>Adjust the angle, interval, length ratio, noise, upward bias and death probability before or during growth. A branch stops if it would intersect another branch or hit a side or bottom boundary. The board scrolls upward. No collision ends the entire run unless all tips have stopped.</p><p>Capture gold resources (+1) and rare blue resources (+5) with the same capture radii as Neuron Brewer. Twenty resources remain available ahead of the growth front. Growth uses a shared 1,000-unit budget; reaching it awards the same completion bonus. Results include resource statistics, optimal wiring comparison and TMD barcodes.</p></div></details><details class="panel compact-details"><summary>Local top 10</summary><div class="details-content"><p>Scores are stored in this browser for the prototype, not shared across visitors.</p><ol class="leader" id="leaderboard"></ol><p class="mini" id="runCount"></p></div></details><details class="panel compact-details research-panel"><summary>Why do neurons grow like trees?</summary><div class="details-content"><p class="credit"><strong>Created by Dr. Lida Kanari</strong><br>University of Oxford</p><p>Many natural systems grow as branching trees. Roots and branches spread through space to reach sunlight, water, or nutrients, while their shape reflects a trade-off between reaching new territory and the cost of building more structure.</p><p>Neurons also form intricate trees. Their <strong>dendrites</strong> receive signals from other cells, while their <strong>axons</strong> carry signals outward. To connect with many partners, neurons extend and branch, yet growth requires material, energy, and space. Their final shapes emerge from growth rules, constraints, and interactions with their surroundings.</p><p>In this simplified game, the glowing points stand for opportunities to capture resources. Golden points are worth 1; the rarer blue points are worth 5. Every growing tip consumes a limited budget: branching reaches more locations, but uses that budget faster. Your challenge is to balance exploration, efficiency, and collision avoidance. <strong>This is an interactive analogy, not a literal biological simulation.</strong></p></div></details><section class="panel research-reference"><h2>Research reference</h2><p class="research-cite"><strong>Research inspiration</strong><br><a href="https://www.sciencedirect.com/science/article/pii/S2211124722003308?via%3Dihub" target="_blank" rel="noopener noreferrer"><em>Computational synthesis of cortical dendritic morphologies</em></a> — Kanari and colleagues, <em>Cell Reports</em> (2022). Explore how computational growth rules can generate realistic neuronal trees.</p></section></aside></div><p class="footer">© 2026 Dr. Lida Kanari. All rights reserved. · University of Oxford (author affiliation).<br>Fractal Edition v0.2 · Recursive symmetric growth · Luminous Morphology · Scientific Results Edition · Reference-inspired brain silhouette · Performance optimized · Gentle tapering · Organic random-walk branches · Research rules: recursive binary growth · upward resource spawning region · scrolling world · 1,000 growth units · all active tips advance simultaneously. No data is sent to a server. At game over, the final morphology is framed by an smooth lateral brain outline based on the user-provided reference with a black exterior. Visual cable curvature is decorative; collision geometry remains exact.</p>
+</main>
+<script>
+(()=>{'use strict';
+const W=800,H=600,MAX=1000,STEP=10,RADIUS=16,RESOURCE_COUNT=20,ROOT={x:400,y:565};
+const $=id=>document.getElementById(id),canvas=$('board'),ctx=canvas.getContext('2d');
+const KEY='fractal-brewer-v01-scores',COUNT='fractal-brewer-v01-count';
+const fractal={angle:35,interval:25,ratio:72,noise:0,bias:0,death:0};
+const MAX_ACTIVE=96;
+let game,aim= -Math.PI/2,mouse=null,autoTimer=null,screen='start',cameraY=0,dragging=false;
+let running=false,growthFrame=0,lastGrowthTime=0,growthElapsed=0;const GROWTH_INTERVAL=150;
+function stopGrowth(){running=false;if(growthFrame){cancelAnimationFrame(growthFrame);growthFrame=0;}growthElapsed=0;lastGrowthTime=0;refreshPlayButton();}
+function refreshPlayButton(){const b=$('grow');if(!b)return;b.innerHTML=running?'Ⅱ Pause <span class="mini">(Enter)</span>':'▶ Start <span class="mini">(Enter)</span>';b.disabled=!game||game.finished||screen!=='play';}
+function growthLoop(time){if(!running||screen!=='play'||!game||game.finished)return;if(!lastGrowthTime)lastGrowthTime=time;growthElapsed+=Math.min(time-lastGrowthTime,120);lastGrowthTime=time;let ticks=0;while(growthElapsed>=GROWTH_INTERVAL&&ticks<2&&running&&!game.finished){growthElapsed-=GROWTH_INTERVAL;fractalTurn();ticks++;}if(running&&!game.finished)growthFrame=requestAnimationFrame(growthLoop);}
+function toggleGrowth(){if(!game||game.finished||screen!=='play')return;if(running){stopGrowth();$('status').textContent='Paused. Press Enter or Start to resume.';}else{clearInterval(autoTimer);autoTimer=null;running=true;lastGrowthTime=0;growthElapsed=0;refreshPlayButton();$('status').textContent='Fractal growth running. Press Enter to pause.';growthFrame=requestAnimationFrame(growthLoop);}}
+// Incremental spatial hash: collision checks inspect nearby segments only.
+const CELL=40;let spatial=new Map(),aimFrame=0;
+const gridKey=(x,y)=>x+','+y;
+function segmentCells(a,b,pad=0){const cells=[];const x0=Math.floor((Math.min(a.x,b.x)-pad)/CELL),x1=Math.floor((Math.max(a.x,b.x)+pad)/CELL),y0=Math.floor((Math.min(a.y,b.y)-pad)/CELL),y1=Math.floor((Math.max(a.y,b.y)+pad)/CELL);for(let x=x0;x<=x1;x++)for(let y=y0;y<=y1;y++)cells.push(gridKey(x,y));return cells;}
+function indexSegment(seg){for(const k of segmentCells(seg.a,seg.b)){let cell=spatial.get(k);if(!cell){cell=[];spatial.set(k,cell);}cell.push(seg);}}
+function nearbySegments(a,b,pad=0){const seen=new Set(),out=[];for(const k of segmentCells(a,b,pad)){const cell=spatial.get(k);if(!cell)continue;for(const seg of cell)if(!seen.has(seg)){seen.add(seg);out.push(seg);}}return out;}
+function requestAimDraw(){if(aimFrame)return;aimFrame=requestAnimationFrame(()=>{aimFrame=0;if(screen==='play')draw();});}
+const rw={randomness:12,bias:15,persistence:73,death:5};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),rad=d=>d*Math.PI/180,deg=r=>r*180/Math.PI;
+const norm=a=>Math.atan2(Math.sin(a),Math.cos(a));
+const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+const pointSeg=(p,a,b)=>{let dx=b.x-a.x,dy=b.y-a.y,q=dx*dx+dy*dy,t=q?clamp(((p.x-a.x)*dx+(p.y-a.y)*dy)/q,0,1):0;return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy)};
+const cross=(a,b)=>a.x*b.y-a.y*b.x;
+function intersection(a,b,c,d){const r={x:b.x-a.x,y:b.y-a.y},s={x:d.x-c.x,y:d.y-c.y},den=cross(r,s),ca={x:c.x-a.x,y:c.y-a.y};if(Math.abs(den)<1e-9){if(Math.abs(cross(ca,r))>1e-8)return null;const rr=r.x*r.x+r.y*r.y;if(rr<1e-9)return null;const t0=((c.x-a.x)*r.x+(c.y-a.y)*r.y)/rr,t1=((d.x-a.x)*r.x+(d.y-a.y)*r.y)/rr,lo=Math.max(0,Math.min(t0,t1)),hi=Math.min(1,Math.max(t0,t1));return hi>=lo-1e-8?{t:lo,p:{x:a.x+r.x*lo,y:a.y+r.y*lo}}:null;}const t=cross(ca,s)/den,u=cross(ca,r)/den;return t>=-1e-8&&t<=1+1e-8&&u>=-1e-8&&u<=1+1e-8?{t:clamp(t,0,1),p:{x:a.x+r.x*t,y:a.y+r.y*t}}:null;}
+function storage(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return []}}
+function savedCount(){try{return Number(localStorage.getItem(COUNT)||0)}catch{return 0}}
+function writeScores(arr,count){try{localStorage.setItem(KEY,JSON.stringify(arr));localStorage.setItem(COUNT,String(count));return true}catch{return false}}
+function sortScores(arr){return arr.sort((a,b)=>b.score-a.score||a.order-b.order)}
+function renderScores(){const arr=sortScores(storage());$('leaderboard').innerHTML=arr.length?arr.map(s=>`<li><span>${escapeHtml(s.name)}</span><span class="score">${s.score}</span></li>`).join(''):'<li>No scores yet</li>';$('runCount').textContent=`${savedCount()} locally completed game(s)`;}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function newGame(){finalGlowLayer=null;stopGrowth();document.body.classList.remove('final-mode');$('finalPage').classList.add('hidden');$('finalPage').innerHTML='';spatial=new Map();if(aimFrame){cancelAnimationFrame(aimFrame);aimFrame=0;}clearInterval(autoTimer);autoTimer=null;game={segments:[],tips:[{id:1,p:{...ROOT},heading:-Math.PI/2,active:true,controlled:false,depth:0,lineage:0,age:0,currentWidth:8.5,travel:0,interval:fractal.interval}],nextId:2,length:0,score:0,turns:0,resources:[],finished:false,reason:'',lastCollision:null,capturedCount:0,capturedValue:0,lostCount:0,lostValue:0,fadingResources:[]};aim=-Math.PI/2;mouse=null;cameraY=0;for(let i=0;i<RESOURCE_COUNT;i++)spawn(i===Math.floor(RESOURCE_COUNT/2));screen='play';$('scienceResults').classList.add('hidden');$('scienceResults').innerHTML='';$('overlay').classList.remove('result-overlay');$('overlay').classList.add('hidden');$('status').textContent='Fractal parameters locked. Press Start or Enter to grow.';update();draw();refreshPlayButton();syncFractal();}
+function resourceFront(){const ctl=game.tips.find(t=>t.controlled&&t.active);if(ctl)return ctl.p.y;const active=game.tips.filter(t=>t.active);return active.length?Math.min(...active.map(t=>t.p.y)):game.tips.reduce((v,t)=>Math.min(v,t.p.y),ROOT.y);}
+function spawn(special=false){const front=resourceFront();for(let n=0;n<1500;n++){
+// The front half-plane is anchored at the controlled tip; keep points within the scrolling view.
+const top=cameraY+20,bottom=Math.min(front-14,cameraY+H-25);
+if(bottom<=top)return;
+const p={x:24+Math.random()*(W-48),y:top+Math.random()*(bottom-top)};
+if(game.resources.some(r=>dist(r,p)<18)||nearbySegments(p,p,RADIUS+5).some(s=>pointSeg(p,s.a,s.b)<RADIUS+5)||game.tips.some(t=>dist(t.p,p)<RADIUS+5))continue;
+game.resources.push({...p,special});return;}}
+function refreshResources(){
+ const front=resourceFront(),FADE_START=H*0.10,FADE_DISTANCE=H*0.35;
+ // Keep resources fully visible until the controlled growth front is 10% of
+ // the viewport above them; then fade over a further 35% of the viewport.
+ game.resources=game.resources.filter(r=>{
+  const behind=r.y-front>=FADE_START;
+  const offscreen=r.y<cameraY+5||r.y>cameraY+H-5;
+  if(behind||offscreen){
+   game.lostCount++;game.lostValue+=r.special?5:1;
+   if(behind&&!offscreen)game.fadingResources.push({...r});
+   return false;
+  }
+  return true;
+ });
+ game.fadingResources=game.fadingResources.filter(r=>r.y-front<FADE_START+FADE_DISTANCE&&r.y>=cameraY-25&&r.y<=cameraY+H+25);
+ while(game.resources.length<RESOURCE_COUNT){const old=game.resources.length;spawn(false);if(game.resources.length===old)break;}
+ if(game.resources.length&&!game.resources.some(r=>r.special))game.resources[Math.floor(Math.random()*game.resources.length)].special=true;
+}
+function followCamera(){const ctl=game.tips.find(t=>t.controlled&&t.active);const active=game.tips.filter(t=>t.active);const focus=ctl||active.reduce((best,t)=>!best||t.p.y<best.p.y?t:best,null);if(focus){const desired=focus.p.y-H*.36;if(desired<cameraY)cameraY=desired;} }
+function aimAt(p){const t=game.tips.find(x=>x.controlled&&x.active);if(!t)return;const wanted=Math.atan2(p.y-t.p.y,p.x-t.p.x),diff=clamp(norm(wanted-t.heading),-rad(45),rad(45));aim=t.heading+diff;update();requestAimDraw();}
+function shiftAim(delta){const t=game.tips.find(x=>x.controlled&&x.active);if(!t)return;aim=t.heading+clamp(norm(aim-t.heading)+rad(delta),-rad(45),rad(45));update();requestAimDraw();}
+function clipToBoard(a,b){const min=3,maxX=W-3,maxY=H-3;let t=1;const dx=b.x-a.x,dy=b.y-a.y;if(dx>0)t=Math.min(t,(maxX-a.x)/dx);if(dx<0)t=Math.min(t,(min-a.x)/dx);if(dy>0)t=Math.min(t,(maxY-a.y)/dy);/* No top boundary: upward growth scrolls the camera. */t=clamp(t,0,1);return {x:a.x+dx*t,y:a.y+dy*t,hit:t<1-1e-8};}
+// Weighted correlated random walk. Weights sum to 100%.
+// Randomness injects angular noise; persistence retains angular momentum;
+// upward bias adds a soft correction toward vertical.
+function wander(tip){
+ // Circular mixture of three independent influences. 100% randomness is a
+ // genuine unbiased walk: each heading is uniform over the entire circle.
+ const randomHeading=Math.random()*Math.PI*2-Math.PI;
+ const wRandom=rw.randomness/100,wUp=rw.bias/100,wPersist=rw.persistence/100;
+ if(wRandom>=1-1e-10)return {heading:randomHeading,turnVelocity:0};
+ const x=wRandom*Math.cos(randomHeading)+wUp*Math.cos(-Math.PI/2)+wPersist*Math.cos(tip.heading);
+ const y=wRandom*Math.sin(randomHeading)+wUp*Math.sin(-Math.PI/2)+wPersist*Math.sin(tip.heading);
+ const heading=Math.hypot(x,y)<1e-9?tip.heading:Math.atan2(y,x);
+ return {heading,turnVelocity:norm(heading-tip.heading)};
+}
+// Each existing automatic tip independently stops before its movement with probability p.
+// The controlled tip is exempt; a newly created daughter starts rolling next turn.
+function applyTipDeath(){
+ let stopped=0;
+ for(const tip of game.tips){
+  if(tip.active&&!tip.controlled&&Math.random()*100<rw.death){
+   tip.active=false;tip.stopReason='random-death';stopped++;
+  }
+ }
+ if(stopped) $('status').textContent=`${stopped} automatic tip${stopped===1?'':'s'} stopped growing spontaneously.`;
+ return stopped;
+}
+function fractalTurn(){
+ if(!game||game.finished)return;
+ const active=game.tips.filter(t=>t.active);
+ if(!active.length){finish('All growing tips stopped growing');return;}
+ // Avoid runaway exponential growth, while keeping all existing active tips moving.
+ const splitAllowed=active.length<MAX_ACTIVE;
+ let available=MAX_ACTIVE-active.length;
+ const proposed=[];
+ for(const tip of active){
+  if(Math.random()*100<fractal.death){tip.active=false;tip.stopReason='random-death';continue;}
+  const interval=tip.interval||fractal.interval;
+  if(splitAllowed&&available>0&&(tip.travel||0)>=interval){
+   available--;
+   const half=rad(fractal.angle/2);
+   const noise=rad(fractal.noise);
+   proposed.push({tip,heading:tip.heading-half+(Math.random()*2-1)*noise,controlled:false,newTip:true,fractalChild:true,side:-1});
+   proposed.push({tip,heading:tip.heading+half+(Math.random()*2-1)*noise,controlled:false,newTip:true,fractalChild:true,side:1});
+  }else{
+   const delta=norm(-Math.PI/2-tip.heading);
+   const heading=tip.heading+delta*(fractal.bias/100)*0.12;
+   proposed.push({tip,heading,controlled:false,newTip:false});
+  }
+ }
+ if(!proposed.length){finish('All growing tips stopped growing');return;}
+ advance(proposed);
+}
+function runTurn(split=false){if(!game||game.finished)return;const ctl=game.tips.find(t=>t.controlled&&t.active);if(!ctl){autoFinish();return;}applyTipDeath();const controlledHeading=ctl.heading+clamp(norm(aim-ctl.heading),-rad(45),rad(45));let proposed=[];for(const tip of game.tips.filter(t=>t.active)){if(tip===ctl&&split){const side=Math.random()<.5?-1:1;proposed.push({tip,heading:controlledHeading,controlled:true,newTip:true});proposed.push({tip,heading:tip.heading+side*rad(30),controlled:false,newTip:true,turnVelocity:side*rad(2)});}else {const drift=tip===ctl?{heading:controlledHeading}:{...wander(tip)};proposed.push({tip,...drift,controlled:tip===ctl,newTip:false});}}advance(proposed);}
+function autoFinish(){if(game.finished)return;applyTipDeath();const proposals=game.tips.filter(t=>t.active).map(t=>({tip:t,...wander(t),controlled:false,newTip:false}));if(!proposals.length){finish('All growing tips stopped growing');return;}advance(proposals);if(!game.finished&& !game.tips.some(t=>t.controlled&&t.active)&&!running)scheduleAuto();}
+function scheduleAuto(){if(running)return;clearInterval(autoTimer);autoTimer=setInterval(()=>{if(game.finished||game.tips.some(t=>t.controlled&&t.active)){clearInterval(autoTimer);autoTimer=null;return;}autoFinish();},110);$('status').textContent='Controlled tip stopped. Remaining branches are advancing automatically…';}
+function advance(proposals){if(game.finished)return;game.turns++;
+// Each 10-pixel visual segment consumes exactly one growth-budget unit per tip.
+const capacity=proposals.length,scale=Math.min(1,(MAX-game.length)/capacity),moves=[];
+for(const pr of proposals){const a=pr.tip.p,b0={x:a.x+Math.cos(pr.heading)*STEP*scale,y:a.y+Math.sin(pr.heading)*STEP*scale},end=clipToBoard(a,b0),b={x:end.x,y:end.y};if(dist(a,b)>1e-7)moves.push({...pr,a,b,hitBoundary:end.hit});else moves.push({...pr,a,b,hitBoundary:true,zero:true});}
+// Resolve controlled growth first. Automatic tips stop just before their first collision.
+// Intentional parent/daughter junctions are legal; overlapping paths are not.
+const added=[];
+const ordered=[...moves].sort((a,b)=>Number(b.controlled)-Number(a.controlled));
+let controlledCollision=null,stoppedAutomatic=0;
+function firstCollision(m){
+ let first=null;
+ for(const s of nearbySegments(m.a,m.b)){
+  const it=intersection(m.a,m.b,s.a,s.b);if(!it)continue;
+  const shared=dist(m.a,s.a)<1e-6||dist(m.a,s.b)<1e-6;
+  if(shared&&dist(it.p,m.a)<1e-6){
+   const vx=m.b.x-m.a.x,vy=m.b.y-m.a.y;
+   const other=dist(m.a,s.a)<1e-6?s.b:s.a;
+   const wx=other.x-m.a.x,wy=other.y-m.a.y;
+   // At a shared junction, diverging segments may touch only at the junction.
+   if(Math.abs(vx*wy-vy*wx)>1e-7||vx*wx+vy*wy<=0)continue;
+  }
+  if(!first||it.t<first.t)first=it;
+ }
+ return first;
+}
+for(const m of ordered){
+ const hit=m.zero?null:firstCollision(m);
+ // Leave a visible safety gap of 0.6 pixels for automatically growing branches.
+ const full=dist(m.a,m.b);
+ const fraction=hit?(m.controlled?Math.max(0,hit.t):Math.max(0,hit.t-0.6/Math.max(full,1e-9))):1;
+ const b={x:m.a.x+(m.b.x-m.a.x)*fraction,y:m.a.y+(m.b.y-m.a.y)*fraction};
+ // At each bifurcation BOTH daughters start at two-thirds of the parent's
+ // current cable diameter. Between splits, width tapers gently and continuously,
+ // then approaches a fine 1px terminal cable asymptotically.
+ const startWidth=m.newTip?Math.max(0.7,(m.tip.currentWidth||8.5)*(2/3)):(m.tip.currentWidth||8.5);
+ const nextWidth=Math.max(0.7,1+(startWidth-1)*Math.exp(-1/62));
+ if(dist(m.a,b)>1e-7){const seg={a:{...m.a},b,depth:m.tip.depth||0,lineage:m.tip.lineage||m.tip.id,age:m.tip.age||0,widthStart:startWidth,widthEnd:nextWidth};game.segments.push(seg);indexSegment(seg);added.push(seg);game.length+=dist(m.a,b)/STEP;}
+ const active=!m.hitBoundary&&!m.zero&&!hit;
+ if(m.newTip){m.tip.active=false;game.tips.push({id:game.nextId++,p:b,heading:m.heading,active,controlled:m.controlled,depth:(m.tip.depth||0)+1,lineage:m.controlled?0:game.nextId-1,age:0,currentWidth:nextWidth,turnVelocity:0,travel:0,interval:Math.max(4,(m.tip.interval||fractal.interval)*fractal.ratio/100)});}
+ else{m.tip.p=b;m.tip.heading=m.heading;if(!m.controlled)m.tip.turnVelocity=m.turnVelocity||0;m.tip.active=active;m.tip.age=(m.tip.age||0)+1;m.tip.travel=(m.tip.travel||0)+dist(m.a,b)/STEP;m.tip.currentWidth=nextWidth;}
+ if(hit){if(m.controlled){controlledCollision=hit.p;break;}stoppedAutomatic++;}
+}
+for(let i=game.resources.length-1;i>=0;i--)if(added.some(s=>pointSeg(game.resources[i],s.a,s.b)<=(game.resources[i].special?RADIUS+4:RADIUS))){game.score+=game.resources[i].special?5:1;game.capturedCount++;game.capturedValue+=game.resources[i].special?5:1;game.resources.splice(i,1);}
+followCamera();refreshResources();
+if(controlledCollision){game.lastCollision=controlledCollision;finish('A growing tip intersected another branch');return;}
+if(stoppedAutomatic)$('status').textContent=`${stoppedAutomatic} automatic branch${stoppedAutomatic===1?'':'es'} stopped before an intersection. Continue growing!`;
+if(game.length>=MAX-1e-6){game.length=MAX;finish('You reached the 1,000-unit growth limit');return;}
+if(!game.tips.some(t=>t.active)){finish('All growing tips stopped growing');return;}
+update();draw();}
+
+// A scientific comparison computed only at game over, not during gameplay.
+// Rooted topology is reconstructed from exact simulation segments, not the decorative curves.
+function scientificTopology(){
+ const nodes=[],lookup=new Map();
+ const key=p=>Math.round(p.x*1e5)+','+Math.round(p.y*1e5);
+ function get(p){const k=key(p);if(lookup.has(k))return lookup.get(k);const id=nodes.length;nodes.push({x:p.x,y:p.y,adj:[]});lookup.set(k,id);return id;}
+ const root=get(ROOT);
+ for(const s of game.segments){const a=get(s.a),b=get(s.b),d=dist(s.a,s.b);if(a!==b){nodes[a].adj.push({to:b,d});nodes[b].adj.push({to:a,d});}}
+ // Connected tree from the soma; collision-terminated segments can end on a previously existing edge.
+ const parent=new Int32Array(nodes.length).fill(-1),distance=new Float64Array(nodes.length),seen=new Uint8Array(nodes.length);
+ const stack=[root];seen[root]=1;
+ while(stack.length){const u=stack.pop();for(const e of nodes[u].adj){if(seen[e.to])continue;seen[e.to]=1;parent[e.to]=u;distance[e.to]=distance[u]+e.d;stack.push(e.to);}}
+ const selected=[root];for(let i=0;i<nodes.length;i++)if(i!==root&&seen[i]&&(nodes[i].adj.length!==2))selected.push(i);
+ return {nodes,root,parent,distance,selected,seen};
+}
+function minimumSpanningTree(topo){
+ const ids=topo.selected, n=ids.length;
+ if(n===0)return {points:[],edges:[],length:0,root:0};
+ const points=ids.map(i=>({x:topo.nodes[i].x,y:topo.nodes[i].y}));
+ const best=new Float64Array(n).fill(Infinity),parent=new Int32Array(n).fill(-1),used=new Uint8Array(n),edges=[];best[0]=0;let length=0;
+ for(let j=0;j<n;j++){
+  let u=-1;for(let i=0;i<n;i++)if(!used[i]&&(u<0||best[i]<best[u]))u=i;
+  if(u<0)break;used[u]=1;
+  if(parent[u]>=0){edges.push({a:parent[u],b:u,d:best[u]});length+=best[u];}
+  for(let v=0;v<n;v++)if(!used[v]){const d=dist(points[u],points[v]);if(d<best[v]){best[v]=d;parent[v]=u;}}
+ }
+ return {points,edges,length,root:0};
+}
+// Persistent components of the superlevel sets of root-path distance on a rooted tree.
+// At each bifurcation the branch with the largest descendant maximum survives;
+// other descendant components die at that bifurcation's root distance (elder rule).
+function tmdPairs(points,edges,root){
+ const adj=points.map(()=>[]);for(const e of edges){adj[e.a].push({to:e.b,d:e.d});adj[e.b].push({to:e.a,d:e.d});}
+ const parents=new Int32Array(points.length).fill(-1),ds=new Float64Array(points.length),order=[],seen=new Uint8Array(points.length),stack=[root];seen[root]=1;
+ while(stack.length){const u=stack.pop();order.push(u);for(const e of adj[u])if(!seen[e.to]){seen[e.to]=1;parents[e.to]=u;ds[e.to]=ds[u]+e.d;stack.push(e.to);}}
+ const maxima=new Float64Array(points.length),pairs=[];
+ for(let j=order.length-1;j>=0;j--){const u=order[j],children=adj[u].filter(e=>parents[e.to]===u).map(e=>e.to);if(!children.length){maxima[u]=ds[u];continue;}
+  children.sort((a,b)=>maxima[b]-maxima[a]);maxima[u]=maxima[children[0]];
+  for(let k=1;k<children.length;k++)pairs.push({birth:ds[u],death:maxima[children[k]]});
+ }
+ if(points.length)pairs.push({birth:0,death:maxima[root]});
+ return pairs.filter(p=>p.death>p.birth+1e-6);
+}
+function playerTreeForTMD(topo){
+ const points=topo.nodes.map(n=>({x:n.x,y:n.y})),edges=[];
+ for(let i=0;i<points.length;i++)if(topo.seen[i]&&topo.parent[i]>=0)edges.push({a:topo.parent[i],b:i,d:dist(points[i],points[topo.parent[i]])});
+ return {points,edges,root:topo.root};
+}
+function scientificCanvas(id,w=640,h=420){const c=document.getElementById(id);c.width=w;c.height=h;return c;}
+function drawScientificTree(canvas,points,edges,isPlayer){
+ const c=canvas.getContext('2d'),w=canvas.width,h=canvas.height;c.fillStyle='#06121e';c.fillRect(0,0,w,h);
+ if(!points.length)return;
+ const xs=points.map(p=>p.x),ys=points.map(p=>p.y),xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys);
+ const scale=Math.min((w-72)/Math.max(1,xmax-xmin),(h-65)/Math.max(1,ymax-ymin));
+ const tx=x=>(x-(xmin+xmax)/2)*scale+w/2,ty=y=>(y-(ymin+ymax)/2)*scale+h/2;
+ c.lineCap='round';c.lineJoin='round';c.shadowColor=isPlayer?'#a37bfa':'#58e2cb';c.shadowBlur=8;c.strokeStyle=isPlayer?'#b69af4':'#78e5d6';c.lineWidth=isPlayer?2.2:1.8;
+ for(const e of edges){c.beginPath();c.moveTo(tx(points[e.a].x),ty(points[e.a].y));c.lineTo(tx(points[e.b].x),ty(points[e.b].y));c.stroke();}
+ c.shadowBlur=0;c.fillStyle='#f5d78c';c.beginPath();c.arc(tx(points[0].x),ty(points[0].y),4,0,2*Math.PI);c.fill();
+}
+function drawPersistence(canvas,pairs,sharedMax){
+ const c=canvas.getContext('2d'),w=canvas.width,h=canvas.height;c.fillStyle='#06121e';c.fillRect(0,0,w,h);
+ const left=53,right=w-20,top=20,bottom=h-42,range=Math.max(1,sharedMax),sx=x=>left+(x/range)*(right-left),sy=y=>bottom-(y/range)*(bottom-top);
+ c.strokeStyle='#456477';c.lineWidth=1;c.beginPath();c.moveTo(left,top);c.lineTo(left,bottom);c.lineTo(right,bottom);c.stroke();
+ c.setLineDash([5,6]);c.strokeStyle='#52748b';c.beginPath();c.moveTo(sx(0),sy(0));c.lineTo(sx(range),sy(range));c.stroke();c.setLineDash([]);
+ // Gaussian persistence image in birth/death coordinates, identical bandwidth and scales.
+ const sigma=Math.max(5,range*.045),radius=3*sigma;
+ for(const p of pairs){const cx=sx(p.birth),cy=sy(p.death),rx=radius/range*(right-left),ry=radius/range*(bottom-top);
+  const g=c.createRadialGradient(cx,cy,0,cx,cy,Math.max(rx,ry));g.addColorStop(0,'rgba(114,233,206,.60)');g.addColorStop(.40,'rgba(95,176,234,.22)');g.addColorStop(1,'rgba(95,176,234,0)');
+  c.fillStyle=g;c.beginPath();c.ellipse(cx,cy,Math.max(3,rx),Math.max(3,ry),0,0,2*Math.PI);c.fill();
+ }
+ c.fillStyle='#a6c5d4';c.font='15px system-ui';c.textAlign='center';c.fillText('Birth · path distance',w/2,h-12);
+ c.save();c.translate(18,h/2);c.rotate(-Math.PI/2);c.fillText('Death · path distance',0,0);c.restore();
+}
+function drawBarcode(canvas,pairs,sharedMax,player){
+ const c=canvas.getContext('2d'),w=canvas.width,h=canvas.height;c.fillStyle='#06121e';c.fillRect(0,0,w,h);
+ const left=66,right=w-25,top=25,bottom=h-52,range=Math.max(1,sharedMax);
+ const sorted=[...pairs].sort((a,b)=>(b.death-b.birth)-(a.death-a.birth));
+ const maxRows=Math.max(1,Math.floor((bottom-top)/7));const shown=sorted.slice(0,maxRows);
+ c.strokeStyle='#4a667c';c.lineWidth=1;c.beginPath();c.moveTo(left,top);c.lineTo(left,bottom);c.lineTo(right,bottom);c.stroke();
+ for(let i=0;i<=4;i++){const x=left+(right-left)*i/4;c.strokeStyle='#20364b';c.beginPath();c.moveTo(x,top);c.lineTo(x,bottom);c.stroke();c.fillStyle='#9bb8c9';c.font='12px system-ui';c.textAlign='center';c.fillText((range*i/4).toFixed(0),x,bottom+19);}
+ const rowH=(bottom-top)/Math.max(1,shown.length);c.lineCap='round';c.lineWidth=Math.min(4,Math.max(1.5,rowH*.6));c.strokeStyle=player?'#b99bee':'#72dfc8';
+ for(let i=0;i<shown.length;i++){const p=shown[i],y=top+(i+.5)*rowH;c.beginPath();c.moveTo(left+p.birth/range*(right-left),y);c.lineTo(left+p.death/range*(right-left),y);c.stroke();}
+ c.fillStyle='#b5ced9';c.font='14px system-ui';c.textAlign='center';c.fillText('Path distance from root (growth units)',w/2,h-12);
+ if(sorted.length>shown.length){c.textAlign='left';c.fillStyle='#a6b7c9';c.font='12px system-ui';c.fillText('Longest '+shown.length+' of '+sorted.length+' intervals',left,15);}
+}
+function branchingBenchmark(topo,mst,playerLength){
+ // Cuntz et al. (PNAS 2012) describe optimal-wiring scaling, including a
+ // 1/2-power length-versus-target-count law for planar arbors. The paper does
+ // NOT give a universal branch count for this game's dimensionless units.
+ // Calibrate the planar law to the MST of this run's own spatial endpoints:
+ // B_expected = B_MST * (L_player / L_MST)^2 (same spatial extent).
+ // This is an illustrative, geometry-calibrated scaling estimate, not a
+ // validated biological optimum or a global mathematical bound.
+ const adj=mst.points.map(()=>0);
+ for(const e of mst.edges){adj[e.a]++;adj[e.b]++;}
+ const mstBranches=adj.filter(v=>v>=3).length;
+ const mstUnits=mst.length/STEP;
+ const estimate=mstUnits>0?Math.round(mstBranches*Math.pow(playerLength/mstUnits,2)):0;
+ return {mstBranches,estimate:Math.max(1,estimate),mstUnits};
+}
+function finalRow(name,value){return `<div class="final-row"><span>${name}</span><strong>${value}</strong></div>`;}
+function renderScientificResults(){
+ const el=$('finalPage');el.classList.remove('hidden');
+ const captured=game.capturedCount,lost=game.lostCount,total=captured+lost,eff=total?100*captured/total:0;
+ const topo=scientificTopology(),player=playerTreeForTMD(topo),mst=minimumSpanningTree(topo);
+ const pPairs=tmdPairs(player.points,player.edges,player.root),mPairs=tmdPairs(mst.points,mst.edges,mst.root);
+ for(const pair of [...pPairs,...mPairs]){pair.birth/=STEP;pair.death/=STEP;}
+ const maxDist=Math.max(1,...pPairs.map(p=>p.death),...mPairs.map(p=>p.death));
+ const length=game.segments.reduce((sum,seg)=>sum+dist(seg.a,seg.b)/STEP,0);
+ const nBif=topo.nodes.reduce((sum,n,i)=>sum+Number(topo.seen[i]&&n.adj.length>=3),0);
+ const nTerminal=topo.nodes.reduce((sum,n,i)=>sum+Number(topo.seen[i]&&i!==topo.root&&n.adj.length===1),0);
+ const benchmark=branchingBenchmark(topo,mst,length);
+ const branchRatio=100*nBif/benchmark.estimate;
+ const wiring=length>0?100*benchmark.mstUnits/length:0;
+ const lengthRatio=benchmark.mstUnits>0?length/benchmark.mstUnits:Infinity;
+ const branchWithin50=Math.abs(nBif-benchmark.estimate)/benchmark.estimate<=.5;
+ const wireWithin50=lengthRatio<=1.5;
+ const optimalBonus=(branchWithin50||wireWithin50)?10:0;
+ if(!game.optimalBonusApplied){game.score+=optimalBonus;game.optimalBonusApplied=true;game.optimalBonus=optimalBonus;update();}
+ const existing=storage(),count=savedCount()+1,rank=1+existing.filter(s=>s.score>game.score).length;
+ const qualifies=existing.length<10||game.score>existing[9].score;
+ const completed=game.length>=MAX-1e-6&&!game.lastCollision;
+ const earnedBonuses=[...(completed?['a bonus for no intersection']:[]),...(optimalBonus?['a bonus for optimal wiring']:[])];
+ const bonusSentence=earnedBonuses.length===2?'You earned a bonus for no intersection and a bonus for optimal wiring.':earnedBonuses.length===1?'You earned '+earnedBonuses[0]+'.':'No completion or optimal wiring bonus was earned.';
+ el.innerHTML=`<div class="final-head"><div><div class="eyebrow">Fractal Brewer · Scientific results</div><h2>Congratulations! You brewed a fractal neuron.</h2><p class="final-note">${escapeHtml(game.reason)} · ${game.turns} turns</p></div><button id="newFromFinal" class="primary">↻ Play again</button></div>
+ <div class="final-primary"><section class="final-card"><h3>Final neuronal morphology</h3><canvas id="finalMorph" width="800" height="600" aria-label="Final neuron inside the approved brain outline"></canvas><p class="final-score-summary"><strong>Congratulations!</strong> You scored <strong>${game.score}</strong> and ranked <strong>${rank} / ${count}</strong>! ${bonusSentence}</p></section>
+ <section class="final-card"><h3>Morphology statistics</h3>
+ <div class="final-section-title">Resources</div>
+ ${finalRow('Captured',captured)}${finalRow('Lost',lost)}${finalRow('Capture efficiency',eff.toFixed(1)+'%')}
+ <div class="final-section-title">Branching</div>
+ ${finalRow('Branching (bifurcations)',nBif)}${finalRow('Total length',length.toFixed(1))}${finalRow('Estimated optimal branching',benchmark.estimate)}${finalRow('Generated / estimated optimal',branchRatio.toFixed(1)+'%')}
+ <div class="final-section-title">Optimal wiring</div>
+ ${finalRow('Branching (optimal wiring tree)',benchmark.mstBranches)}${finalRow('Total length (optimal wiring tree)',benchmark.mstUnits.toFixed(1))}${finalRow('Optimal wiring / player length',wiring.toFixed(1)+'%')}
+ ${qualifies?'<label class="final-note" for="finalName">Top 10! Username (optional)</label><input class="final-input" id="finalName" maxlength="24" placeholder="anonymous'+count+'">':''}
+ <button id="saveFinalScore" class="primary">${qualifies?'Save leaderboard score':'Record completed run'}</button>
+ <div class="final-top-scores"><h3>🏆 Top scores</h3><ol class="final-score-list" id="finalTopScores"></ol><p class="final-score-foot" id="finalTopScoresNote"></p></div>
+ </section></div>
+ <section class="final-comparison"><h2>Topology comparison</h2><p class="final-note">The optimal wiring tree is a minimum spanning tree connecting the root, bifurcations and terminal tips. It minimizes connection length for those points, not resource-capture performance.</p>
+ <div class="final-grid"><div class="final-card"><h3>A · Player tree</h3><canvas id="playerScience"></canvas></div><div class="final-card"><h3>B · Optimal wiring tree</h3><canvas id="mstScience"></canvas></div><div class="final-card"><h3>C · Player TMD barcodes</h3><canvas id="playerTMD"></canvas></div><div class="final-card"><h3>D · Optimal wiring TMD barcodes</h3><canvas id="mstTMD"></canvas></div></div>
+ <details class="final-card" style="margin-top:12px"><summary>What do TMD barcodes mean?</summary><p class="final-note">Each interval represents a persistent branching feature of a rooted tree. The horizontal axis is distance along the tree from its root, rather than straight-line radial distance. Longer intervals indicate features spanning a greater path-distance range. Both plots use the same scale. These are browser-calculated path-distance branch-persistence barcodes, not a clinical biological-realism score.</p></details>
+ <div class="final-actions"><button id="exportScience" class="primary">↓ Save full scientific results PNG</button><button id="saveFinalNeuron">↓ Save final neuron PNG</button></div>
+ <p class="final-note">© 2026 Dr. Lida Kanari · University of Oxford · Inspired by Kanari and colleagues, Cell Reports (2022).</p></section>`;
+ $('finalMorph').getContext('2d').drawImage(canvas,0,0);
+ drawScientificTree(scientificCanvas('playerScience'),player.points,player.edges,true);
+ drawScientificTree(scientificCanvas('mstScience'),mst.points,mst.edges,false);
+ drawBarcode(scientificCanvas('playerTMD',640,330),pPairs,maxDist,true);
+ drawBarcode(scientificCanvas('mstTMD',640,330),mPairs,maxDist,false);
+ let saved=false;
+ refreshFinalTopScores();
+ $('saveFinalScore').onclick=()=>{if(saved)return;saved=true;if(qualifies){const name=($('finalName').value||'').trim()||`anonymous${count}`;writeScores(sortScores([...existing,{name,score:game.score,order:count}]).slice(0,10),count);}else writeScores(existing,count);game.scoreRecorded=true;renderScores();refreshFinalTopScores();$('saveFinalScore').textContent='Saved ✓';$('saveFinalScore').disabled=true;};
+ $('newFromFinal').onclick=()=>{if(!saved)$('saveFinalScore').click();newGame();};
+ $('exportScience').onclick=downloadScientificResults;$('saveFinalNeuron').onclick=downloadMorphology;
+ document.body.classList.add('final-mode');window.scrollTo({top:0,behavior:'instant'});
+}
+function refreshFinalTopScores(){
+ const list=$('finalTopScores');if(!list)return;
+ const scores=sortScores(storage().slice()).slice(0,10);
+ list.innerHTML=scores.length?scores.map((entry,i)=>`<li><span class="place">${i+1}.</span><span class="name">${escapeHtml(entry.name)}</span><span class="points">${entry.score}</span></li>`).join(''):'<li class="empty">No recorded scores yet — be the first!</li>';
+ $('finalTopScoresNote').textContent=`${savedCount()} completed game(s) · Scores are saved in this browser only`;
+}
+function downloadScientificResults(){
+ if(!game.finished)return;
+ // Export the same two-column card hierarchy as the actual final results screen.
+ const W=1600, margin=58,gap=22,leftW=866,rightW=W-2*margin-gap-leftW;
+ const out=document.createElement('canvas');out.width=W;out.height=2350;
+ const c=out.getContext('2d');
+ const color={bg:'#071421',card:'#0b1b2b',border:'#29465c',mint:'#75d9c6',text:'#e7f7ff',muted:'#a9c2d3',gold:'#f3d48b',sub:'#102c35'};
+ const round=(x,y,w,h,r,fill,stroke)=>{c.beginPath();c.roundRect(x,y,w,h,r);c.fillStyle=fill;c.fill();if(stroke){c.strokeStyle=stroke;c.lineWidth=2;c.stroke();}};
+ const txt=(v,x,y,size=22,col=color.text,bold=false)=>{c.font=`${bold?'700 ':'400 '}${size}px system-ui,-apple-system,Segoe UI,sans-serif`;c.fillStyle=col;c.textAlign='left';c.fillText(String(v),x,y);};
+ const wrap=(value,x,y,maxWidth,lineHeight,size,col,bold=false)=>{c.font=`${bold?'700 ':'400 '}${size}px system-ui`;const words=String(value).split(/\s+/);let line='',yy=y;for(const word of words){const next=line?line+' '+word:word;if(c.measureText(next).width>maxWidth&&line){txt(line,x,yy,size,col,bold);yy+=lineHeight;line=word;}else line=next;}if(line)txt(line,x,yy,size,col,bold);return yy;};
+ const stat=(label,value,y,x=margin+leftW+gap+26,width=rightW-52)=>{txt(label,x,y,19,color.muted);c.textAlign='right';c.font='700 20px system-ui';c.fillStyle=color.text;c.fillText(String(value),x+width,y);c.textAlign='left';c.strokeStyle='#20364b';c.lineWidth=1;c.beginPath();c.moveTo(x,y+12);c.lineTo(x+width,y+12);c.stroke();};
+ const topo=scientificTopology(),mst=minimumSpanningTree(topo),len=game.segments.reduce((a,s)=>a+dist(s.a,s.b)/STEP,0),bif=topo.nodes.filter((n,i)=>topo.seen[i]&&n.adj.length>=3).length,bench=branchingBenchmark(topo,mst,len);
+ const captured=game.capturedCount,lost=game.lostCount,eff=(100*captured/(captured+lost||1)).toFixed(1),wiring=(100*bench.mstUnits/(len||1)).toFixed(1);
+ const count=savedCount()+(game.finished&&!game.scoreRecorded?1:0),rank=1+storage().filter(s=>s.score>game.score).length;
+ c.fillStyle=color.bg;c.fillRect(0,0,W,out.height);
+ txt('NEURON BREWER · GROW YOUR NEURON!',margin,70,18,color.mint,true);
+ txt('Congratulations! You brewed a fractal neuron.',margin,122,43,color.text,true);
+ txt(`${game.reason} · ${game.turns} turns`,margin,160,20,color.muted);
+ const y0=192,topH=910;
+ round(margin,y0,leftW,topH,19,color.card,color.border);
+ round(margin+leftW+gap,y0,rightW,topH,19,color.card,color.border);
+ txt('Final neuronal morphology',margin+24,y0+42,25,color.text,true);
+ const imgX=margin+22,imgY=y0+65,imgW=leftW-44,imgH=imgW*0.75;
+ c.drawImage($('finalMorph'),imgX,imgY,imgW,imgH);
+ const sy=imgY+imgH+21;
+ round(imgX,sy,imgW,158,12,color.sub,'#31536a');
+ wrap(`Congratulations! You scored ${game.score} and ranked ${rank} / ${Math.max(count,1)}!`,imgX+20,sy+39,imgW-40,32,23,color.gold,true);
+ const complete=game.length>=MAX-1e-6&&!game.lastCollision;
+ const bonus=complete&&game.optimalBonus?'You earned a bonus for no intersection and a bonus for optimal wiring.':game.optimalBonus?'You earned a bonus for optimal wiring.':complete?'You earned a bonus for no intersection.':'No completion or optimal wiring bonus was earned.';
+ wrap(bonus,imgX+20,sy+103,imgW-40,26,19,color.text);
+ const sx=margin+leftW+gap+25,sw=rightW-50;
+ txt('Morphology statistics',sx,y0+42,26,color.text,true);
+ txt('RESOURCES',sx,y0+90,18,color.mint,true);
+ stat('Captured',captured,y0+129);stat('Lost',lost,y0+171);stat('Capture efficiency',eff+'%',y0+213);
+ txt('BRANCHING',sx,y0+260,18,color.mint,true);
+ stat('Bifurcations',bif,y0+299);stat('Total length',len.toFixed(1),y0+341);stat('Estimated optimal branching',bench.estimate,y0+383);stat('Generated / estimated optimal',(100*bif/bench.estimate).toFixed(1)+'%',y0+425);
+ txt('OPTIMAL WIRING',sx,y0+472,18,color.mint,true);
+ stat('Optimal wiring branches',bench.mstBranches,y0+511);stat('Optimal wiring length',bench.mstUnits.toFixed(1),y0+553);stat('Optimal / player length',wiring+'%',y0+595);
+ 
+ const compY=1130;
+ txt('Topology comparison',margin,compY,32,color.text,true);
+ wrap('Optimal wiring tree: minimum spanning tree connecting the root, bifurcations and terminal tips.',margin,compY+37,W-2*margin,26,19,color.muted);
+ const panels=[['A · Player tree','playerScience'],['B · Optimal wiring tree','mstScience'],['C · Player TMD barcodes','playerTMD'],['D · Optimal wiring TMD barcodes','mstTMD']];
+ const panelW=(W-2*margin-gap)/2,panelH=475;
+ panels.forEach(([label,id],i)=>{const x=margin+(i%2)*(panelW+gap),y=1210+Math.floor(i/2)*(panelH+gap);round(x,y,panelW,panelH,15,color.card,color.border);txt(label,x+20,y+39,23,color.text,true);const src=$(id),dx=x+20,dy=y+58,dw=panelW-40,dh=panelH-83;round(dx,dy,dw,dh,9,'#06121e');const ratio=Math.min(dw/src.width,dh/src.height),rw=src.width*ratio,rh=src.height*ratio;c.drawImage(src,dx+(dw-rw)/2,dy+(dh-rh)/2,rw,rh);});
+ txt('TMD barcodes: rooted path-distance filtration · shared horizontal scale',margin,2220,19,color.muted);
+ txt('© 2026 Dr. Lida Kanari · University of Oxford',margin,2268,19,color.muted);
+ const a=document.createElement('a');a.download='neuron-brewer-scientific-results.png';a.href=out.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
+}
+
+function finish(reason){if(game.finished)return;finalGlowLayer=null;stopGrowth();const completed=game.length>=MAX-1e-6 && !game.lastCollision;const completionBonus=completed?10:0;game.score+=completionBonus;clearInterval(autoTimer);autoTimer=null;game.finished=true;game.reason=reason;screen='over';update();draw();renderScientificResults();const existing=storage(),count=savedCount()+1,rank=1+existing.filter(s=>s.score>game.score).length,qualifies=existing.length<10||game.score>existing[9].score;let saved=false;
+$('overlay').classList.add('hidden');$('boardHint').textContent='Final morphology';}
+
+function downloadMorphology(){
+ if(!game.finished)return;
+ // Export the actual final board (including its brain outline) with a caption.
+ const out=document.createElement('canvas');out.width=1200;out.height=1050;
+ const c=out.getContext('2d');
+ const bg=c.createLinearGradient(0,0,0,out.height);bg.addColorStop(0,'#07162b');bg.addColorStop(1,'#03101b');
+ c.fillStyle=bg;c.fillRect(0,0,out.width,out.height);
+ c.fillStyle='#d7e7f7';c.font='bold 38px system-ui,sans-serif';c.fillText('NEURON BREWER',55,72);
+ c.fillStyle='#93b6c7';c.font='21px system-ui,sans-serif';c.fillText('Final neuronal morphology · Constellation edition',55,108);
+ c.drawImage(canvas,40,140,1120,840);
+ c.fillStyle='#c3dfe7';c.font='24px system-ui,sans-serif';
+ c.fillText('Score: '+game.score+'  |  Length: '+Math.round(game.length)+'/1000  |  '+game.turns+' turns',55,1008);
+ c.textAlign='right';c.font='17px system-ui,sans-serif';c.fillStyle='#7ca4ad';c.fillText('© 2026 Dr. Lida Kanari · University of Oxford',1145,1008);
+ const a=document.createElement('a');a.download='neuron-morphology-'+Date.now()+'.png';
+ a.href=out.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
+}
+function update(){if(!game)return;$('score').textContent=game.score;$('length').textContent=`${Math.round(game.length)} / ${MAX}`;$('tips').textContent=game.tips.filter(t=>t.active).length;$('turns').textContent=game.turns;$('progress').style.width=(100*game.length/MAX)+'%';const ctl=game.tips.find(t=>t.controlled&&t.active);$('heading').textContent=ctl?`${Math.round(deg(norm(aim+Math.PI/2)))}°`:'—';for(const id of ['split','left','right','resetAim'])$(id).disabled=!ctl||game.finished;refreshPlayButton();$('boardHint').textContent=ctl?'Automatic fractal growth':'No controlled tip';}
+// All pseudo-3D constellation effects are Canvas 2D only; the geometry and collision model are unchanged.
+const stars=Array.from({length:135},(_,i)=>({x:((i*127.71+Math.sin(i*31.7)*239.2)%W+W)%W,y:((i*73.37+Math.cos(i*9.1)*337.3)%H+H)%H,r:.35+(i%7)*.16,a:.10+(i%9)*.043}));
+function brainSilhouette(){
+ // Smooth, single continuous lateral outline based on the supplied hand-drawn reference.
+ // No lobular scallops or decorative folds. Brainstem is a narrow lower extension.
+ const p=new Path2D();
+ p.moveTo(86,234);
+ // Frontal (left) and smoothly domed crown.
+ p.bezierCurveTo(88,189,117,142,164,111);
+ p.bezierCurveTo(204,85,256,51,303,45);
+ p.bezierCurveTo(365,29,436,30,487,45);
+ p.bezierCurveTo(541,66,601,108,641,154);
+ p.bezierCurveTo(681,197,697,230,704,273);
+ // Posterior edge slopes toward the underside.
+ p.bezierCurveTo(694,309,688,362,670,394);
+ p.bezierCurveTo(659,419,641,438,616,450);
+ // Small notch at the back of the cerebrum; stem emerges beneath it.
+ p.bezierCurveTo(597,446,572,440,563,453);
+ p.bezierCurveTo(552,467,565,504,568,527);
+ p.bezierCurveTo(572,550,568,557,550,573);
+ p.bezierCurveTo(536,586,523,593,516,593);
+ p.bezierCurveTo(504,593,518,568,515,553);
+ p.bezierCurveTo(512,526,512,500,501,480);
+ // Curved inferior temporal region, including the characteristic inward notch.
+ p.bezierCurveTo(489,457,472,445,446,431);
+ p.bezierCurveTo(427,403,408,394,383,397);
+ p.bezierCurveTo(359,397,337,412,305,403);
+ p.bezierCurveTo(269,395,249,379,244,351);
+ p.bezierCurveTo(241,336,244,325,228,330);
+ p.bezierCurveTo(199,341,169,333,146,316);
+ p.bezierCurveTo(113,291,90,266,86,234);
+ p.closePath();
+ return p;
+}
+// Cached final-only luminous cable layer. Gameplay never pays for these effects.
+let finalGlowLayer=null;
+function buildFinalGlowLayer(){
+ const glow=document.createElement('canvas');glow.width=W;glow.height=H;
+ const g=glow.getContext('2d');
+ let minX=ROOT.x,maxX=ROOT.x,minY=ROOT.y,maxY=ROOT.y;
+ for(const seg of game.segments){minX=Math.min(minX,seg.a.x,seg.b.x);maxX=Math.max(maxX,seg.a.x,seg.b.x);minY=Math.min(minY,seg.a.y,seg.b.y);maxY=Math.max(maxY,seg.a.y,seg.b.y);}
+ for(const tip of game.tips){minX=Math.min(minX,tip.p.x);maxX=Math.max(maxX,tip.p.x);minY=Math.min(minY,tip.p.y);maxY=Math.max(maxY,tip.p.y);}
+ const scale=Math.min(1.8,395/Math.max(1,maxX-minX),260/Math.max(1,maxY-minY));
+ const offsetX=393-(minX+maxX)*scale/2,offsetY=257-(minY+maxY)*scale/2;
+ g.save();g.translate(offsetX,offsetY);g.scale(scale,scale);
+ g.lineCap='round';g.lineJoin='round';
+ for(const seg of game.segments){
+  const depth=seg.depth||0,branch=seg.lineage!==0;
+  const mix=branch?Math.min(1,.32+depth*.095):Math.min(.30,(seg.age||0)/300);
+  const hue=268-72*mix;
+  const width=Math.max(.7,(seg.widthStart+seg.widthEnd)*.5);
+  g.strokeStyle=`hsla(${hue},92%,73%,.85)`;
+  g.lineWidth=Math.max(1,width*.85);
+  g.beginPath();g.moveTo(seg.a.x,seg.a.y);g.lineTo(seg.b.x,seg.b.y);g.stroke();
+ }
+ g.restore();return glow;
+}
+function paintFinalGlow(){
+ if(!finalGlowLayer)finalGlowLayer=buildFinalGlowLayer();
+ ctx.save();ctx.globalCompositeOperation='screen';
+ // Two blurred halos plus a crisp, faint spectral highlight.
+ ctx.globalAlpha=.46;ctx.filter='blur(17px)';ctx.drawImage(finalGlowLayer,0,0);
+ ctx.globalAlpha=.52;ctx.filter='blur(6px)';ctx.drawImage(finalGlowLayer,0,0);
+ ctx.globalAlpha=.22;ctx.filter='none';ctx.drawImage(finalGlowLayer,0,0);
+ ctx.restore();
+}
+function drawBrainOutline(){
+ // Stroke-only contour; everything outside is pure black.
+ ctx.save();
+ const p=brainSilhouette();
+ ctx.strokeStyle='rgba(106,222,211,.12)';ctx.lineWidth=6;
+ ctx.shadowColor='#44d9bf';ctx.shadowBlur=13;ctx.stroke(p);
+ ctx.shadowBlur=0;ctx.strokeStyle='rgba(155,237,226,.90)';ctx.lineWidth=2.1;ctx.stroke(p);
+ ctx.restore();
+}
+function draw(){
+ const over=game.finished;
+ ctx.setTransform(1,0,0,1,0,0);
+ ctx.clearRect(0,0,W,H);
+ if(over){ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);ctx.save();ctx.clip(brainSilhouette());}
+ const bg=ctx.createRadialGradient(W*.54,H*.35,18,W*.5,H*.5,W*.78);
+ bg.addColorStop(0,'#112951');bg.addColorStop(.56,'#091832');bg.addColorStop(1,'#030916');
+ ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+ // A clearly perceptible but soft emerald atmosphere increases with height.
+ // It is drawn in screen space so it remains soft even when the camera scrolls.
+ // At game over, fit the tint to the complete final morphology.
+ const topWorld=game.finished&&game.segments.length
+   ? game.segments.reduce((v,s)=>Math.min(v,s.a.y,s.b.y),ROOT.y)
+   : cameraY;
+ const climbed=Math.max(0,ROOT.y-topWorld);
+ const greenStrength=Math.min(.42,.12+climbed/1700*.26);
+ const green=ctx.createLinearGradient(0,H,0,0);
+ green.addColorStop(0,'rgba(6,48,39,0)');
+ green.addColorStop(.40,`rgba(8,94,66,${greenStrength*.38})`);
+ green.addColorStop(1,`rgba(23,146,94,${greenStrength})`);
+ ctx.fillStyle=green;ctx.fillRect(0,0,W,H);
+ // Extremely faint green haze, visible mostly near the upper corners.
+ const haze=ctx.createRadialGradient(W*.7,H*.04,0,W*.7,H*.04,W*.83);
+ haze.addColorStop(0,`rgba(29,151,103,${greenStrength*.64})`);
+ haze.addColorStop(1,'rgba(9,45,39,0)');
+ ctx.fillStyle=haze;ctx.fillRect(0,0,W,H);
+ // Star field remains visually fixed while the world scrolls.
+ for(const st of stars){ctx.fillStyle=`rgba(181,210,255,${st.a})`;ctx.beginPath();ctx.arc(st.x,st.y,st.r,0,Math.PI*2);ctx.fill();}
+ ctx.save();
+ let viewCamera=cameraY;
+ if(over){
+  let minX=ROOT.x,maxX=ROOT.x,minY=ROOT.y,maxY=ROOT.y;
+  for(const seg of game.segments){minX=Math.min(minX,seg.a.x,seg.b.x);maxX=Math.max(maxX,seg.a.x,seg.b.x);minY=Math.min(minY,seg.a.y,seg.b.y);maxY=Math.max(maxY,seg.a.y,seg.b.y);}
+  for(const t of game.tips){minX=Math.min(minX,t.p.x);maxX=Math.max(maxX,t.p.x);minY=Math.min(minY,t.p.y);maxY=Math.max(maxY,t.p.y);}
+  // Keep the entire morphology within the cerebral hemisphere, away from
+  // the lower brainstem and narrow temporal-lobe edge.
+  const scale=Math.min(1.8,395/Math.max(1,maxX-minX),260/Math.max(1,maxY-minY));
+  const offsetX=393-(minX+maxX)*scale/2,offsetY=257-(minY+maxY)*scale/2;
+  ctx.transform(scale,0,0,scale,offsetX,offsetY);
+  viewCamera=0;
+ }
+ // Faint astronomical guide lines, barely visible behind the morphology.
+ ctx.lineWidth=.5;ctx.strokeStyle='rgba(87,130,182,.065)';
+ for(let x=0;x<W;x+=50){ctx.beginPath();ctx.moveTo(x,viewCamera-40);ctx.lineTo(x,viewCamera+H+40);ctx.stroke();}
+ for(let y=Math.floor((viewCamera-40)/50)*50;y<=viewCamera+H+40;y+=50){ctx.beginPath();ctx.moveTo(0,y-viewCamera);ctx.lineTo(W,y-viewCamera);ctx.stroke();}
+ const visible=over?game.segments:game.segments.filter(s=>Math.max(s.a.y,s.b.y)>=viewCamera-30&&Math.min(s.a.y,s.b.y)<=viewCamera+H+30);
+ // Render-only pseudo-3D cables: depth-tapered ribbons with soft outer light,
+ // shadowed edges, a directional specular highlight, and a gentle quadratic bend.
+ // All collisions still use the original straight geometric segments.
+ // O(n) predecessor lookup, rather than searching all segments for each segment.
+ const previous=new Map(),lastEndpoint=new Map();
+ const key=p=>`${Math.round(p.x*1000)},${Math.round(p.y*1000)}`;
+ for(const seg of visible){
+  const k=seg.lineage+':'+key(seg.a),prior=lastEndpoint.get(k);
+  if(prior)previous.set(seg,prior);
+  lastEndpoint.set(seg.lineage+':'+key(seg.b),seg);
+ }
+ function cablePath(seg){
+  const a=seg.a,b=seg.b,prev=previous.get(seg);
+  // Curve only by a fraction of the incoming heading change; never move endpoints.
+  let cx=(a.x+b.x)*.5,cy=(a.y+b.y)*.5;
+  if(prev){const ux=a.x-prev.a.x,uy=a.y-prev.a.y,vx=b.x-a.x,vy=b.y-a.y;
+   const len=Math.hypot(vx,vy)||1,pl=Math.hypot(ux,uy)||1;
+   const bend=clamp((ux/pl*vy/len-uy/pl*vx/len)*2.1,-2.1,2.1);
+   cx+=-vy/len*bend;cy+=vx/len*bend;
+  }
+  ctx.beginPath();ctx.moveTo(a.x,a.y-viewCamera);ctx.quadraticCurveTo(cx,cy-viewCamera,b.x,b.y-viewCamera);
+ }
+ // Per-segment diameter follows the simulated tip thickness.
+ // Root starts at 8.5px; slower exponential decay keeps the trunk full
+ // for the first few steps, then gradually approaches 1px over a longer distance.
+ // Every bifurcation reduces BOTH daughter diameters to 2/3 of the parent.
+ function cableWidth(seg){return (seg.widthStart+seg.widthEnd)*.5;}
+ // Continuous hue shift: lavender on the main trunk, through indigo and
+ // periwinkle to cyan on deeper offshoots, with subtle height variation.
+ function cableColor(seg,lightness=0,alpha=1){
+  const depth=seg.depth||0;
+  const branch=seg.lineage!==0;
+  const mix=branch?Math.min(1,.32+depth*.095):Math.min(.30,(seg.age||0)/300);
+  const hue=268-72*mix;
+  const sat=82;
+  const lit=clamp(54+lightness+Math.min(7,(ROOT.y-seg.b.y)/500),15,92);
+  return `hsla(${hue},${sat}%,${lit}%,${alpha})`;
+ }
+ ctx.lineCap='round';ctx.lineJoin='round';
+ const renderPasses=[
+  {kind:'aura',extra:7,blur:16},
+  {kind:'shadow',extra:1.6,blur:2},
+  {kind:'body',extra:0,blur:0},
+  {kind:'light',extra:-1.1,blur:1}
+ ];
+ for(const pass of renderPasses){
+  for(const seg of visible){
+   const width=cableWidth(seg);
+   if(pass.kind==='light'&&width<1.8)continue;
+   ctx.lineWidth=Math.max(.38,width+pass.extra);
+   ctx.shadowBlur=pass.blur;
+   ctx.shadowColor=cableColor(seg,0,.7);
+   if(pass.kind==='aura')ctx.strokeStyle=cableColor(seg,4,.12);
+   if(pass.kind==='shadow')ctx.strokeStyle=cableColor(seg,-38,.85);
+   if(pass.kind==='body'){
+    // Gradients are expensive: reserve them for visually thick cables.
+    if(width>=2.8){const gr=ctx.createLinearGradient(seg.a.x-3,seg.a.y-viewCamera-3,seg.b.x+3,seg.b.y-viewCamera+3);gr.addColorStop(0,cableColor(seg,-15));gr.addColorStop(.55,cableColor(seg,11));gr.addColorStop(1,cableColor(seg,-8));ctx.strokeStyle=gr;}else ctx.strokeStyle=cableColor(seg,4);
+   }
+   if(pass.kind==='light')ctx.strokeStyle=cableColor(seg,27,.58);
+   if(pass.kind==='glint')ctx.strokeStyle=cableColor(seg,36,.66);
+   cablePath(seg);ctx.stroke();
+  }
+ }
+ ctx.shadowBlur=0;
+ // Branch-point halos and subtle stellar nodes.
+ const nodes=new Map();
+ for(const seg of visible){for(const p of [seg.a,seg.b]){const key=`${p.x.toFixed(2)},${p.y.toFixed(2)}`;const item=nodes.get(key);if(item)item.count++;else nodes.set(key,{p,count:1});}}
+ let index=0;
+ for(const {p,count} of nodes.values()){
+  if(count<3 && index++%7!==0)continue;
+  const y=p.y-viewCamera;
+  if(!over&&(y< -20||y>H+20))continue;
+  const r=count>=3?2.1:1.1;
+  ctx.shadowColor=count>=3?'#b49aff':'#94c8ff';ctx.shadowBlur=count>=3?12:6;
+  ctx.fillStyle=count>=3?'rgba(221,192,255,.88)':'rgba(196,220,255,.66)';
+  ctx.beginPath();ctx.arc(p.x,y,r,0,Math.PI*2);ctx.fill();
+ }
+ ctx.shadowBlur=0;
+ // Resources are bright, gold stars with a small capture halo.
+ if(!over)for(const r of [...game.fadingResources,...game.resources]){const y=r.y-viewCamera;
+  const front=resourceFront(),alpha=clamp(1-Math.max(0,r.y-front-H*0.10)/(H*0.35),0,1);
+  if(alpha<=0)continue;ctx.save();ctx.globalAlpha=alpha;
+  if(y< -20||y>H+20){ctx.restore();continue;}
+  const special=!!r.special, haloRadius=special?25:12;
+  const halo=ctx.createRadialGradient(r.x,y,0,r.x,y,haloRadius);
+  halo.addColorStop(0,special?'rgba(91,175,255,.55)':'rgba(255,232,166,.32)');
+  halo.addColorStop(1,special?'rgba(52,132,255,0)':'rgba(255,202,113,0)');
+  ctx.fillStyle=halo;ctx.beginPath();ctx.arc(r.x,y,haloRadius,0,Math.PI*2);ctx.fill();
+  ctx.shadowColor=special?'#45aaff':'#ffd889';ctx.shadowBlur=special?25:13;
+  ctx.fillStyle=special?'#9fe5ff':'#ffe6ac';
+  ctx.beginPath();ctx.arc(r.x,y,special?6.5:3.5,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+  if(special){ctx.strokeStyle='rgba(152,219,255,.75)';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(r.x,y,9,0,Math.PI*2);ctx.stroke();}ctx.restore();
+ }
+ // Active tips are constellation endpoints, with a larger selected-tip marker.
+ for(const t of game.tips.filter(t=>t.active)){
+  const y=t.p.y-viewCamera;
+  ctx.shadowColor=t.controlled?'#ca8aff':'#64c9ff';ctx.shadowBlur=t.controlled?22:12;
+  ctx.fillStyle=t.controlled?'#e5c0ff':'#b2eaff';
+  ctx.beginPath();ctx.arc(t.p.x,y,t.controlled?4.8:2.5,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+  if(t.controlled&&!over){
+   ctx.strokeStyle='rgba(255,244,210,.64)';ctx.lineWidth=1;ctx.setLineDash([3,5]);
+   ctx.beginPath();ctx.arc(t.p.x,y,11,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+   ctx.strokeStyle='rgba(255,247,215,.8)';ctx.lineWidth=1.4;
+   ctx.beginPath();ctx.moveTo(t.p.x,y);ctx.lineTo(t.p.x+Math.cos(aim)*35,y+Math.sin(aim)*35);ctx.stroke();
+  }
+ }
+ if(game.lastCollision){const p=game.lastCollision,y=p.y-viewCamera;ctx.strokeStyle='#ff889c';ctx.shadowColor='#ff526c';ctx.shadowBlur=13;ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(p.x-7,y-7);ctx.lineTo(p.x+7,y+7);ctx.moveTo(p.x+7,y-7);ctx.lineTo(p.x-7,y+7);ctx.stroke();ctx.shadowBlur=0;}
+ ctx.restore();
+ if(over){paintFinalGlow();ctx.restore();drawBrainOutline();}
+}
+function canvasPoint(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height+cameraY};}
+canvas.addEventListener('pointerdown',e=>{if(screen==='play'){dragging=true;canvas.setPointerCapture(e.pointerId);aimAt(canvasPoint(e));}});canvas.addEventListener('pointermove',e=>{if(screen==='play')aimAt(canvasPoint(e));});canvas.addEventListener('pointerup',()=>{dragging=false;});canvas.addEventListener('pointercancel',()=>{dragging=false;});
+function syncFractal(){
+ for(const [id,key,suffix] of [['fAngle','angle','°'],['fInterval','interval',''],['fRatio','ratio','%'],['fNoise','noise','°'],['fBias','bias','%'],['fDeath','death','%']]){
+  $(id).value=fractal[key];$(id+'Val').textContent=fractal[key]+suffix;
+  $(id).disabled=false;
+ }
+ $('fLocked').textContent='Live controls: changes apply to subsequent growth. Branching interval changes apply to future bifurcations.';
+}
+for(const [id,key] of [['fAngle','angle'],['fInterval','interval'],['fRatio','ratio'],['fNoise','noise'],['fBias','bias'],['fDeath','death']])$(id).addEventListener('input',e=>{fractal[key]=Number(e.target.value);syncFractal();});
+$('fReset').onclick=()=>{Object.assign(fractal,{angle:35,interval:25,ratio:72,noise:0,bias:0,death:0});syncFractal();};
+$('grow').onclick=toggleGrowth;
+$('restartTop').onclick=()=>{stopGrowth();startScreen();};
+document.addEventListener('keydown',e=>{if(e.target&&['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;if(e.code==='Enter'&&screen==='play'){e.preventDefault();toggleGrowth();}});
+function startScreen(){stopGrowth();document.body.classList.remove('final-mode');$('finalPage').classList.add('hidden');$('finalPage').innerHTML='';clearInterval(autoTimer);autoTimer=null;screen='start';$('overlay').classList.remove('result-overlay');$('overlay').classList.remove('hidden');$('modal').innerHTML='<div class="eyebrow">Fractal Brewer · Generative neuron laboratory</div><h2>Grow a fractal neuron</h2><p>Adjust the six fractal parameters before or during automatic growth. Default settings produce a <strong>symmetric binary fractal</strong>.</p><p>Branches stop individually before collisions or at boundaries. Collect gold (+1) and rare blue (+5) resources, with a total growth budget of 1,000. The scientific results screen compares branching, optimal wiring, and TMD barcodes.</p><p class="mini">Press Enter to pause/resume. You control the rules, not individual tips. Your original Neuron Brewer game is a separate, unchanged file.</p><button class="primary" id="startBtn">▶ Grow fractal</button>';$('startBtn').onclick=()=>{newGame();toggleGrowth();};syncFractal();}
+renderScores();spatial=new Map();game={segments:[],tips:[{id:1,p:{...ROOT},heading:-Math.PI/2,active:true,controlled:false,depth:0,lineage:0,age:0,travel:0,interval:fractal.interval,currentWidth:8.5}],resources:[],fadingResources:[],score:0,length:0,turns:0,finished:false};for(let i=0;i<RESOURCE_COUNT;i++)spawn(i===Math.floor(RESOURCE_COUNT/2));update();draw();startScreen();
+})();
+</script>
+</body></html>

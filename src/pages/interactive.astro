@@ -1,38 +1,144 @@
+
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+
 import Navigation from "../components/navigation/Navigation.astro";
 import Footer from "../components/layout/Footer.astro";
 import Container from "../components/layout/Container.astro";
+
+import { sitePath } from "../lib/paths";
+
+// Images and game URLs
+const hero = sitePath(
+  "/interactive/assets/neuron-brewer-hero.webp"
+);
+
+const neuronUrl = sitePath(
+  "/interactive/neuron-brewer/"
+);
+
+const fractalUrl = sitePath(
+  "/interactive/fractal-brewer/"
+);
 ---
 
-<MainLayout title="Interactive">
+<MainLayout title="Neuron Brewer — NeuroTopology">
 
   <Navigation />
 
   <main>
 
-    <section class="interactive-coming-soon">
+    <section class="brewer-hero">
 
       <Container>
 
-        <div class="interactive-coming-soon-content">
+        <div class="brewer-content">
 
-          <p class="interactive-label">
-            Interactive
+          <p class="brewer-eyebrow">
+            Interactive Neuroscience
           </p>
 
-          <h1>
-            Explore neuronal structure.
-          </h1>
+          <h1>Neuron Brewer</h1>
 
-          <p class="interactive-intro">
-            Interactive tools for exploring neuronal morphology,
-            topology and structure are currently in development.
+          <p class="brewer-tagline">
+            Grow your neuron!
           </p>
 
-          <div class="interactive-status">
-            Coming soon
-          </div>
+
+          <!-- Game illustration -->
+
+          <img
+            class="brewer-art"
+            src={hero}
+            alt="Colourful branching neuronal tree representing the Neuron Brewer game"
+            width="1536"
+            height="1024"
+            fetchpriority="high"
+          />
+
+
+          <!-- Introduction -->
+
+          <p class="brewer-intro">
+            Discover how neurons grow like trees,
+            branch to explore their environment,
+            and compete for resources.
+
+            Build a neuronal tree, then explore
+            its morphological features, wiring
+            efficiency, and topology.
+          </p>
+
+
+          <!-- Game selection -->
+
+          <fieldset class="brewer-editions">
+
+            <legend>
+              Choose your edition
+            </legend>
+
+
+            <label class="brewer-choice">
+
+              <input
+                type="radio"
+                name="brewer-edition"
+                value={neuronUrl}
+                checked
+              />
+
+              <span class="brewer-choice-content">
+
+                <strong>
+                  Neuron Edition
+                </strong>
+
+                <small>
+                  Steer the growing neuron and
+                  choose when to branch.
+                </small>
+
+              </span>
+
+            </label>
+
+
+            <label class="brewer-choice">
+
+              <input
+                type="radio"
+                name="brewer-edition"
+                value={fractalUrl}
+              />
+
+              <span class="brewer-choice-content">
+
+                <strong>
+                  Fractal Edition
+                </strong>
+
+                <small>
+                  Choose the growth rules and
+                  grow your fractal.
+                </small>
+
+              </span>
+
+            </label>
+
+          </fieldset>
+
+
+          <!-- Play button -->
+
+          <a
+            class="brewer-play"
+            id="brewer-play"
+            href={neuronUrl}
+          >
+            Play Neuron Brewer →
+          </a>
 
         </div>
 
@@ -45,3 +151,239 @@ import Container from "../components/layout/Container.astro";
   <Footer />
 
 </MainLayout>
+
+
+<script>
+  const play = document.getElementById(
+    "brewer-play"
+  ) as HTMLAnchorElement | null;
+
+  const editions =
+    document.querySelectorAll<HTMLInputElement>(
+      'input[name="brewer-edition"]'
+    );
+
+  editions.forEach((input) => {
+
+    input.addEventListener("change", () => {
+
+      if (!input.checked || !play) return;
+
+      play.href = input.value;
+
+      play.textContent =
+        input.value.includes("fractal-brewer")
+          ? "Play Fractal Brewer →"
+          : "Play Neuron Brewer →";
+
+    });
+
+  });
+</script>
+
+
+<style>
+
+  .brewer-hero {
+    padding: clamp(2rem, 5vw, 4.5rem) 0;
+
+    background:
+      radial-gradient(
+        ellipse at 50% 48%,
+        #0e302e 0%,
+        #071522 60%,
+        #050c15 100%
+      );
+
+    color: #eaf8f8;
+  }
+
+
+  .brewer-content {
+    max-width: 1020px;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+
+  .brewer-eyebrow {
+    color: #88dfcd;
+    font-size: .82rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 0 0 .6rem;
+  }
+
+
+  .brewer-content h1 {
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    line-height: 1.1;
+    margin: 0;
+    color: #f1fbff;
+  }
+
+
+  .brewer-tagline {
+    font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+    color: #a0e8dd;
+    margin: .35rem 0 1.4rem;
+  }
+
+
+  .brewer-art {
+    width: 100%;
+    height: auto;
+    display: block;
+
+    border: 1px solid #31545c;
+    border-radius: 20px;
+
+    box-shadow: 0 24px 55px #0008;
+  }
+
+
+  .brewer-intro {
+    max-width: 740px;
+    margin: 1.6rem auto;
+
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: #c4d9e2;
+  }
+
+
+  .brewer-editions {
+    max-width: 740px;
+    margin: 0 auto 1.1rem;
+    padding: 0;
+    border: 0;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+
+    text-align: left;
+  }
+
+
+  .brewer-editions legend {
+    width: 100%;
+    text-align: center;
+
+    color: #91e0d2;
+    text-transform: uppercase;
+
+    font-size: .8rem;
+    font-weight: 750;
+    letter-spacing: .12em;
+
+    margin-bottom: .75rem;
+  }
+
+
+  .brewer-choice {
+    cursor: pointer;
+    position: relative;
+  }
+
+
+  .brewer-choice input {
+    position: absolute;
+    opacity: 0;
+  }
+
+
+  .brewer-choice-content {
+    display: block;
+    height: 100%;
+
+    background: #122637;
+    border: 1px solid #395d68;
+    border-radius: 13px;
+
+    padding: 1rem 1.15rem;
+
+    transition:
+      background .15s,
+      border-color .15s;
+  }
+
+
+  .brewer-choice input:checked
+  + .brewer-choice-content {
+    background: #12382f;
+    border-color: #8ae7d2;
+    box-shadow: inset 0 0 0 1px #8ae7d2;
+  }
+
+
+  .brewer-choice input:focus-visible
+  + .brewer-choice-content {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+  }
+
+
+  .brewer-choice strong {
+    display: block;
+    color: #effbfc;
+  }
+
+
+  .brewer-choice small {
+    display: block;
+    margin-top: .25rem;
+
+    color: #aec9d3;
+    line-height: 1.5;
+  }
+
+
+  .brewer-play {
+    display: block;
+    max-width: 740px;
+
+    margin: 0 auto;
+    padding: 1.1rem 1.4rem;
+
+    border-radius: 13px;
+
+    background:
+      linear-gradient(
+        105deg,
+        #a0f0d9,
+        #71d8cc
+      );
+
+    color: #062821;
+
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    font-weight: 800;
+
+    text-decoration: none;
+
+    box-shadow: 0 12px 30px #16a68d33;
+  }
+
+
+  .brewer-play:hover {
+    filter: brightness(1.08);
+  }
+
+
+  /* Mobile */
+
+  @media (max-width: 640px) {
+
+    .brewer-editions {
+      grid-template-columns: 1fr;
+    }
+
+    .brewer-art {
+      border-radius: 12px;
+    }
+
+  }
+
+</style>
