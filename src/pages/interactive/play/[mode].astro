@@ -1,0 +1,277 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import Navigation from "../../../components/navigation/Navigation.astro";
+import Footer from "../../../components/layout/Footer.astro";
+import Container from "../../../components/layout/Container.astro";
+import { sitePath } from "../../../lib/paths";
+
+export function getStaticPaths() {
+  return [
+    { params: { mode: "neuron" }, props: { mode: "neuron" } },
+    { params: { mode: "fractal" }, props: { mode: "fractal" } },
+  ];
+}
+
+interface Props {
+  mode: "neuron" | "fractal";
+}
+
+const { mode } = Astro.props;
+const isNeuron = mode === "neuron";
+const modeName = isNeuron ? "Neuron" : "Fractal";
+const otherName = isNeuron ? "Fractal" : "Neuron";
+const gameUrl = sitePath(`/interactive/${mode}-brewer/`);
+const otherUrl = sitePath(`/interactive/play/${isNeuron ? "fractal" : "neuron"}/`);
+const interactiveUrl = `${sitePath("/interactive/")}?mode=${mode}`;
+---
+
+<MainLayout title={`${modeName} Brewer — NeuroTopology`}>
+  <Navigation />
+
+  <main class="game-page">
+    <Container>
+      <div class="game-shell">
+        <div class="game-topbar">
+          <a
+            href={interactiveUrl}
+            class="game-nav-link"
+            id="game-back"
+          >
+            ← Back to Interactive
+          </a>
+
+          <div class="game-topbar-right">
+            <span class="game-mode-label">{modeName} mode</span>
+            <button
+              type="button"
+              id="game-other-mode"
+              class="game-other-mode"
+              data-other-url={otherUrl}
+              title={`Play ${otherName} mode`}
+            >
+              Play {otherName} mode →
+            </button>
+          </div>
+        </div>
+
+        <p class="game-mode-note" id="game-mode-note" aria-live="polite">
+          Choose a different mode before starting, or after finishing this game.
+        </p>
+
+        <iframe
+          id="brewer-game-frame"
+          class="brewer-frame"
+          src={gameUrl}
+          title={`${modeName} Brewer game`}
+          loading="eager"
+          allow="fullscreen"
+        ></iframe>
+      </div>
+    </Container>
+  </main>
+
+  <Footer />
+</MainLayout>
+
+<script>
+  const frame = document.querySelector<HTMLIFrameElement>("#brewer-game-frame");
+  const otherButton = document.querySelector<HTMLButtonElement>("#game-other-mode");
+  const back = document.querySelector<HTMLAnchorElement>("#game-back");
+  const note = document.querySelector<HTMLElement>("#game-mode-note");
+
+  type GamePhase = "start" | "playing" | "finished";
+  let phase: GamePhase = "start";
+  let frameObserver: ResizeObserver | undefined;
+
+  function setPhase(next: GamePhase) {
+    phase = next;
+    if (otherButton) {
+      const locked = phase === "playing";
+      otherButton.disabled = locked;
+      otherButton.title = locked
+        ? "Available when this game ends"
+        : "Open the other growth mode";
+    }
+    if (note) {
+      note.textContent = phase === "playing"
+        ? "Mode switching is available when this game ends."
+        : phase === "finished"
+          ? "Your game is complete. You can now try the other growth mode."
+          : "Choose a different mode before starting, or after finishing this game.";
+    }
+  }
+
+  function resizeGame() {
+    if (!frame) return;
+    try {
+      const doc = frame.contentDocument;
+      if (!doc) return;
+      const height = Math.max(
+        doc.documentElement.scrollHeight,
+        doc.body?.scrollHeight ?? 0,
+        doc.body?.offsetHeight ?? 0
+      );
+      if (height > 0) frame.style.height = `${Math.max(620, Math.ceil(height) + 12)}px`;
+    } catch {
+      // The game remains usable with the iframe's default height.
+    }
+  }
+
+  frame?.addEventListener("load", () => {
+    frameObserver?.disconnect();
+    resizeGame();
+    try {
+      const doc = frame.contentDocument;
+      if (doc) {
+        frameObserver = new ResizeObserver(resizeGame);
+        frameObserver.observe(doc.documentElement);
+        if (doc.body) frameObserver.observe(doc.body);
+      }
+    } catch {
+      // Same-origin pages support automatic height adjustment.
+    }
+  });
+
+  window.addEventListener("resize", resizeGame);
+
+  window.addEventListener("message", (event: MessageEvent) => {
+    if (
+      !frame ||
+      event.origin !== window.location.origin ||
+      event.source !== frame.contentWindow ||
+      event.data?.type !== "neurotopology:game-state"
+    ) return;
+
+    if (["start", "playing", "finished"].includes(event.data.phase)) {
+      setPhase(event.data.phase as GamePhase);
+      requestAnimationFrame(resizeGame);
+      if (event.data.phase === "finished") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  });
+
+  function saveCompletedScore() {
+    if (phase !== "finished") return;
+    try {
+      const button = frame?.contentDocument?.getElementById("saveFinalScore") as HTMLButtonElement | null;
+      if (button && !button.disabled) button.click();
+    } catch {
+      // Local scores are stored inside the game; navigation remains available.
+    }
+  }
+
+  otherButton?.addEventListener("click", () => {
+    if (phase === "playing") return;
+    saveCompletedScore();
+    const destination = otherButton.dataset.otherUrl;
+    if (destination) window.location.assign(destination);
+  });
+
+  back?.addEventListener("click", (event) => {
+    if (phase === "playing" && !window.confirm("Leave this game? Your current progress will be lost.")) {
+      event.preventDefault();
+      return;
+    }
+    saveCompletedScore();
+  });
+
+  setPhase("start");
+</script>
+
+<style>
+  .game-page {
+    min-height: 60vh;
+    padding: clamp(1.2rem, 2.5vw, 2.5rem) 0 3.5rem;
+    background: radial-gradient(ellipse at 50% 12%, #0e302e, #071522 64%, #050c15);
+    color: #eaf8f8;
+  }
+
+  .game-shell {
+    max-width: 1360px;
+    margin-inline: auto;
+  }
+
+  .game-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: .35rem;
+  }
+
+  .game-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    flex-wrap: wrap;
+  }
+
+  .game-nav-link, .game-other-mode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: .6rem .9rem;
+    border-radius: 10px;
+    font: inherit;
+    font-size: .95rem;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid #4c7780;
+    background: #142d39;
+    color: #eaf8f8;
+    cursor: pointer;
+  }
+
+  .game-nav-link:hover, .game-other-mode:hover:not(:disabled) {
+    background: #205045;
+  }
+
+  .game-nav-link:focus-visible, .game-other-mode:focus-visible {
+    outline: 3px solid #8ae7d2;
+    outline-offset: 3px;
+  }
+
+  .game-other-mode:not(:disabled) {
+    background: #1b6e61;
+    border-color: #8ae7d2;
+  }
+
+  .game-other-mode:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+  }
+
+  .game-mode-label {
+    color: #a4d9d0;
+    font-size: .83rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .game-mode-note {
+    font-size: .82rem;
+    line-height: 1.5;
+    color: #bdd5df;
+    margin: 0 0 1rem;
+  }
+
+  .brewer-frame {
+    display: block;
+    width: 100%;
+    height: 1040px;
+    border: 1px solid #31545c;
+    border-radius: 16px;
+    background: #050b19;
+  }
+
+  @media (max-width: 640px) {
+    .game-topbar, .game-topbar-right { align-items: stretch; }
+    .game-topbar-right { width: 100%; justify-content: space-between; }
+    .game-nav-link { flex: 1; }
+    .brewer-frame { border-radius: 10px; }
+  }
+</style>

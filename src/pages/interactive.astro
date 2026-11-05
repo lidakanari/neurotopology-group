@@ -13,13 +13,8 @@ const hero = sitePath(
   "/interactive/assets/neuron-brewer-hero.webp"
 );
 
-const neuronUrl = sitePath(
-  "/interactive/neuron-brewer/"
-);
-
-const fractalUrl = sitePath(
-  "/interactive/fractal-brewer/"
-);
+const neuronPlayUrl = sitePath("/interactive/play/neuron/");
+const fractalPlayUrl = sitePath("/interactive/play/fractal/");
 ---
 
 <MainLayout title="Neuron Brewer — NeuroTopology">
@@ -70,75 +65,45 @@ const fractalUrl = sitePath(
           </p>
 
 
-          <!-- Game selection -->
+          <!-- Compact mode picker and one shared Play button -->
+          <div class="brewer-launcher">
+            <fieldset class="brewer-modes">
+              <legend>Choose your growth mode</legend>
+              <div class="brewer-mode-picker">
+                <label class="brewer-mode-choice">
+                  <input
+                    type="radio"
+                    name="brewer-mode"
+                    value="neuron"
+                    checked
+                  />
+                  <span>Neuron</span>
+                </label>
+                <label class="brewer-mode-choice">
+                  <input
+                    type="radio"
+                    name="brewer-mode"
+                    value="fractal"
+                  />
+                  <span>Fractal</span>
+                </label>
+              </div>
+            </fieldset>
 
-          <fieldset class="brewer-editions">
+            <p id="brewer-mode-help" class="brewer-mode-help" aria-live="polite">
+              Guide a growing neuron and choose when to branch.
+            </p>
 
-            <legend>
-              Choose your edition
-            </legend>
-
-
-            <label class="brewer-choice">
-
-              <input
-                type="radio"
-                name="brewer-edition"
-                value={neuronUrl}
-                checked
-              />
-
-              <span class="brewer-choice-content">
-
-                <strong>
-                  Neuron Edition
-                </strong>
-
-                <small>
-                  Steer the growing neuron and
-                  choose when to branch.
-                </small>
-
-              </span>
-
-            </label>
-
-
-            <label class="brewer-choice">
-
-              <input
-                type="radio"
-                name="brewer-edition"
-                value={fractalUrl}
-              />
-
-              <span class="brewer-choice-content">
-
-                <strong>
-                  Fractal Edition
-                </strong>
-
-                <small>
-                  Choose the growth rules and
-                  grow your fractal.
-                </small>
-
-              </span>
-
-            </label>
-
-          </fieldset>
-
-
-          <!-- Play button -->
-
-          <a
-            class="brewer-play"
-            id="brewer-play"
-            href={neuronUrl}
-          >
-            Play Neuron Brewer →
-          </a>
+            <a
+              class="brewer-play"
+              id="brewer-play"
+              href={neuronPlayUrl}
+              data-neuron-url={neuronPlayUrl}
+              data-fractal-url={fractalPlayUrl}
+            >
+              Play Neuron Brewer →
+            </a>
+          </div>
 
         </div>
 
@@ -154,31 +119,39 @@ const fractalUrl = sitePath(
 
 
 <script>
-  const play = document.getElementById(
-    "brewer-play"
-  ) as HTMLAnchorElement | null;
+  const play = document.querySelector<HTMLAnchorElement>("#brewer-play");
+  const help = document.querySelector<HTMLElement>("#brewer-mode-help");
+  const radios = document.querySelectorAll<HTMLInputElement>(
+    'input[name="brewer-mode"]'
+  );
 
-  const editions =
-    document.querySelectorAll<HTMLInputElement>(
-      'input[name="brewer-edition"]'
-    );
-
-  editions.forEach((input) => {
-
-    input.addEventListener("change", () => {
-
-      if (!input.checked || !play) return;
-
-      play.href = input.value;
-
-      play.textContent =
-        input.value.includes("fractal-brewer")
-          ? "Play Fractal Brewer →"
-          : "Play Neuron Brewer →";
-
+  function selectMode(mode: "neuron" | "fractal") {
+    radios.forEach((radio) => {
+      radio.checked = radio.value === mode;
     });
 
+    if (play) {
+      play.href = mode === "fractal"
+        ? play.dataset.fractalUrl!
+        : play.dataset.neuronUrl!;
+    }
+
+    if (help) {
+      help.textContent = mode === "fractal"
+        ? "Set branching rules and watch a fractal tree grow."
+        : "Guide a growing neuron and choose when to branch.";
+    }
+  }
+
+  radios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (radio.checked) selectMode(radio.value as "neuron" | "fractal");
+    });
   });
+
+  // Returning from a game remembers which mode was open.
+  const requestedMode = new URLSearchParams(window.location.search).get("mode");
+  selectMode(requestedMode === "fractal" ? "fractal" : "neuron");
 </script>
 
 
@@ -253,92 +226,82 @@ const fractalUrl = sitePath(
   }
 
 
-  .brewer-editions {
+  /* Compact, accessible two-mode switch. */
+  .brewer-launcher {
     max-width: 740px;
-    margin: 0 auto 1.1rem;
+    margin: 1.7rem auto 0;
+  }
+
+  .brewer-modes {
+    margin: 0;
     padding: 0;
     border: 0;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-
-    text-align: left;
   }
 
-
-  .brewer-editions legend {
-    width: 100%;
-    text-align: center;
-
+  .brewer-modes legend {
     color: #91e0d2;
-    text-transform: uppercase;
-
     font-size: .8rem;
-    font-weight: 750;
+    font-weight: 700;
     letter-spacing: .12em;
-
-    margin-bottom: .75rem;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+    padding: 0;
+    margin-bottom: .65rem;
   }
 
+  .brewer-mode-picker {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 5px;
+    background: #0a2030;
+    border: 1px solid #395d68;
+    border-radius: 13px;
+  }
 
-  .brewer-choice {
-    cursor: pointer;
+  .brewer-mode-choice {
     position: relative;
+    display: block;
+    cursor: pointer;
   }
 
-
-  .brewer-choice input {
+  .brewer-mode-choice input {
     position: absolute;
+    width: 1px;
+    height: 1px;
     opacity: 0;
   }
 
-
-  .brewer-choice-content {
+  .brewer-mode-choice span {
     display: block;
-    height: 100%;
-
-    background: #122637;
-    border: 1px solid #395d68;
-    border-radius: 13px;
-
-    padding: 1rem 1.15rem;
-
-    transition:
-      background .15s,
-      border-color .15s;
+    padding: .7rem 1rem;
+    border-radius: 9px;
+    color: #c5d9e4;
+    font-weight: 700;
+    text-align: center;
+    transition: background .15s, color .15s;
   }
 
-
-  .brewer-choice input:checked
-  + .brewer-choice-content {
-    background: #12382f;
-    border-color: #8ae7d2;
+  .brewer-mode-choice input:checked + span {
+    color: #effbfc;
+    background: #20534f;
     box-shadow: inset 0 0 0 1px #8ae7d2;
   }
 
-
-  .brewer-choice input:focus-visible
-  + .brewer-choice-content {
+  .brewer-mode-choice input:focus-visible + span {
     outline: 3px solid #fff;
     outline-offset: 2px;
   }
 
-
-  .brewer-choice strong {
-    display: block;
-    color: #effbfc;
+  .brewer-mode-help {
+    margin: .9rem auto 1.15rem;
+    min-height: 1.5em;
+    color: #c4d9e2;
+    font-size: .95rem;
   }
-
-
-  .brewer-choice small {
-    display: block;
-    margin-top: .25rem;
-
-    color: #aec9d3;
-    line-height: 1.5;
-  }
-
 
   .brewer-play {
     display: block;
@@ -375,10 +338,6 @@ const fractalUrl = sitePath(
   /* Mobile */
 
   @media (max-width: 640px) {
-
-    .brewer-editions {
-      grid-template-columns: 1fr;
-    }
 
     .brewer-art {
       border-radius: 12px;

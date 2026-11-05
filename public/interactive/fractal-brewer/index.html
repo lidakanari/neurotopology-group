@@ -65,6 +65,11 @@ body.final-mode .header #restartTop{display:none}
 .final-score-list .place{color:#75d9c6}.final-score-list .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#d6e8f0}.final-score-list .points{font-weight:750;color:#f3d48b}
 .final-score-list .current{border-color:#5e9f94;background:#183b40}.final-score-list .empty{display:block;color:#9bb6c6}
 .final-score-foot{margin:7px 0 0;font-size:11px;color:#91aebd}
+/* Preserve the scientific results dashboard; add one sibling mode button. */
+.final-head-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.final-mode-link{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;min-height:43px;border:1px solid #65bca9;background:#183c44;color:#dcfaf2;border-radius:11px;text-decoration:none;font-size:14px;font-weight:700}
+.final-mode-link:hover{background:#246254;color:#fff}
+.final-mode-link:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -90,6 +95,11 @@ const fractal={angle:35,interval:25,ratio:72,noise:0,bias:0,death:0};
 const MAX_ACTIVE=96;
 let game,aim= -Math.PI/2,mouse=null,autoTimer=null,screen='start',cameraY=0,dragging=false;
 let running=false,growthFrame=0,lastGrowthTime=0,growthElapsed=0;const GROWTH_INTERVAL=150;
+function notifyParentState(phase){
+  if(window.parent!==window){
+    window.parent.postMessage({type:'neurotopology:game-state',phase},window.location.origin);
+  }
+}
 function stopGrowth(){running=false;if(growthFrame){cancelAnimationFrame(growthFrame);growthFrame=0;}growthElapsed=0;lastGrowthTime=0;refreshPlayButton();}
 function refreshPlayButton(){const b=$('grow');if(!b)return;b.innerHTML=running?'Ⅱ Pause <span class="mini">(Enter)</span>':'▶ Start <span class="mini">(Enter)</span>';b.disabled=!game||game.finished||screen!=='play';}
 function growthLoop(time){if(!running||screen!=='play'||!game||game.finished)return;if(!lastGrowthTime)lastGrowthTime=time;growthElapsed+=Math.min(time-lastGrowthTime,120);lastGrowthTime=time;let ticks=0;while(growthElapsed>=GROWTH_INTERVAL&&ticks<2&&running&&!game.finished){growthElapsed-=GROWTH_INTERVAL;fractalTurn();ticks++;}if(running&&!game.finished)growthFrame=requestAnimationFrame(growthLoop);}
@@ -114,7 +124,7 @@ function writeScores(arr,count){try{localStorage.setItem(KEY,JSON.stringify(arr)
 function sortScores(arr){return arr.sort((a,b)=>b.score-a.score||a.order-b.order)}
 function renderScores(){const arr=sortScores(storage());$('leaderboard').innerHTML=arr.length?arr.map(s=>`<li><span>${escapeHtml(s.name)}</span><span class="score">${s.score}</span></li>`).join(''):'<li>No scores yet</li>';$('runCount').textContent=`${savedCount()} locally completed game(s)`;}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function newGame(){finalGlowLayer=null;stopGrowth();document.body.classList.remove('final-mode');$('finalPage').classList.add('hidden');$('finalPage').innerHTML='';spatial=new Map();if(aimFrame){cancelAnimationFrame(aimFrame);aimFrame=0;}clearInterval(autoTimer);autoTimer=null;game={segments:[],tips:[{id:1,p:{...ROOT},heading:-Math.PI/2,active:true,controlled:false,depth:0,lineage:0,age:0,currentWidth:8.5,travel:0,interval:fractal.interval}],nextId:2,length:0,score:0,turns:0,resources:[],finished:false,reason:'',lastCollision:null,capturedCount:0,capturedValue:0,lostCount:0,lostValue:0,fadingResources:[]};aim=-Math.PI/2;mouse=null;cameraY=0;for(let i=0;i<RESOURCE_COUNT;i++)spawn(i===Math.floor(RESOURCE_COUNT/2));screen='play';$('scienceResults').classList.add('hidden');$('scienceResults').innerHTML='';$('overlay').classList.remove('result-overlay');$('overlay').classList.add('hidden');$('status').textContent='Fractal parameters locked. Press Start or Enter to grow.';update();draw();refreshPlayButton();syncFractal();}
+function newGame(){finalGlowLayer=null;stopGrowth();document.body.classList.remove('final-mode');$('finalPage').classList.add('hidden');$('finalPage').innerHTML='';spatial=new Map();if(aimFrame){cancelAnimationFrame(aimFrame);aimFrame=0;}clearInterval(autoTimer);autoTimer=null;game={segments:[],tips:[{id:1,p:{...ROOT},heading:-Math.PI/2,active:true,controlled:false,depth:0,lineage:0,age:0,currentWidth:8.5,travel:0,interval:fractal.interval}],nextId:2,length:0,score:0,turns:0,resources:[],finished:false,reason:'',lastCollision:null,capturedCount:0,capturedValue:0,lostCount:0,lostValue:0,fadingResources:[]};aim=-Math.PI/2;mouse=null;cameraY=0;for(let i=0;i<RESOURCE_COUNT;i++)spawn(i===Math.floor(RESOURCE_COUNT/2));screen='play';notifyParentState('playing');$('scienceResults').classList.add('hidden');$('scienceResults').innerHTML='';$('overlay').classList.remove('result-overlay');$('overlay').classList.add('hidden');$('status').textContent='Fractal parameters locked. Press Start or Enter to grow.';update();draw();refreshPlayButton();syncFractal();}
 function resourceFront(){const ctl=game.tips.find(t=>t.controlled&&t.active);if(ctl)return ctl.p.y;const active=game.tips.filter(t=>t.active);return active.length?Math.min(...active.map(t=>t.p.y)):game.tips.reduce((v,t)=>Math.min(v,t.p.y),ROOT.y);}
 function spawn(special=false){const front=resourceFront();for(let n=0;n<1500;n++){
 // The front half-plane is anchored at the controlled tip; keep points within the scrolling view.
@@ -374,7 +384,7 @@ function renderScientificResults(){
  const completed=game.length>=MAX-1e-6&&!game.lastCollision;
  const earnedBonuses=[...(completed?['a bonus for no intersection']:[]),...(optimalBonus?['a bonus for optimal wiring']:[])];
  const bonusSentence=earnedBonuses.length===2?'You earned a bonus for no intersection and a bonus for optimal wiring.':earnedBonuses.length===1?'You earned '+earnedBonuses[0]+'.':'No completion or optimal wiring bonus was earned.';
- el.innerHTML=`<div class="final-head"><div><div class="eyebrow">Fractal Brewer · Scientific results</div><h2>Congratulations! You brewed a fractal neuron.</h2><p class="final-note">${escapeHtml(game.reason)} · ${game.turns} turns</p></div><button id="newFromFinal" class="primary">↻ Play again</button></div>
+ el.innerHTML=`<div class="final-head"><div><div class="eyebrow">Fractal Brewer · Scientific results</div><h2>Congratulations! You brewed a fractal neuron.</h2><p class="final-note">${escapeHtml(game.reason)} · ${game.turns} turns</p></div><div class="final-head-actions"><button id="newFromFinal" class="primary">↻ Play again</button><a id="otherModeFinal" class="final-mode-link" href="../play/neuron/" target="_top">Play Neuron mode →</a></div></div>
  <div class="final-primary"><section class="final-card"><h3>Final neuronal morphology</h3><canvas id="finalMorph" width="800" height="600" aria-label="Final neuron inside the approved brain outline"></canvas><p class="final-score-summary"><strong>Congratulations!</strong> You scored <strong>${game.score}</strong> and ranked <strong>${rank} / ${count}</strong>! ${bonusSentence}</p></section>
  <section class="final-card"><h3>Morphology statistics</h3>
  <div class="final-section-title">Resources</div>
@@ -401,6 +411,7 @@ function renderScientificResults(){
  refreshFinalTopScores();
  $('saveFinalScore').onclick=()=>{if(saved)return;saved=true;if(qualifies){const name=($('finalName').value||'').trim()||`anonymous${count}`;writeScores(sortScores([...existing,{name,score:game.score,order:count}]).slice(0,10),count);}else writeScores(existing,count);game.scoreRecorded=true;renderScores();refreshFinalTopScores();$('saveFinalScore').textContent='Saved ✓';$('saveFinalScore').disabled=true;};
  $('newFromFinal').onclick=()=>{if(!saved)$('saveFinalScore').click();newGame();};
+ $('otherModeFinal').onclick=()=>{if(!saved)$('saveFinalScore').click();};
  $('exportScience').onclick=downloadScientificResults;$('saveFinalNeuron').onclick=downloadMorphology;
  document.body.classList.add('final-mode');window.scrollTo({top:0,behavior:'instant'});
 }
@@ -460,7 +471,7 @@ function downloadScientificResults(){
  const a=document.createElement('a');a.download='neuron-brewer-scientific-results.png';a.href=out.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
 }
 
-function finish(reason){if(game.finished)return;finalGlowLayer=null;stopGrowth();const completed=game.length>=MAX-1e-6 && !game.lastCollision;const completionBonus=completed?10:0;game.score+=completionBonus;clearInterval(autoTimer);autoTimer=null;game.finished=true;game.reason=reason;screen='over';update();draw();renderScientificResults();const existing=storage(),count=savedCount()+1,rank=1+existing.filter(s=>s.score>game.score).length,qualifies=existing.length<10||game.score>existing[9].score;let saved=false;
+function finish(reason){if(game.finished)return;finalGlowLayer=null;stopGrowth();const completed=game.length>=MAX-1e-6 && !game.lastCollision;const completionBonus=completed?10:0;game.score+=completionBonus;clearInterval(autoTimer);autoTimer=null;game.finished=true;game.reason=reason;screen='over';update();draw();renderScientificResults();notifyParentState('finished');const existing=storage(),count=savedCount()+1,rank=1+existing.filter(s=>s.score>game.score).length,qualifies=existing.length<10||game.score>existing[9].score;let saved=false;
 $('overlay').classList.add('hidden');$('boardHint').textContent='Final morphology';}
 
 function downloadMorphology(){
@@ -725,7 +736,7 @@ $('fReset').onclick=()=>{Object.assign(fractal,{angle:35,interval:25,ratio:72,no
 $('grow').onclick=toggleGrowth;
 $('restartTop').onclick=()=>{stopGrowth();startScreen();};
 document.addEventListener('keydown',e=>{if(e.target&&['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName))return;if(e.code==='Enter'&&screen==='play'){e.preventDefault();toggleGrowth();}});
-function startScreen(){stopGrowth();document.body.classList.remove('final-mode');$('finalPage').classList.add('hidden');$('finalPage').innerHTML='';clearInterval(autoTimer);autoTimer=null;screen='start';$('overlay').classList.remove('result-overlay');$('overlay').classList.remove('hidden');$('modal').innerHTML='<div class="eyebrow">Fractal Brewer · Generative neuron laboratory</div><h2>Grow a fractal neuron</h2><p>Adjust the six fractal parameters before or during automatic growth. Default settings produce a <strong>symmetric binary fractal</strong>.</p><p>Branches stop individually before collisions or at boundaries. Collect gold (+1) and rare blue (+5) resources, with a total growth budget of 1,000. The scientific results screen compares branching, optimal wiring, and TMD barcodes.</p><p class="mini">Press Enter to pause/resume. You control the rules, not individual tips. Your original Neuron Brewer game is a separate, unchanged file.</p><button class="primary" id="startBtn">▶ Grow fractal</button>';$('startBtn').onclick=()=>{newGame();toggleGrowth();};syncFractal();}
+function startScreen(){stopGrowth();document.body.classList.remove('final-mode');$('finalPage').classList.add('hidden');$('finalPage').innerHTML='';clearInterval(autoTimer);autoTimer=null;screen='start';notifyParentState('start');$('overlay').classList.remove('result-overlay');$('overlay').classList.remove('hidden');$('modal').innerHTML='<div class="eyebrow">Fractal Brewer · Generative neuron laboratory</div><h2>Grow a fractal neuron</h2><p>Adjust the six fractal parameters before or during automatic growth. Default settings produce a <strong>symmetric binary fractal</strong>.</p><p>Branches stop individually before collisions or at boundaries. Collect gold (+1) and rare blue (+5) resources, with a total growth budget of 1,000. The scientific results screen compares branching, optimal wiring, and TMD barcodes.</p><p class="mini">Press Enter to pause/resume. You control the rules, not individual tips. Your original Neuron Brewer game is a separate, unchanged file.</p><button class="primary" id="startBtn">▶ Grow fractal</button>';$('startBtn').onclick=()=>{newGame();toggleGrowth();};syncFractal();}
 renderScores();spatial=new Map();game={segments:[],tips:[{id:1,p:{...ROOT},heading:-Math.PI/2,active:true,controlled:false,depth:0,lineage:0,age:0,travel:0,interval:fractal.interval,currentWidth:8.5}],resources:[],fadingResources:[],score:0,length:0,turns:0,finished:false};for(let i=0;i<RESOURCE_COUNT;i++)spawn(i===Math.floor(RESOURCE_COUNT/2));update();draw();startScreen();
 })();
 </script>
